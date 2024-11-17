@@ -17,6 +17,12 @@
     "output": "bluemsx_libretro.so",
     "makefile": "Makefile"
   },
+  "DOSBox Pure": {
+    "source": "https://github.com/schellingb/dosbox-pure",
+    "directory": "dosbox-pure",
+    "output": "dosbox_pure_libretro.so",
+    "makefile": "Makefile"
+  },
   "Fuse Unix Spectrum Emulator": {
     "source": "https://github.com/libretro/fuse-libretro",
     "directory": "fuse-libretro",
