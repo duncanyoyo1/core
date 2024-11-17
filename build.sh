@@ -32,7 +32,10 @@ RUN_COMMANDS() {
 
 	# Run through the list of given commands in the array and use an EOF to run them outside of this subshell
 	while IFS= read -r CMD; do
-		printf "\t\tRunning: %s\n" "$CMD"
+		# Skip "Running" message for commands starting with 'printf'
+		if ! echo "$CMD" | grep -qE '^printf'; then
+			printf "\t\tRunning: %s\n" "$CMD"
+		fi
 		eval "$CMD" || {
 			printf "\t\tCommand failed: %s\n" "$CMD" >&2
 			return 1
@@ -40,8 +43,6 @@ RUN_COMMANDS() {
 	done <<EOF
 $CMD_LIST
 EOF
-
-	printf "\n"
 }
 
 APPLY_PATCHES() {
@@ -70,7 +71,7 @@ else
 	CORES=$(jq -r 'keys[]' "$CORE_CONFIG")
 fi
 
-for NAME in $CORES; do
+echo "$CORES" | while IFS= read -r NAME; do
 	MODULE=$(jq -c --arg name "$NAME" '.[$name]' "$CORE_CONFIG")
 
 	if [ -z "$MODULE" ] || [ "$MODULE" = "null" ]; then
@@ -122,13 +123,6 @@ for NAME in $CORES; do
 		continue
 	}
 
-	printf "\tCleaning build environment for '%s'\n" "$NAME"
-	make clean >/dev/null 2>&1 || {
-		printf "\t\tClean failed for %s\n" "$NAME" >&2
-		RETURN_TO_BASE
-		continue
-	}
-
 	if [ "$PRE_MAKE" != "[]" ]; then
 		if ! RUN_COMMANDS "pre-make" "$PRE_MAKE"; then
 			printf "\t\tPre-make commands failed for %s\n" "$NAME" >&2
@@ -137,7 +131,7 @@ for NAME in $CORES; do
 		fi
 	fi
 
-	printf "\tBuilding '%s' (%s) ..." "$NAME" "$OUTPUT"
+	printf "\n\tBuilding '%s' (%s) ..." "$NAME" "$OUTPUT"
 
 	(while :; do
 		printf '.'
@@ -153,7 +147,7 @@ for NAME in $CORES; do
 	else
 		kill $PV_PID
 		wait $PV_PID 2>/dev/null
-		printf "\t\tBuild failed for '%s' using '%s'\n" "$NAME" "$MAKEFILE" >&2
+		printf "\n\t\tBuild failed for '%s' using '%s'\n" "$NAME" "$MAKEFILE" >&2
 		RETURN_TO_BASE
 		continue
 	fi
@@ -173,9 +167,14 @@ for NAME in $CORES; do
 		continue
 	}
 
+	printf "\tCleaning build environment for '%s'\n" "$NAME"
+	make clean >/dev/null 2>&1 || {
+		printf "\t\tClean failed or not required\n" >&2
+	}
+
 	printf "\n"
 
 	RETURN_TO_BASE
 done
 
-printf "\nAll successful core builds are in '%s'\n" "$BUILD_DIR"
+printf "All successful core builds are in '%s'\n" "$BUILD_DIR"

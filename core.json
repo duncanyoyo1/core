@@ -84,8 +84,11 @@
     "makefile": "Makefile",
     "commands": {
       "pre-make": [
-        "make bootroms",
-        "make libretro",
+        "make clean >/dev/null 2>&1",
+        "printf '\\n\\t\\tBuilding Boot ROMs\\n'",
+        "make bootroms >/dev/null 2>&1",
+        "printf '\\n\\t\\tPre-generating Libretro Source\\n'",
+        "make libretro >/dev/null 2>&1",
         "cd libretro"
       ],
       "post-make": [
