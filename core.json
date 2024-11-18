@@ -3,91 +3,166 @@
     "source": "https://github.com/libretro/libretro-atari800",
     "directory": "libretro-atari800",
     "output": "atari800_libretro.so",
-    "makefile": "Makefile"
+    "make": {
+      "file": "Makefile",
+      "args": "",
+      "target": ""
+    },
+    "symbols": 0
   },
   "Beetle PC Engine Fast": {
     "source": "https://github.com/libretro/beetle-pce-fast-libretro",
     "directory": "beetle-pce-fast-libretro",
     "output": "mednafen_pce_fast_libretro.so",
-    "makefile": "Makefile"
+    "make": {
+      "file": "Makefile",
+      "args": "",
+      "target": ""
+    },
+    "symbols": 0
   },
   "blueMSX": {
     "source": "https://github.com/libretro/blueMSX-libretro",
     "directory": "blueMSX-libretro",
     "output": "bluemsx_libretro.so",
-    "makefile": "Makefile"
+    "make": {
+      "file": "Makefile",
+      "args": "",
+      "target": ""
+    },
+    "symbols": 0
   },
   "DOSBox Pure": {
     "source": "https://github.com/schellingb/dosbox-pure",
     "directory": "dosbox-pure",
     "output": "dosbox_pure_libretro.so",
-    "makefile": "Makefile"
+    "make": {
+      "file": "Makefile",
+      "args": "",
+      "target": ""
+    },
+    "symbols": 0
   },
   "Fuse Unix Spectrum Emulator": {
     "source": "https://github.com/libretro/fuse-libretro",
     "directory": "fuse-libretro",
     "output": "fuse_libretro.so",
-    "makefile": "Makefile.libretro"
+    "make": {
+      "file": "Makefile.libretro",
+      "args": "",
+      "target": ""
+    },
+    "symbols": 0
   },
   "Gambatte": {
     "source": "https://github.com/libretro/gambatte-libretro",
     "directory": "gambatte-libretro",
     "output": "gambatte_libretro.so",
-    "makefile": "Makefile.libretro"
+    "make": {
+      "file": "Makefile.libretro",
+      "args": "",
+      "target": ""
+    },
+    "symbols": 0
   },
   "Genesis Plus GX": {
     "source": "https://github.com/libretro/Genesis-Plus-GX",
     "directory": "Genesis-Plus-GX",
     "output": "genesis_plus_gx_libretro.so",
-    "makefile": "Makefile.libretro"
+    "make": {
+      "file": "Makefile.libretro",
+      "args": "",
+      "target": ""
+    },
+    "symbols": 0
   },
   "MAME 2003-Plus": {
     "source": "https://github.com/libretro/mame2003-plus-libretro",
     "directory": "mame2003-plus-libretro",
     "output": "mame2003_plus_libretro.so",
-    "makefile": "Makefile"
+    "make": {
+      "file": "Makefile",
+      "args": "",
+      "target": ""
+    },
+    "symbols": 0
   },
   "mGBA": {
     "source": "https://github.com/libretro/mgba",
     "directory": "mgba",
     "output": "mgba_libretro.so",
-    "makefile": "Makefile.libretro"
+    "make": {
+      "file": "Makefile.libretro",
+      "args": "",
+      "target": ""
+    },
+    "symbols": 0
   },
   "PCSX-ReARMed": {
     "source": "https://github.com/libretro/pcsx_rearmed",
     "directory": "pcsx_rearmed",
     "output": "pcsx_rearmed_libretro.so",
-    "makefile": "Makefile.libretro"
+    "make": {
+      "file": "Makefile.libretro",
+      "args": "",
+      "target": ""
+    },
+    "symbols": 0
   },
   "PicoDrive": {
     "source": "https://github.com/libretro/picodrive",
     "directory": "picodrive",
     "output": "picodrive_libretro.so",
-    "makefile": "Makefile.libretro"
+    "make": {
+      "file": "Makefile.libretro",
+      "args": "",
+      "target": ""
+    },
+    "symbols": 0
   },
   "PokeMini": {
     "source": "https://github.com/libretro/PokeMini",
     "directory": "PokeMini",
     "output": "pokemini_libretro.so",
-    "makefile": "Makefile.libretro"
+    "make": {
+      "file": "Makefile.libretro",
+      "args": "",
+      "target": ""
+    },
+    "symbols": 0
   },
   "PrBoom": {
     "source": "https://github.com/libretro/libretro-prboom",
     "directory": "libretro-prboom",
     "output": "prboom_libretro.so",
-    "makefile": "Makefile"
+    "make": {
+      "file": "Makefile",
+      "args": "",
+      "target": ""
+    },
+    "symbols": 0
   },
   "QuickNES": {
     "source": "https://github.com/libretro/QuickNES_Core",
     "directory": "QuickNES_Core",
     "output": "quicknes_libretro.so",
-    "makefile": "Makefile"
+    "make": {
+      "file": "Makefile",
+      "args": "",
+      "target": ""
+    },
+    "symbols": 0
   },
   "SameBoy": {
     "source": "https://github.com/LIJI32/SameBoy",
     "directory": "SameBoy",
     "output": "sameboy_libretro.so",
-    "makefile": "Makefile",
+    "make": {
+      "file": "Makefile",
+      "args": "",
+      "target": ""
+    },
+    "symbols": 0,
     "commands": {
       "pre-make": [
         "make clean >/dev/null 2>&1",
@@ -106,13 +181,23 @@
     "source": "https://github.com/libretro/smsplus-gx",
     "directory": "smsplus-gx",
     "output": "smsplus_libretro.so",
-    "makefile": "Makefile"
+    "make": {
+      "file": "Makefile",
+      "args": "",
+      "target": ""
+    },
+    "symbols": 0
   },
   "Snes9x": {
     "source": "https://github.com/libretro/snes9x",
     "directory": "snes9x",
     "output": "snes9x_libretro.so",
-    "makefile": "Makefile",
+    "make": {
+      "file": "Makefile",
+      "args": "",
+      "target": ""
+    },
+    "symbols": 0,
     "commands": {
       "pre-make": [
         "cd libretro"

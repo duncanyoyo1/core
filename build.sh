@@ -1,6 +1,6 @@
 #!/bin/sh
 
-for CMD in git jq make patch pv; do
+for CMD in aarch64-linux-objcopy aarch64-linux-strip file git jq make patch pv readelf; do
 	if ! command -v "$CMD" >/dev/null 2>&1; then
 		printf "Error: Missing required command '%s'\n" "$CMD" >&2
 		exit 1
@@ -79,18 +79,26 @@ echo "$CORES" | while IFS= read -r NAME; do
 		continue
 	fi
 
+	# Required keys
 	DIR=$(echo "$MODULE" | jq -r '.directory')
 	OUTPUT=$(echo "$MODULE" | jq -r '.output')
 	SOURCE=$(echo "$MODULE" | jq -r '.source')
-	MAKEFILE=$(echo "$MODULE" | jq -r '.makefile')
-	PRE_MAKE=$(echo "$MODULE" | jq -c '.commands["pre-make"] // []')
-	POST_MAKE=$(echo "$MODULE" | jq -c '.commands["post-make"] // []')
+	SYMBOLS=$(echo "$MODULE" | jq -r '.symbols')
+
+	# Make keys
+	MAKE_FILE=$(echo "$MODULE" | jq -r '.make.file')
+	MAKE_ARGS=$(echo "$MODULE" | jq -r '.make.args')
+	MAKE_TARGET=$(echo "$MODULE" | jq -r '.make.target')
 
 	# Verify required keys
-	if [ -z "$DIR" ] || [ -z "$OUTPUT" ] || [ -z "$SOURCE" ] || [ -z "$MAKEFILE" ]; then
-		printf "Missing required configuration for '%s' in '%s'\n" "$NAME" "$CORE_CONFIG" >&2
+	if [ -z "$DIR" ] || [ -z "$OUTPUT" ] || [ -z "$SOURCE" ] || [ -z "$MAKE_FILE" ] || [ -z "$SYMBOLS" ]; then
+		printf "Missing required configuration keys for '%s' in '%s'\n" "$NAME" "$CORE_CONFIG" >&2
 		continue
 	fi
+
+	# Optional keys
+	PRE_MAKE=$(echo "$MODULE" | jq -c '.commands["pre-make"] // []')
+	POST_MAKE=$(echo "$MODULE" | jq -c '.commands["post-make"] // []')
 
 	CORE_DIR="$CORES_DIR/$DIR"
 
@@ -131,6 +139,11 @@ echo "$CORES" | while IFS= read -r NAME; do
 		fi
 	fi
 
+	printf "\n\tMake Structure:\n"
+	printf "\t\tFILE:\t%s" "$MAKE_FILE"
+	printf "\n\t\tARGS:\t%s" "$MAKE_ARGS"
+	printf "\n\t\tTARGET: %s\n" "$MAKE_TARGET"
+
 	printf "\n\tBuilding '%s' (%s) ..." "$NAME" "$OUTPUT"
 
 	(while :; do
@@ -140,14 +153,14 @@ echo "$CORES" | while IFS= read -r NAME; do
 
 	PV_PID=$!
 
-	if make -f "$MAKEFILE" >/dev/null 2>&1; then
+	if make -f "$MAKE_FILE" "$MAKE_ARGS" "$MAKE_TARGET" >/dev/null 2>&1; then
 		kill $PV_PID
 		wait $PV_PID 2>/dev/null
 		printf "\n\tBuild completed successfully for %s\n" "$NAME"
 	else
 		kill $PV_PID
 		wait $PV_PID 2>/dev/null
-		printf "\n\t\tBuild failed for '%s' using '%s'\n" "$NAME" "$MAKEFILE" >&2
+		printf "\n\t\tBuild failed for '%s' using '%s'\n" "$NAME" "$MAKE_FILE" >&2
 		RETURN_TO_BASE
 		continue
 	fi
@@ -159,6 +172,26 @@ echo "$CORES" | while IFS= read -r NAME; do
 			continue
 		fi
 	fi
+
+	if [ "$SYMBOLS" -eq 0 ]; then
+		# Check if the output is not stripped already
+		if file "$OUTPUT" | grep -q 'not stripped'; then
+			aarch64-linux-strip -sx "$OUTPUT"
+			printf "\n\tStripped debug symbols"
+		else
+			printf "\n\tCore is already stripped"
+		fi
+
+		# Check if the BuildID section is present
+		if readelf -S "$OUTPUT" | grep -Fq '.note.gnu.build-id'; then
+			aarch64-linux-objcopy --remove-section=.note.gnu.build-id "$OUTPUT"
+			printf "\n\tRemoved BuildID section"
+		else
+			printf "\n\tBuildID section not present"
+		fi
+	fi
+
+	printf "\n\tFile Information: %s\n\n" "$(file "$OUTPUT")"
 
 	printf "\tMoving '%s' to '%s'\n" "$OUTPUT" "$BUILD_DIR"
 	mv "$OUTPUT" "$BUILD_DIR" || {
