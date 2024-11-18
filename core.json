@@ -32,6 +32,17 @@
     },
     "symbols": 0
   },
+  "ChaiLove": {
+    "source": "https://github.com/libretro/libretro-chailove",
+    "directory": "libretro-chailove",
+    "output": "chailove_libretro.so",
+    "make": {
+      "file": "Makefile",
+      "args": "",
+      "target": ""
+    },
+    "symbols": 0
+  },
   "DOSBox Pure": {
     "source": "https://github.com/schellingb/dosbox-pure",
     "directory": "dosbox-pure",
@@ -42,6 +53,93 @@
       "target": ""
     },
     "symbols": 0
+  },
+  "DoubleCherryGB": {
+    "source": "https://github.com/TimOelrichs/doublecherryGB-libretro",
+    "directory": "doublecherryGB-libretro",
+    "output": "DoubleCherryGB_libretro.so",
+    "make": {
+      "file": "Makefile",
+      "args": "",
+      "target": ""
+    },
+    "symbols": 0
+  },
+  "EightyOne Sinclair Emulator": {
+    "source": "https://github.com/libretro/81-libretro",
+    "directory": "81-libretro",
+    "output": "81_libretro.so",
+    "make": {
+      "file": "Makefile.libretro",
+      "args": "",
+      "target": ""
+    },
+    "symbols": 0
+  },
+  "FCE Ultra Mappers Modified": {
+    "source": "https://github.com/libretro/libretro-fceumm",
+    "directory": "libretro-fceumm",
+    "output": "fceumm_libretro.so",
+    "make": {
+      "file": "Makefile.libretro",
+      "args": "",
+      "target": ""
+    },
+    "symbols": 0
+  },
+  "Final Burn Alpha 2012 CPS1": {
+    "source": "https://github.com/libretro/fbalpha2012_cps1",
+    "directory": "fbalpha2012_cps1",
+    "output": "fbalpha2012_cps1_libretro.so",
+    "make": {
+      "file": "Makefile",
+      "args": "",
+      "target": ""
+    },
+    "symbols": 0
+  },
+  "Final Burn Alpha 2012 CPS2": {
+    "source": "https://github.com/libretro/fbalpha2012_cps2",
+    "directory": "fbalpha2012_cps2",
+    "output": "fbalpha2012_cps2_libretro.so",
+    "make": {
+      "file": "Makefile",
+      "args": "",
+      "target": ""
+    },
+    "symbols": 0
+  },
+  "Final Burn Alpha 2012 CPS3": {
+    "source": "https://github.com/libretro/fbalpha2012_cps3",
+    "directory": "fbalpha2012_cps3",
+    "output": "fbalpha2012_cps3_libretro.so",
+    "make": {
+      "file": "makefile.libretro",
+      "args": "",
+      "target": ""
+    },
+    "symbols": 0,
+    "commands": {
+      "pre-make": [
+        "cd svn-current/trunk"
+      ]
+    }
+  },
+  "fixGB": {
+    "source": "https://github.com/libretro/fixGB",
+    "directory": "fixGB",
+    "output": "fixgb_libretro.so",
+    "make": {
+      "file": "Makefile",
+      "args": "",
+      "target": ""
+    },
+    "symbols": 0,
+    "commands": {
+      "pre-make": [
+        "cd libretro"
+      ]
+    }
   },
   "Fuse Unix Spectrum Emulator": {
     "source": "https://github.com/libretro/fuse-libretro",
@@ -65,6 +163,70 @@
     },
     "symbols": 0
   },
+  "Gearboy": {
+    "source": "https://github.com/drhelius/Gearboy",
+    "directory": "Gearboy",
+    "output": "gearboy_libretro.so",
+    "make": {
+      "file": "Makefile",
+      "args": "",
+      "target": ""
+    },
+    "symbols": 0,
+    "commands": {
+      "pre-make": [
+        "cd platforms/libretro"
+      ]
+    }
+  },
+  "Gearcoleco": {
+    "source": "https://github.com/drhelius/Gearcoleco",
+    "directory": "Gearcoleco",
+    "output": "gearcoleco_libretro.so",
+    "make": {
+      "file": "Makefile",
+      "args": "",
+      "target": ""
+    },
+    "symbols": 0,
+    "commands": {
+      "pre-make": [
+        "cd platforms/libretro"
+      ]
+    }
+  },
+  "Geargrafx": {
+    "source": "https://github.com/drhelius/Geargrafx",
+    "directory": "Geargrafx",
+    "output": "geargrafx_libretro.so",
+    "make": {
+      "file": "Makefile",
+      "args": "",
+      "target": ""
+    },
+    "symbols": 0,
+    "commands": {
+      "pre-make": [
+        "cd platforms/libretro"
+      ]
+    }
+  },
+  "Gearsystem": {
+    "source": "https://github.com/drhelius/Gearsystem",
+    "directory": "Gearsystem",
+    "output": "gearsystem_libretro.so",
+    "make": {
+      "file": "Makefile",
+      "args": "",
+      "target": ""
+    },
+    "symbols": 0,
+    "commands": {
+      "pre-make": [
+        "cd platforms/libretro"
+      ]
+    }
+  },
   "Genesis Plus GX": {
     "source": "https://github.com/libretro/Genesis-Plus-GX",
     "directory": "Genesis-Plus-GX",
@@ -76,10 +238,48 @@
     },
     "symbols": 0
   },
+  "Geolith": {
+    "source": "https://github.com/libretro/geolith-libretro",
+    "directory": "geolith-libretro",
+    "output": "geolith_libretro.so",
+    "make": {
+      "file": "Makefile",
+      "args": "",
+      "target": ""
+    },
+    "symbols": 0,
+    "commands": {
+      "pre-make": [
+        "cd libretro"
+      ]
+    }
+  },
+  "Hatari": {
+    "source": "https://github.com/libretro/hatari",
+    "directory": "hatari",
+    "output": "hatari_libretro.so",
+    "make": {
+      "file": "Makefile",
+      "args": "",
+      "target": ""
+    },
+    "symbols": 0
+  },
   "MAME 2003-Plus": {
     "source": "https://github.com/libretro/mame2003-plus-libretro",
     "directory": "mame2003-plus-libretro",
     "output": "mame2003_plus_libretro.so",
+    "make": {
+      "file": "Makefile",
+      "args": "",
+      "target": ""
+    },
+    "symbols": 0
+  },
+  "Mednafen Virtual Boy": {
+    "source": "https://github.com/libretro/beetle-vb-libretro",
+    "directory": "beetle-vb-libretro",
+    "output": "mednafen_vb_libretro.so",
     "make": {
       "file": "Makefile",
       "args": "",
@@ -142,10 +342,32 @@
     },
     "symbols": 0
   },
+  "ProSystem 7800": {
+    "source": "https://github.com/libretro/prosystem-libretro",
+    "directory": "prosystem-libretro",
+    "output": "prosystem_libretro.so",
+    "make": {
+      "file": "Makefile",
+      "args": "",
+      "target": ""
+    },
+    "symbols": 0
+  },
   "QuickNES": {
     "source": "https://github.com/libretro/QuickNES_Core",
     "directory": "QuickNES_Core",
     "output": "quicknes_libretro.so",
+    "make": {
+      "file": "Makefile",
+      "args": "",
+      "target": ""
+    },
+    "symbols": 0
+  },
+  "RACE NGPC Emulator": {
+    "source": "https://github.com/libretro/RACE",
+    "directory": "RACE",
+    "output": "race_libretro.so",
     "make": {
       "file": "Makefile",
       "args": "",
@@ -201,6 +423,188 @@
     "commands": {
       "pre-make": [
         "cd libretro"
+      ]
+    }
+  },
+  "Stella": {
+    "source": "https://github.com/libretro/stella2014-libretro",
+    "directory": "stella2014-libretro",
+    "output": "stella2014_libretro.so",
+    "make": {
+      "file": "Makefile",
+      "args": "",
+      "target": ""
+    },
+    "symbols": 0
+  },
+  "Theodore - Thomson MO/TO Emulator": {
+    "source": "https://github.com/Zlika/theodore",
+    "directory": "theodore",
+    "output": "theodore_libretro.so",
+    "make": {
+      "file": "Makefile",
+      "args": "",
+      "target": ""
+    },
+    "symbols": 0
+  },
+  "VICE - x64": {
+    "source": "https://github.com/libretro/vice-libretro",
+    "directory": "vice-libretro",
+    "output": "vice_x64_libretro.so",
+    "make": {
+      "file": "Makefile",
+      "args": "EMUTYPE=x64",
+      "target": ""
+    },
+    "symbols": 0,
+    "commands": {
+      "post-make": [
+        "make clean EMUTYPE=x64"
+      ]
+    }
+  },
+  "VICE - x64dtv": {
+    "source": "https://github.com/libretro/vice-libretro",
+    "directory": "vice-libretro",
+    "output": "vice_x64dtv_libretro.so",
+    "make": {
+      "file": "Makefile",
+      "args": "EMUTYPE=x64dtv",
+      "target": ""
+    },
+    "symbols": 0,
+    "commands": {
+      "post-make": [
+        "make clean EMUTYPE=x64dtv"
+      ]
+    }
+  },
+  "VICE - x64sc": {
+    "source": "https://github.com/libretro/vice-libretro",
+    "directory": "vice-libretro",
+    "output": "vice_x64sc_libretro.so",
+    "make": {
+      "file": "Makefile",
+      "args": "EMUTYPE=x64sc",
+      "target": ""
+    },
+    "symbols": 0,
+    "commands": {
+      "post-make": [
+        "make clean EMUTYPE=x64sc"
+      ]
+    }
+  },
+  "VICE - x128": {
+    "source": "https://github.com/libretro/vice-libretro",
+    "directory": "vice-libretro",
+    "output": "vice_x128_libretro.so",
+    "make": {
+      "file": "Makefile",
+      "args": "EMUTYPE=x128",
+      "target": ""
+    },
+    "symbols": 0,
+    "commands": {
+      "post-make": [
+        "make clean EMUTYPE=x128"
+      ]
+    }
+  },
+  "VICE - xcbm2": {
+    "source": "https://github.com/libretro/vice-libretro",
+    "directory": "vice-libretro",
+    "output": "vice_xcbm2_libretro.so",
+    "make": {
+      "file": "Makefile",
+      "args": "EMUTYPE=xcbm2",
+      "target": ""
+    },
+    "symbols": 0,
+    "commands": {
+      "post-make": [
+        "make clean EMUTYPE=xcbm2"
+      ]
+    }
+  },
+  "VICE - xcbm5x0": {
+    "source": "https://github.com/libretro/vice-libretro",
+    "directory": "vice-libretro",
+    "output": "vice_xcbm5x0_libretro.so",
+    "make": {
+      "file": "Makefile",
+      "args": "EMUTYPE=xcbm5x0",
+      "target": ""
+    },
+    "symbols": 0,
+    "commands": {
+      "post-make": [
+        "make clean EMUTYPE=xcbm5x0"
+      ]
+    }
+  },
+  "VICE - xpet": {
+    "source": "https://github.com/libretro/vice-libretro",
+    "directory": "vice-libretro",
+    "output": "vice_xpet_libretro.so",
+    "make": {
+      "file": "Makefile",
+      "args": "EMUTYPE=xpet",
+      "target": ""
+    },
+    "symbols": 0,
+    "commands": {
+      "post-make": [
+        "make clean EMUTYPE=xpet"
+      ]
+    }
+  },
+  "VICE - xplus4": {
+    "source": "https://github.com/libretro/vice-libretro",
+    "directory": "vice-libretro",
+    "output": "vice_xplus4_libretro.so",
+    "make": {
+      "file": "Makefile",
+      "args": "EMUTYPE=xplus4",
+      "target": ""
+    },
+    "symbols": 0,
+    "commands": {
+      "post-make": [
+        "make clean EMUTYPE=xplus4"
+      ]
+    }
+  },
+  "VICE - xscpu64": {
+    "source": "https://github.com/libretro/vice-libretro",
+    "directory": "vice-libretro",
+    "output": "vice_xscpu64_libretro.so",
+    "make": {
+      "file": "Makefile",
+      "args": "EMUTYPE=xscpu64",
+      "target": ""
+    },
+    "symbols": 0,
+    "commands": {
+      "post-make": [
+        "make clean EMUTYPE=xscpu64"
+      ]
+    }
+  },
+  "VICE - xvic": {
+    "source": "https://github.com/libretro/vice-libretro",
+    "directory": "vice-libretro",
+    "output": "vice_xvic_libretro.so",
+    "make": {
+      "file": "Makefile",
+      "args": "EMUTYPE=xvic",
+      "target": ""
+    },
+    "symbols": 0,
+    "commands": {
+      "post-make": [
+        "make clean EMUTYPE=xvic"
       ]
     }
   }
