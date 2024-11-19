@@ -163,6 +163,17 @@
     },
     "symbols": 0
   },
+  "Game & Watch": {
+    "source": "https://github.com/libretro/gw-libretro",
+    "directory": "gw-libretro",
+    "output": "gw_libretro.so",
+    "make": {
+      "file": "Makefile.libretro",
+      "args": "",
+      "target": ""
+    },
+    "symbols": 0
+  },
   "Gearboy": {
     "source": "https://github.com/drhelius/Gearboy",
     "directory": "Gearboy",
@@ -254,6 +265,28 @@
       ]
     }
   },
+  "gpSP": {
+    "source": "https://github.com/libretro/gpsp",
+    "directory": "gpsp",
+    "output": "gpsp_libretro.so",
+    "make": {
+      "file": "Makefile",
+      "args": "platform=arm64",
+      "target": ""
+    },
+    "symbols": 0
+  },
+  "Handy": {
+    "source": "https://github.com/libretro/libretro-handy",
+    "directory": "libretro-handy",
+    "output": "handy_libretro.so",
+    "make": {
+      "file": "Makefile",
+      "args": "",
+      "target": ""
+    },
+    "symbols": 0
+  },
   "Hatari": {
     "source": "https://github.com/libretro/hatari",
     "directory": "hatari",
@@ -269,6 +302,17 @@
     "source": "https://github.com/libretro/mame2003-plus-libretro",
     "directory": "mame2003-plus-libretro",
     "output": "mame2003_plus_libretro.so",
+    "make": {
+      "file": "Makefile",
+      "args": "",
+      "target": ""
+    },
+    "symbols": 0
+  },
+  "MAME 2003-Plus Xtreme Amped": {
+    "source": "https://github.com/KMFDManic/mame2003-xtreme",
+    "directory": "mame2003-xtreme",
+    "output": "km_mame2003_xtreme_amped_libretro.so",
     "make": {
       "file": "Makefile",
       "args": "",
@@ -342,10 +386,43 @@
     },
     "symbols": 0
   },
+  "Press F - Fairchild F8 Emulator": {
+    "source": "https://github.com/celerizer/Press-F-libretro",
+    "directory": "Press-F-libretro",
+    "output": "press_f_libretro.so",
+    "make": {
+      "file": "Makefile",
+      "args": "",
+      "target": ""
+    },
+    "symbols": 0
+  },
   "ProSystem 7800": {
     "source": "https://github.com/libretro/prosystem-libretro",
     "directory": "prosystem-libretro",
     "output": "prosystem_libretro.so",
+    "make": {
+      "file": "Makefile",
+      "args": "",
+      "target": ""
+    },
+    "symbols": 0
+  },
+  "PUAE": {
+    "source": "https://github.com/KMFDManic/libretro-uae",
+    "directory": "libretro-uae",
+    "output": "km_puae_xtreme_amped_2k24_libretro.so",
+    "make": {
+      "file": "Makefile",
+      "args": "",
+      "target": ""
+    },
+    "symbols": 0
+  },
+  "Quake": {
+    "source": "https://github.com/libretro/tyrquake",
+    "directory": "tyrquake",
+    "output": "tyrquake_libretro.so",
     "make": {
       "file": "Makefile",
       "args": "",
@@ -426,6 +503,17 @@
       ]
     }
   },
+  "Snes9x2010": {
+    "source": "https://github.com/libretro/snes9x2010",
+    "directory": "snes9x2010",
+    "output": "snes9x2010_libretro.so",
+    "make": {
+      "file": "Makefile.libretro",
+      "args": "",
+      "target": ""
+    },
+    "symbols": 0
+  },
   "Stella": {
     "source": "https://github.com/libretro/stella2014-libretro",
     "directory": "stella2014-libretro",
@@ -443,6 +531,17 @@
     "output": "theodore_libretro.so",
     "make": {
       "file": "Makefile",
+      "args": "",
+      "target": ""
+    },
+    "symbols": 0
+  },
+  "VBA-M Next": {
+    "source": "https://github.com/libretro/vba-next",
+    "directory": "vba-next",
+    "output": "vba_next_libretro.so",
+    "make": {
+      "file": "Makefile.libretro",
       "args": "",
       "target": ""
     },
