@@ -1,0 +1,29 @@
+diff --git a/frontends/input/retro_input.c b/frontends/input/retro_input.c
+index b06e6d2..a7579fe 100644
+--- a/frontends/input/retro_input.c
++++ b/frontends/input/retro_input.c
+@@ -55,9 +55,9 @@ void ret_unload(struct input_frontend *fe, struct input_config *cfg)
+                        break;
+ 
+        /* Free data and remove it from states list */
++       list_remove(&retro_data.input_states, data);
+        free(data->states);
+        free(data);
+-       list_remove(&retro_data.input_states, data);
+ }
+ 
+ void ret_update(struct input_frontend *UNUSED(fe))
+diff --git a/main/event.c b/main/event.c
+index 5503b88..4aafbbe 100644
+--- a/main/event.c
++++ b/main/event.c
+@@ -109,8 +109,8 @@ void event_remove(char *name, event_callback_t cb)
+        }
+ 
+        /* Free listener and remove it from list */
+-       free(listener);
+        list_remove(&event->listeners, listener);
++       free(listener);
+        LOG_D("Unregistered %p listener from event \"%s\".\n", cb, name);
+ }
+

@@ -10,17 +10,6 @@
     },
     "symbols": 0
   },
-  "Beetle PC Engine Fast": {
-    "source": "https://github.com/libretro/beetle-pce-fast-libretro",
-    "directory": "beetle-pce-fast-libretro",
-    "output": "mednafen_pce_fast_libretro.so",
-    "make": {
-      "file": "Makefile",
-      "args": "",
-      "target": ""
-    },
-    "symbols": 0
-  },
   "blueMSX": {
     "source": "https://github.com/libretro/blueMSX-libretro",
     "directory": "blueMSX-libretro",
@@ -65,7 +54,18 @@
     },
     "symbols": 0
   },
-  "EightyOne Sinclair Emulator": {
+  "ECWolf": {
+    "source": "https://github.com/libretro/ecwolf",
+    "directory": "ecwolf",
+    "output": "ecwolf_libretro.so",
+    "make": {
+      "file": "Makefile",
+      "args": "",
+      "target": ""
+    },
+    "symbols": 0
+  },
+  "EightyOne - Sinclair Emulator": {
     "source": "https://github.com/libretro/81-libretro",
     "directory": "81-libretro",
     "output": "81_libretro.so",
@@ -75,6 +75,86 @@
       "target": ""
     },
     "symbols": 0
+  },
+  "Emux - CHIP-8": {
+    "source": "https://github.com/sronsse/emux",
+    "directory": "emux-chip8",
+    "output": "emux_chip8_libretro.so",
+    "make": {
+      "file": "Makefile.aarch64",
+      "args": "MACHINE=chip8",
+      "target": ""
+    },
+    "symbols": 0,
+    "commands": {
+      "pre-make": [
+        "cd libretro",
+        "cp $PATCH_DIR/Emux/Makefile.aarch64 ."
+      ],
+      "post-make": [
+        "find ../. -name '*.o' -delete"
+      ]
+    }
+  },
+  "Emux - Nintendo Game Boy": {
+    "source": "https://github.com/sronsse/emux",
+    "directory": "emux-gb",
+    "output": "emux_gb_libretro.so",
+    "make": {
+      "file": "Makefile.aarch64",
+      "args": "MACHINE=gb",
+      "target": ""
+    },
+    "symbols": 0,
+    "commands": {
+      "pre-make": [
+        "cd libretro",
+        "cp $PATCH_DIR/Emux/Makefile.aarch64 ."
+      ],
+      "post-make": [
+        "find ../. -name '*.o' -delete"
+      ]
+    }
+  },
+  "Emux - Nintendo Entertainment System": {
+    "source": "https://github.com/sronsse/emux",
+    "directory": "emux-nes",
+    "output": "emux_nes_libretro.so",
+    "make": {
+      "file": "Makefile.aarch64",
+      "args": "MACHINE=nes",
+      "target": ""
+    },
+    "symbols": 0,
+    "commands": {
+      "pre-make": [
+        "cd libretro",
+        "cp $PATCH_DIR/Emux/Makefile.aarch64 ."
+      ],
+      "post-make": [
+        "find ../. -name '*.o' -delete"
+      ]
+    }
+  },
+  "Emux - Sega Master System": {
+    "source": "https://github.com/sronsse/emux",
+    "directory": "emux-sms",
+    "output": "emux_sms_libretro.so",
+    "make": {
+      "file": "Makefile.aarch64",
+      "args": "MACHINE=sms",
+      "target": ""
+    },
+    "symbols": 0,
+    "commands": {
+      "pre-make": [
+        "cd libretro",
+        "cp $PATCH_DIR/Emux/Makefile.aarch64 ."
+      ],
+      "post-make": [
+        "find ../. -name '*.o' -delete"
+      ]
+    }
   },
   "FCE Ultra Mappers Modified": {
     "source": "https://github.com/libretro/libretro-fceumm",
@@ -141,7 +221,7 @@
       ]
     }
   },
-  "Fuse Unix Spectrum Emulator": {
+  "FUSE - Unix Spectrum Emulator": {
     "source": "https://github.com/libretro/fuse-libretro",
     "directory": "fuse-libretro",
     "output": "fuse_libretro.so",
@@ -320,7 +400,62 @@
     },
     "symbols": 0
   },
-  "Mednafen Virtual Boy": {
+  "Mednafen - Gameboy Advance": {
+    "source": "https://github.com/libretro/beetle-gba-libretro",
+    "directory": "beetle-gba-libretro",
+    "output": "mednafen_gba_libretro.so",
+    "make": {
+      "file": "Makefile",
+      "args": "",
+      "target": ""
+    },
+    "symbols": 0
+  },
+  "Mednafen - NeoGeo Pocket": {
+    "source": "https://github.com/libretro/beetle-ngp-libretro",
+    "directory": "beetle-ngp-libretro",
+    "output": "mednafen_ngp_libretro.so",
+    "make": {
+      "file": "Makefile",
+      "args": "",
+      "target": ""
+    },
+    "symbols": 0
+  },
+  "Mednafen - PC Engine Fast": {
+    "source": "https://github.com/libretro/beetle-pce-fast-libretro",
+    "directory": "beetle-pce-fast-libretro",
+    "output": "mednafen_pce_fast_libretro.so",
+    "make": {
+      "file": "Makefile",
+      "args": "",
+      "target": ""
+    },
+    "symbols": 0
+  },
+  "Mednafen - PC Engine SuperGrafx": {
+    "source": "https://github.com/libretro/beetle-supergrafx-libretro",
+    "directory": "beetle-supergrafx-libretro",
+    "output": "mednafen_supergrafx_libretro.so",
+    "make": {
+      "file": "Makefile",
+      "args": "",
+      "target": ""
+    },
+    "symbols": 0
+  },
+  "Mednafen - Supafaust": {
+    "source": "https://github.com/libretro/supafaust",
+    "directory": "supafaust",
+    "output": "mednafen_supafaust_libretro.so",
+    "make": {
+      "file": "Makefile",
+      "args": "",
+      "target": ""
+    },
+    "symbols": 0
+  },
+  "Mednafen - Virtual Boy": {
     "source": "https://github.com/libretro/beetle-vb-libretro",
     "directory": "beetle-vb-libretro",
     "output": "mednafen_vb_libretro.so",
@@ -375,6 +510,22 @@
     },
     "symbols": 0
   },
+  "Potator - Watara Supervision": {
+    "source": "https://github.com/libretro/potator",
+    "directory": "potator",
+    "output": "potator_libretro.so",
+    "make": {
+      "file": "Makefile",
+      "args": "",
+      "target": ""
+    },
+    "symbols": 0,
+    "commands": {
+      "pre-make": [
+        "cd platform/libretro"
+      ]
+    }
+  },
   "PrBoom": {
     "source": "https://github.com/libretro/libretro-prboom",
     "directory": "libretro-prboom",
@@ -419,6 +570,17 @@
     },
     "symbols": 0
   },
+  "Puzzlescript": {
+    "source": "https://github.com/nwhitehead/pzretro",
+    "directory": "pzretro",
+    "output": "puzzlescript_libretro.so",
+    "make": {
+      "file": "Makefile",
+      "args": "",
+      "target": ""
+    },
+    "symbols": 0
+  },
   "Quake": {
     "source": "https://github.com/libretro/tyrquake",
     "directory": "tyrquake",
@@ -441,7 +603,7 @@
     },
     "symbols": 0
   },
-  "RACE NGPC Emulator": {
+  "RACE - NGPC Emulator": {
     "source": "https://github.com/libretro/RACE",
     "directory": "RACE",
     "output": "race_libretro.so",
@@ -503,6 +665,28 @@
       ]
     }
   },
+  "Snes9x2002": {
+    "source": "https://github.com/libretro/snes9x2002",
+    "directory": "snes9x2002",
+    "output": "snes9x2002_libretro.so",
+    "make": {
+      "file": "Makefile",
+      "args": "",
+      "target": ""
+    },
+    "symbols": 0
+  },
+  "Snes9x2005": {
+    "source": "https://github.com/libretro/snes9x2005",
+    "directory": "snes9x2005",
+    "output": "snes9x2005_libretro.so",
+    "make": {
+      "file": "Makefile",
+      "args": "",
+      "target": ""
+    },
+    "symbols": 0
+  },
   "Snes9x2010": {
     "source": "https://github.com/libretro/snes9x2010",
     "directory": "snes9x2010",
@@ -514,10 +698,21 @@
     },
     "symbols": 0
   },
-  "Stella": {
+  "Stella 2014": {
     "source": "https://github.com/libretro/stella2014-libretro",
     "directory": "stella2014-libretro",
     "output": "stella2014_libretro.so",
+    "make": {
+      "file": "Makefile",
+      "args": "",
+      "target": ""
+    },
+    "symbols": 0
+  },
+  "Stella": {
+    "source": "https://github.com/stella-emu/stella",
+    "directory": "stella",
+    "output": "stella_libretro.so",
     "make": {
       "file": "Makefile",
       "args": "",

@@ -1,0 +1,14 @@
+diff --git a/libretro/Makefile.rules b/libretro/Makefile.rules
+index ba8c5c9..cdf8d3b 100644
+--- a/libretro/Makefile.rules
++++ b/libretro/Makefile.rules
+@@ -23,7 +23,7 @@ else ifeq ($(MACHINE), gb)
+ else ifeq ($(MACHINE), nes)
+        VALID_EXTS = nes|bin|rom
+ else ifeq ($(MACHINE), sms)
+-       VALID_EXTS = sms|bin|rom
++       VALID_EXTS = sms|bms|bin|rom
+ endif
+ 
+ all: $(TARGET)
+
