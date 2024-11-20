@@ -155,7 +155,7 @@ echo "$CORES" | while IFS= read -r NAME; do
 
 	PV_PID=$!
 
-	if make -f "$MAKE_FILE" "$MAKE_ARGS" "$MAKE_TARGET" >/dev/null 2>&1; then
+	if make -j"$(nproc)" -f "$MAKE_FILE" "$MAKE_ARGS" "$MAKE_TARGET" >/dev/null 2>&1; then
 		kill $PV_PID
 		wait $PV_PID 2>/dev/null
 		printf "\n\tBuild completed successfully for %s\n" "$NAME"
