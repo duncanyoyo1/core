@@ -32,6 +32,8 @@ RUN_COMMANDS() {
 
 	# Run through the list of given commands in the array and use an EOF to run them outside of this subshell
 	while IFS= read -r CMD; do
+		CMD=$(eval "echo \"$CMD\"")
+
 		# Skip "Running" message for commands starting with 'printf'
 		if ! echo "$CMD" | grep -qE '^printf'; then
 			printf "\t\tRunning: %s\n" "$CMD"
