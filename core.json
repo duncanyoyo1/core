@@ -920,5 +920,24 @@
         "make clean EMUTYPE=xvic"
       ]
     }
+  },
+  "Vircon32": {
+    "source": "https://github.com/vircon32/vircon32-libretro",
+    "directory": "vircon32-libretro",
+    "output": "vircon32_libretro.so",
+    "make": {
+      "file": "Makefile",
+      "args": "",
+      "target": ""
+    },
+    "symbols": 0,
+    "commands": {
+      "pre-make": [
+        "mkdir build",
+        "cd build",
+        "printf '\\n\\t\\tRunning CMAKE Build\\n'",
+        "cmake -DCMAKE_BUILD_TYPE=RELEASE -DAARCH64=ON .. >/dev/null 2>&1"
+      ]
+    }
   }
 }
