@@ -9,7 +9,7 @@ To build all cores defined in `core.json`, run:
 To build specific cores, specify their names as arguments:
 
 ```bash
-./build.sh "DOSBox Pure" "SameBoy"
+./build.sh "dosbox-pure" "sameboy"
 ```
 
 ### Please Note
@@ -36,7 +36,7 @@ The `commands` section is completely optional and can be omitted.
 
 ```json
 {
-  "SameBoy": {
+  "sameboy": {
     "source": "https://github.com/LIJI32/SameBoy",
     "directory": "SameBoy",
     "output": "sameboy_libretro.so",

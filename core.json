@@ -125,7 +125,7 @@
     },
     "symbols": 0
   },
-  "dosbox-pure": {
+  "dosbox_pure": {
     "source": "https://github.com/schellingb/dosbox-pure",
     "directory": "dosbox-pure",
     "output": "dosbox_pure_libretro.so",
@@ -158,7 +158,7 @@
     },
     "symbols": 0
   },
-  "emux-chip8": {
+  "emux_chip8": {
     "source": "https://github.com/sronsse/emux",
     "directory": "emux-chip8",
     "output": "emux_chip8_libretro.so",
@@ -178,7 +178,7 @@
       ]
     }
   },
-  "emux-gb": {
+  "emux_gb": {
     "source": "https://github.com/sronsse/emux",
     "directory": "emux-gb",
     "output": "emux_gb_libretro.so",
@@ -198,7 +198,7 @@
       ]
     }
   },
-  "emux-nes": {
+  "emux_nes": {
     "source": "https://github.com/sronsse/emux",
     "directory": "emux-nes",
     "output": "emux_nes_libretro.so",
@@ -218,7 +218,7 @@
       ]
     }
   },
-  "emux-sms": {
+  "emux_sms": {
     "source": "https://github.com/sronsse/emux",
     "directory": "emux-sms",
     "output": "emux_sms_libretro.so",
