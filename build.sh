@@ -78,18 +78,18 @@ done
 
 BASE_DIR=$(pwd)
 CORE_CONFIG="core.json"
-CORES_DIR="$BASE_DIR/cores"
 BUILD_DIR="$BASE_DIR/build"
+CORES_DIR="$BASE_DIR/cores"
 PATCH_DIR="$BASE_DIR/patch"
 
 if [ "$PURGE" -eq 1 ]; then
-	printf "Purging cores directory: %s\n" "$CORES_DIR"
+	printf "Purging build and core directories\n"
+	rm -rf "$BUILD_DIR"
 	rm -rf "$CORES_DIR"
 fi
 
-mkdir -p "$CORES_DIR"
 mkdir -p "$BUILD_DIR"
-mkdir -p "$PATCH_DIR"
+mkdir -p "$CORES_DIR"
 
 trap 'printf "\nAn error occurred. Returning to base directory.\n"; cd "$BASE_DIR"; exit 1' INT TERM
 
@@ -284,6 +284,36 @@ for NAME in $CORES; do
 		RETURN_TO_BASE
 		continue
 	}
+
+	printf "\nIndexing and compressing '%s'\n" "$OUTPUT"
+
+	cd "$BUILD_DIR" || {
+		printf "Failed to enter directory %s\n" "$BUILD_DIR" >&2
+		continue
+	}
+
+	INDEX=$(printf "%s %08x %s" "$(date +%Y-%m-%d)" "$(cksum "$OUTPUT" | awk '{print $1}')" "$OUTPUT.zip")
+
+	zip -q "$OUTPUT.zip" "$OUTPUT"
+	rm "$OUTPUT"
+
+	ESCAPED_OUTPUT_ZIP=$(printf "%s" "$OUTPUT.zip" | sed 's/[\\/&]/\\&/g')
+
+	if [ -f .index-extended ]; then
+		sed "/$ESCAPED_OUTPUT_ZIP/d" .index-extended >.index-extended.tmp
+		mv .index-extended.tmp .index-extended
+	else
+		touch .index-extended
+	fi
+	echo "$INDEX" >>.index-extended
+
+	if [ -f .index ]; then
+		sed "/$ESCAPED_OUTPUT_ZIP/d" .index >.index.tmp
+		mv .index.tmp .index
+	else
+		touch .index
+	fi
+	echo "$OUTPUT.zip" >>.index
 
 	if [ "$PURGE" -eq 1 ]; then
 		printf "\nPurging core directory: %s\n" "$CORE_DIR"
