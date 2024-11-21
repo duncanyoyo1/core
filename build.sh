@@ -1,5 +1,74 @@
 #!/bin/sh
 
+printf "\nMURCB - muOS RetroArch Core Builder\n"
+
+USAGE() {
+	echo "Usage: $0 [options]"
+	echo ""
+	echo "Options:"
+	echo "  -a, --all            Build all cores"
+	echo "  -c, --core [cores]   Build specific cores (e.g., -c dosbox-pure prboom)"
+	echo "  -p, --purge          Purge cores directory before building"
+	echo ""
+	echo "Notes:"
+	echo "  - Either -a or -c is required, but NOT both"
+	echo "  - If -p is used, it MUST be the first argument"
+	echo ""
+	echo "Examples:"
+	echo "  $0 -a"
+	echo "  $0 -c dosbox-pure prboom"
+	echo "  $0 -p -a"
+	echo "  $0 -p -c dosbox-pure prboom"
+	echo ""
+	exit 1
+}
+
+PURGE=0
+BUILD_ALL=0
+BUILD_CORES=""
+OPTION_SPECIFIED=0
+
+if [ "$#" -gt 0 ]; then
+	case "$1" in
+		-p | --purge)
+			PURGE=1
+			shift
+			;;
+	esac
+fi
+
+if [ "$#" -eq 0 ]; then
+	USAGE
+fi
+
+while [ "$#" -gt 0 ]; do
+	case "$1" in
+		-a | --all)
+			[ "$OPTION_SPECIFIED" -ne 0 ] && USAGE
+			BUILD_ALL=1
+			OPTION_SPECIFIED=1
+			shift
+			;;
+		-c | --core)
+			[ "$OPTION_SPECIFIED" -ne 0 ] && USAGE
+			OPTION_SPECIFIED=1
+			shift
+			if [ "$#" -eq 0 ]; then
+				printf "Error: Missing cores \n\n" >&2
+				USAGE
+			fi
+			BUILD_CORES="$*"
+			break
+			;;
+		*)
+			printf "Error: Unknown option '%s'\n" "$1" >&2
+			USAGE
+			;;
+	esac
+done
+
+[ "$OPTION_SPECIFIED" -eq 0 ] && USAGE
+
 for CMD in aarch64-linux-objcopy aarch64-linux-strip file git jq make patch pv readelf; do
 	if ! command -v "$CMD" >/dev/null 2>&1; then
 		printf "Error: Missing required command '%s'\n" "$CMD" >&2
@@ -13,6 +82,11 @@ CORES_DIR="$BASE_DIR/cores"
 BUILD_DIR="$BASE_DIR/build"
 PATCH_DIR="$BASE_DIR/patch"
 
+if [ "$PURGE" -eq 1 ]; then
+	printf "Purging cores directory: %s\n" "$CORES_DIR"
+	rm -rf "$CORES_DIR"
+fi
+
 mkdir -p "$CORES_DIR"
 mkdir -p "$BUILD_DIR"
 mkdir -p "$PATCH_DIR"
@@ -21,13 +95,13 @@ trap 'printf "\nAn error occurred. Returning to base directory.\n"; cd "$BASE_DI
 
 RETURN_TO_BASE() {
 	cd "$BASE_DIR" || {
-		printf "\tFailed to return to base directory\n" >&2
+		printf "Failed to return to base directory\n" >&2
 		exit 1
 	}
 }
 
 RUN_COMMANDS() {
-	printf "\n\tRunning '%s' commands\n" "$1"
+	printf "\nRunning '%s' commands\n" "$1"
 	CMD_LIST=$(echo "$2" | jq -r '.[]')
 
 	# Run through the list of given commands in the array and use an EOF to run them outside of this subshell
@@ -36,10 +110,10 @@ RUN_COMMANDS() {
 
 		# Skip "Running" message for commands starting with 'printf'
 		if ! echo "$CMD" | grep -qE '^printf'; then
-			printf "\t\tRunning: %s\n" "$CMD"
+			printf "Running: %s\n" "$CMD"
 		fi
 		eval "$CMD" || {
-			printf "\t\tCommand failed: %s\n" "$CMD" >&2
+			printf "Command Failed: %s\n" "$CMD" >&2
 			return 1
 		}
 	done <<EOF
@@ -52,28 +126,29 @@ APPLY_PATCHES() {
 	CORE_DIR="$2"
 
 	if [ -d "$PATCH_DIR/$NAME" ]; then
-		printf "\tApplying patches from '%s' to '%s'\n" "$PATCH_DIR/$NAME" "$CORE_DIR"
+		printf "Applying patches from '%s' to '%s'\n" "$PATCH_DIR/$NAME" "$CORE_DIR"
 		for PATCH in "$PATCH_DIR/$NAME"/*.patch; do
 			[ -e "$PATCH" ] || continue
-			printf "\t\tApplying patch: %s\n" "$PATCH"
+			printf "Applying patch: %s\n" "$PATCH"
 			patch -d "$CORE_DIR" -p1 <"$PATCH" || {
-				printf "\t\tFailed to apply patch: %s\n" "$PATCH" >&2
+				printf "Failed to apply patch: %s\n" "$PATCH" >&2
 				return 1
 			}
 		done
-	else
-		printf "\tNo patches found for '%s'\n" "$NAME"
+		printf "\n"
 	fi
 }
 
 # Get specific core names or process all cores given as arguments
-if [ "$#" -gt 0 ]; then
-	CORES="$*"
+if [ "$BUILD_ALL" -eq 0 ]; then
+	CORES="$BUILD_CORES"
 else
 	CORES=$(jq -r 'keys[]' "$CORE_CONFIG")
 fi
 
-echo "$CORES" | while IFS= read -r NAME; do
+for NAME in $CORES; do
+	printf "\n-------------------------------------------------------------------------\n"
+
 	MODULE=$(jq -c --arg name "$NAME" '.[$name]' "$CORE_CONFIG")
 
 	if [ -z "$MODULE" ] || [ "$MODULE" = "null" ]; then
@@ -107,54 +182,58 @@ echo "$CORES" | while IFS= read -r NAME; do
 
 	CORE_DIR="$CORES_DIR/$DIR"
 
-	printf "Processing: %s\n" "$NAME"
-	printf "\tSource is '%s'\n" "$SOURCE"
+	printf "Processing: %s\n\n" "$NAME"
 
+	BEEN_CLONED=0
 	if [ ! -d "$CORE_DIR" ]; then
-		printf "\tSource '%s' not found. Cloning from '%s'\n\n" "$CORE_DIR" "$SOURCE"
+		printf "Source '%s' not found. Cloning '%s'\n\n" "$DIR" "$SOURCE"
 
 		GC_CMD="git clone --progress --quiet --recurse-submodules -j$(nproc)"
 		[ -n "$BRANCH" ] && GC_CMD="$GC_CMD -b $BRANCH"
 		GC_CMD="$GC_CMD $SOURCE $CORE_DIR"
 
 		eval "$GC_CMD" || {
-			printf "\t\tFailed to clone %s\n" "$SOURCE" >&2
+			printf "Failed to clone %s\n" "$SOURCE" >&2
 			continue
 		}
+
 		printf "\n"
+		BEEN_CLONED=1
 	fi
 
 	APPLY_PATCHES "$NAME" "$CORE_DIR" || {
-		printf "\t\tFailed to apply patches for %s\n" "$NAME" >&2
+		printf "Failed to apply patches for %s\n" "$NAME" >&2
 		continue
 	}
 
 	cd "$CORE_DIR" || {
-		printf "\t\tFailed to enter directory %s\n" "$CORE_DIR" >&2
+		printf "Failed to enter directory %s\n" "$CORE_DIR" >&2
 		continue
 	}
 
-	printf "\tPulling latest changes for '%s'\n\n" "$NAME"
-	git pull --recurse-submodules -j8 || {
-		printf "\t\tFailed to pull latest changes for '%s'\n" "$NAME" >&2
-		RETURN_TO_BASE
-		continue
-	}
+	if [ $BEEN_CLONED -eq 0 ]; then
+		printf "Pulling latest changes for '%s'\n" "$NAME"
+		git pull --recurse-submodules -j8 || {
+			printf "Failed to pull latest changes for '%s'\n" "$NAME" >&2
+			RETURN_TO_BASE
+			continue
+		}
+	fi
 
 	if [ "$PRE_MAKE" != "[]" ]; then
 		if ! RUN_COMMANDS "pre-make" "$PRE_MAKE"; then
-			printf "\t\tPre-make commands failed for %s\n" "$NAME" >&2
+			printf "Pre-make commands failed for %s\n" "$NAME" >&2
 			RETURN_TO_BASE
 			continue
 		fi
 	fi
 
-	printf "\n\tMake Structure:\n"
-	printf "\t\tFILE:\t%s" "$MAKE_FILE"
-	printf "\n\t\tARGS:\t%s" "$MAKE_ARGS"
-	printf "\n\t\tTARGET: %s\n" "$MAKE_TARGET"
+	printf "Make Structure:"
+	printf "\n\tFILE:\t%s" "$MAKE_FILE"
+	printf "\n\tARGS:\t%s" "$MAKE_ARGS"
+	printf "\n\tTARGET: %s\n" "$MAKE_TARGET"
 
-	printf "\n\tBuilding '%s' (%s) ..." "$NAME" "$OUTPUT"
+	printf "\nBuilding '%s' (%s) ..." "$NAME" "$OUTPUT"
 
 	(while :; do
 		printf '.'
@@ -166,18 +245,18 @@ echo "$CORES" | while IFS= read -r NAME; do
 	if make -j"$(nproc)" -f "$MAKE_FILE" "$MAKE_ARGS" "$MAKE_TARGET" >/dev/null 2>&1; then
 		kill $PV_PID
 		wait $PV_PID 2>/dev/null
-		printf "\n\tBuild completed successfully for %s\n" "$NAME"
+		printf "\nBuild completed successfully for '%s'\n" "$NAME"
 	else
 		kill $PV_PID
 		wait $PV_PID 2>/dev/null
-		printf "\n\t\tBuild failed for '%s' using '%s'\n" "$NAME" "$MAKE_FILE" >&2
+		printf "\nBuild failed for '%s' using '%s'\n" "$NAME" "$MAKE_FILE" >&2
 		RETURN_TO_BASE
 		continue
 	fi
 
 	if [ "$POST_MAKE" != "[]" ]; then
 		if ! RUN_COMMANDS "post-make" "$POST_MAKE"; then
-			printf "\t\tPost-make commands failed for '%s'\n" "$NAME" >&2
+			printf "Post-make commands failed for '%s'\n" "$NAME" >&2
 			RETURN_TO_BASE
 			continue
 		fi
@@ -187,37 +266,37 @@ echo "$CORES" | while IFS= read -r NAME; do
 		# Check if the output is not stripped already
 		if file "$OUTPUT" | grep -q 'not stripped'; then
 			aarch64-linux-strip -sx "$OUTPUT"
-			printf "\n\tStripped debug symbols"
-		else
-			printf "\n\tCore is already stripped"
+			printf "\nStripped debug symbols"
 		fi
 
 		# Check if the BuildID section is present
 		if readelf -S "$OUTPUT" | grep -Fq '.note.gnu.build-id'; then
 			aarch64-linux-objcopy --remove-section=.note.gnu.build-id "$OUTPUT"
-			printf "\n\tRemoved BuildID section"
-		else
-			printf "\n\tBuildID section not present"
+			printf "\nRemoved BuildID section"
 		fi
 	fi
 
-	printf "\n\tFile Information: %s\n\n" "$(file "$OUTPUT")"
+	printf "\nFile Information: %s\n" "$(file "$OUTPUT")"
 
-	printf "\tMoving '%s' to '%s'\n" "$OUTPUT" "$BUILD_DIR"
+	printf "\nMoving '%s' to '%s'\n" "$OUTPUT" "$BUILD_DIR"
 	mv "$OUTPUT" "$BUILD_DIR" || {
-		printf "\t\tFailed to move '%s' for '%s' to '%s'\n" "$OUTPUT" "$NAME" "$BUILD_DIR" >&2
+		printf "Failed to move '%s' for '%s' to '%s'\n" "$OUTPUT" "$NAME" "$BUILD_DIR" >&2
 		RETURN_TO_BASE
 		continue
 	}
 
-	printf "\tCleaning build environment for '%s'\n" "$NAME"
-	make clean >/dev/null 2>&1 || {
-		printf "\t\tClean failed or not required\n" >&2
-	}
-
-	printf "\n"
+	if [ "$PURGE" -eq 1 ]; then
+		printf "\nPurging core directory: %s\n" "$CORE_DIR"
+		rm -rf "$CORE_DIR"
+	else
+		printf "Cleaning build environment for '%s'\n" "$NAME"
+		make clean >/dev/null 2>&1 || {
+			printf "Clean failed or not required\n" >&2
+		}
+	fi
 
 	RETURN_TO_BASE
 done
 
-printf "All successful core builds are in '%s'\n" "$BUILD_DIR"
+printf "\n-------------------------------------------------------------------------\n"
+printf "All successful core builds are in '%s'\n\n" "$BUILD_DIR"
