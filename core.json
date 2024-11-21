@@ -382,6 +382,22 @@
     },
     "symbols": 0
   },
+  "freej2me": {
+    "source": "https://github.com/TASEmulators/freej2me-plus",
+    "directory": "freej2me-plus",
+    "output": "freej2me_libretro.so",
+    "make": {
+      "file": "Makefile",
+      "args": "",
+      "target": ""
+    },
+    "symbols": 0,
+    "commands": {
+      "pre-make": [
+        "cd src/libretro"
+      ]
+    }
+  },
   "fuse": {
     "source": "https://github.com/libretro/fuse-libretro",
     "directory": "fuse-libretro",
@@ -563,7 +579,7 @@
   },
   "km_puae_xtreme_amped_2k24": {
     "source": "https://github.com/KMFDManic/libretro-uae",
-    "directory": "libretro-uae",
+    "directory": "km_puae",
     "output": "km_puae_xtreme_amped_2k24_libretro.so",
     "make": {
       "file": "Makefile",
@@ -753,6 +769,22 @@
     },
     "symbols": 0
   },
+  "np2kai": {
+    "source": "https://github.com/AZO234/NP2kai",
+    "directory": "NP2kai",
+    "output": "np2kai_libretro.so",
+    "make": {
+      "file": "Makefile.libretro",
+      "args": "",
+      "target": ""
+    },
+    "symbols": 0,
+    "commands": {
+      "pre-make": [
+        "cd sdl"
+      ]
+    }
+  },
   "numero": {
     "source": "https://github.com/nbarkhina/numero",
     "directory": "numero",
@@ -779,6 +811,17 @@
     "source": "https://github.com/libretro/libretro-o2em",
     "directory": "libretro-o2em",
     "output": "o2em_libretro.so",
+    "make": {
+      "file": "Makefile",
+      "args": "",
+      "target": ""
+    },
+    "symbols": 0
+  },
+  "opera": {
+    "source": "https://github.com/libretro/opera-libretro",
+    "directory": "opera-libretro",
+    "output": "opera_libretro.so",
     "make": {
       "file": "Makefile",
       "args": "",
@@ -861,6 +904,29 @@
     "source": "https://github.com/libretro/prosystem-libretro",
     "directory": "prosystem-libretro",
     "output": "prosystem_libretro.so",
+    "make": {
+      "file": "Makefile",
+      "args": "",
+      "target": ""
+    },
+    "symbols": 0
+  },
+  "puae": {
+    "source": "https://github.com/libretro/libretro-uae",
+    "directory": "libretro-uae",
+    "output": "puae_libretro.so",
+    "make": {
+      "file": "Makefile",
+      "args": "",
+      "target": ""
+    },
+    "symbols": 0
+  },
+  "puae2021": {
+    "source": "https://github.com/libretro/libretro-uae",
+    "branch": "2.6.1",
+    "directory": "libretro-uae-2021",
+    "output": "puae2021_libretro.so",
     "make": {
       "file": "Makefile",
       "args": "",
@@ -1114,6 +1180,17 @@
     },
     "symbols": 0
   },
+  "vecx": {
+    "source": "https://github.com/libretro/libretro-vecx",
+    "directory": "libretro-vecx",
+    "output": "vecx_libretro.so",
+    "make": {
+      "file": "Makefile.libretro",
+      "args": "HAS_GLES=1",
+      "target": ""
+    },
+    "symbols": 0
+  },
   "vice_x128": {
     "source": "https://github.com/libretro/vice-libretro",
     "directory": "vice-libretro",
@@ -1290,6 +1367,33 @@
         "cd build",
         "printf '\\n\\t\\tRunning CMAKE Build\\n'",
         "cmake -DCMAKE_BUILD_TYPE=RELEASE -DAARCH64=ON .. >/dev/null 2>&1"
+      ]
+    }
+  },
+  "virtualjaguar": {
+    "source": "https://github.com/libretro/virtualjaguar-libretro",
+    "directory": "virtualjaguar-libretro",
+    "output": "virtualjaguar_libretro.so",
+    "make": {
+      "file": "Makefile",
+      "args": "",
+      "target": ""
+    },
+    "symbols": 0
+  },
+  "x1": {
+    "source": "https://github.com/libretro/xmil-libretro",
+    "directory": "xmil-libretro",
+    "output": "x1_libretro.so",
+    "make": {
+      "file": "Makefile.libretro",
+      "args": "",
+      "target": ""
+    },
+    "symbols": 0,
+    "commands": {
+      "pre-make": [
+        "cd libretro"
       ]
     }
   }
