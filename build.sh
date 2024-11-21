@@ -98,6 +98,9 @@ echo "$CORES" | while IFS= read -r NAME; do
 		continue
 	fi
 
+	# Optional branch
+	BRANCH=$(echo "$MODULE" | jq -r '.branch // ""')
+
 	# Optional keys
 	PRE_MAKE=$(echo "$MODULE" | jq -c '.commands["pre-make"] // []')
 	POST_MAKE=$(echo "$MODULE" | jq -c '.commands["post-make"] // []')
@@ -109,7 +112,12 @@ echo "$CORES" | while IFS= read -r NAME; do
 
 	if [ ! -d "$CORE_DIR" ]; then
 		printf "\tSource '%s' not found. Cloning from '%s'\n\n" "$CORE_DIR" "$SOURCE"
-		git clone --recurse-submodules -j8 "$SOURCE" "$CORE_DIR" || {
+
+		GC_CMD="git clone --progress --quiet --recurse-submodules -j$(nproc)"
+		[ -n "$BRANCH" ] && GC_CMD="$GC_CMD -b $BRANCH"
+		GC_CMD="$GC_CMD $SOURCE $CORE_DIR"
+
+		eval "$GC_CMD" || {
 			printf "\t\tFailed to clone %s\n" "$SOURCE" >&2
 			continue
 		}
