@@ -7,7 +7,7 @@ USAGE() {
 	echo ""
 	echo "Options:"
 	echo "  -a, --all            Build all cores"
-	echo "  -c, --core [cores]   Build specific cores (e.g., -c dosbox-pure prboom)"
+	echo "  -c, --core [cores]   Build specific cores (e.g., -c dosbox-pure sameboy)"
 	echo "  -p, --purge          Purge cores directory before building"
 	echo ""
 	echo "Notes:"
@@ -16,9 +16,9 @@ USAGE() {
 	echo ""
 	echo "Examples:"
 	echo "  $0 -a"
-	echo "  $0 -c dosbox-pure prboom"
+	echo "  $0 -c dosbox-pure sameboy"
 	echo "  $0 -p -a"
-	echo "  $0 -p -c dosbox-pure prboom"
+	echo "  $0 -p -c dosbox-pure sameboy"
 	echo ""
 	exit 1
 }

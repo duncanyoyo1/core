@@ -3,13 +3,19 @@
 To build all cores defined in `core.json`, run:
 
 ```bash
-./build.sh
+./build.sh -a
 ```
 
 To build specific cores, specify their names as arguments:
 
 ```bash
-./build.sh "dosbox-pure" "sameboy"
+./build.sh -c dosbox-pure sameboy
+```
+
+To purge any existing core repositories add the `-p` switch:
+
+```bash
+./build.sh -p -c dosbox-pure sameboy
 ```
 
 ### Please Note
@@ -20,17 +26,18 @@ To build specific cores, specify their names as arguments:
 
 ## Core Structure
 
-* `source` - The repository URL where it the core will clone from.
-* `directory` - Usually the name of the repository but can be anything.
-* `output` - The end file that is compiled for processing.
-* `make.file` - The file which make calls upon.
-* `make.args` - Additional arguments that is used alongside make.
-* `make.target` - A specific target to use with make if required.
-* `symbols` - Set it to `1` if you require debug symbols.
-* `commands.pre-make` - Commands to run _**before**_ make is run.
-* `commands.post-make` - Commands that are run _**after**_ successful compilation.
+* `source` - The repository URL where it the core will clone from
+* `branch` - The repository branch of the above source
+* `directory` - Usually the name of the repository but can be anything
+* `output` - The end file that is compiled for processing
+* `make.file` - The file which make calls upon
+* `make.args` - Additional arguments that is used alongside make
+* `make.target` - A specific target to use with make if required
+* `symbols` - Set it to `1` if you require debug symbols
+* `commands.pre-make` - Commands to run _**before**_ make is run
+* `commands.post-make` - Commands that are run _**after**_ successful compilation
 
-The `commands` section is completely optional and can be omitted.
+The `branch` and `commands` sections are completely optional and can be omitted.
 
 ### Example Core (SameBoy)
 
