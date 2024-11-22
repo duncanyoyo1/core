@@ -82,12 +82,6 @@ BUILD_DIR="$BASE_DIR/build"
 CORES_DIR="$BASE_DIR/cores"
 PATCH_DIR="$BASE_DIR/patch"
 
-if [ "$PURGE" -eq 1 ]; then
-	printf "Purging build and core directories\n"
-	rm -rf "$BUILD_DIR"
-	rm -rf "$CORES_DIR"
-fi
-
 mkdir -p "$BUILD_DIR"
 mkdir -p "$CORES_DIR"
 
@@ -184,9 +178,14 @@ for NAME in $CORES; do
 
 	printf "Processing: %s\n\n" "$NAME"
 
+	if [ "$PURGE" -eq 1 ]; then
+		printf "Purging core '%s' directory\n" "$DIR"
+		rm -rf "$CORE_DIR"
+	fi
+
 	BEEN_CLONED=0
 	if [ ! -d "$CORE_DIR" ]; then
-		printf "Source '%s' not found. Cloning '%s'\n\n" "$DIR" "$SOURCE"
+		printf "Core '%s' not found\n\n" "$DIR" "$SOURCE"
 
 		GC_CMD="git clone --progress --quiet --recurse-submodules -j$(nproc)"
 		[ -n "$BRANCH" ] && GC_CMD="$GC_CMD -b $BRANCH"
