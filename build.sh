@@ -69,7 +69,7 @@ done
 
 [ "$OPTION_SPECIFIED" -eq 0 ] && USAGE
 
-for CMD in aarch64-linux-objcopy aarch64-linux-strip file git jq make patch pv readelf; do
+for CMD in aarch64-linux-objcopy aarch64-linux-strip file git jq make patch pv readelf zip; do
 	if ! command -v "$CMD" >/dev/null 2>&1; then
 		printf "Error: Missing required command '%s'\n" "$CMD" >&2
 		exit 1
@@ -275,7 +275,7 @@ for NAME in $CORES; do
 		fi
 	fi
 
-	printf "\nFile Information: %s\n" "$(file "$OUTPUT")"
+	printf "\nFile Information: %s\n" "$(file -b "$OUTPUT")"
 
 	printf "\nMoving '%s' to '%s'\n" "$OUTPUT" "$BUILD_DIR"
 	mv "$OUTPUT" "$BUILD_DIR" || {
@@ -293,6 +293,7 @@ for NAME in $CORES; do
 
 	INDEX=$(printf "%s %08x %s" "$(date +%Y-%m-%d)" "$(cksum "$OUTPUT" | awk '{print $1}')" "$OUTPUT.zip")
 
+	[ -f "$OUTPUT.zip" ] && rm -f "$OUTPUT.zip"
 	zip -q "$OUTPUT.zip" "$OUTPUT"
 	rm "$OUTPUT"
 
