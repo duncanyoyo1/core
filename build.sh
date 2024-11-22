@@ -314,6 +314,9 @@ for NAME in $CORES; do
 	fi
 	echo "$OUTPUT.zip" >>.index
 
+	sort -k3 .index-extended -o .index-extended
+	sort .index -o .index
+
 	if [ "$PURGE" -eq 1 ]; then
 		printf "\nPurging core directory: %s\n" "$CORE_DIR"
 		rm -rf "$CORE_DIR"
