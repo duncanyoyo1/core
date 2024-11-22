@@ -35,7 +35,7 @@
       "pre-make": [
         "mkdir -p build",
         "cd build",
-        "printf '\\n\\t\\tRunning CMAKE Build\\n'",
+        "printf 'Running CMAKE Build\\n'",
         "cmake -DCMAKE_BUILD_TYPE=RELEASE -DARDENS_LIBRETRO=ON .. >/dev/null 2>&1"
       ]
     }
@@ -54,7 +54,7 @@
       "pre-make": [
         "mkdir -p build",
         "cd build",
-        "printf '\\n\\t\\tRunning CMAKE Build\\n'",
+        "printf 'Running CMAKE Build\\n'",
         "cmake -DCMAKE_BUILD_TYPE=RELEASE .. >/dev/null 2>&1"
       ]
     }
@@ -369,6 +369,22 @@
     },
     "symbols": 0
   },
+  "fbalpha2012": {
+    "source": "https://github.com/libretro/fbalpha2012",
+    "directory": "fbalpha2012",
+    "output": "fbalpha2012_libretro.so.so",
+    "make": {
+      "file": "makefile.libretro",
+      "args": "",
+      "target": ""
+    },
+    "symbols": 0,
+    "commands": {
+      "pre-make": [
+        "cd svn-current/trunk"
+      ]
+    }
+  },
   "fbalpha2012_cps1": {
     "source": "https://github.com/libretro/fbalpha2012_cps1",
     "directory": "fbalpha2012_cps1",
@@ -406,6 +422,17 @@
         "cd svn-current/trunk"
       ]
     }
+  },
+  "fbalpha2012_neogeo": {
+    "source": "https://github.com/libretro/fbalpha2012_neogeo",
+    "directory": "fbalpha2012_neogeo",
+    "output": "fbalpha2012_neogeo_libretro.so",
+    "make": {
+      "file": "makefile.libretro",
+      "args": "",
+      "target": ""
+    },
+    "symbols": 0
   },
   "fceumm": {
     "source": "https://github.com/libretro/libretro-fceumm",
@@ -448,7 +475,7 @@
       "pre-make": [
         "mkdir -p build",
         "cd build",
-        "printf '\\n\\t\\tRunning CMAKE Build\\n'",
+        "printf 'Running CMAKE Build\\n'",
         "cmake -DCMAKE_BUILD_TYPE=RELEASE -DLIBRETRO=ON -DUSE_GLES=ON -DUSE_DX11=OFF -DUSE_DX9=OFF -DUSE_OPENGL=ON -DUSE_PULSEAUDIO=OFF -DUSE_VULKAN=OFF .. >/dev/null 2>&1"
       ]
     }
@@ -1318,9 +1345,9 @@
     "commands": {
       "pre-make": [
         "make clean >/dev/null 2>&1",
-        "printf '\\n\\t\\tBuilding Boot ROMs\\n'",
+        "printf 'Building Boot ROMs\\n'",
         "make bootroms >/dev/null 2>&1",
-        "printf '\\n\\t\\tPre-generating Libretro Source\\n'",
+        "printf 'Pre-generating Libretro Source\\n'",
         "make libretro >/dev/null 2>&1",
         "cd libretro"
       ],
@@ -1430,7 +1457,7 @@
       "pre-make": [
         "mkdir -p build",
         "cd build",
-        "printf '\\n\\t\\tRunning CMAKE Build\\n'",
+        "printf 'Running CMAKE Build\\n'",
         "cmake -DCMAKE_BUILD_TYPE=Release .. >/dev/null 2>&1"
       ]
     }
@@ -1524,6 +1551,17 @@
     "make": {
       "file": "Makefile.libretro",
       "args": "HAS_GLES=1",
+      "target": ""
+    },
+    "symbols": 0
+  },
+  "vemulator": {
+    "source": "https://github.com/libretro/vemulator-libretro",
+    "directory": "vemulator-libretro",
+    "output": "vemulator_libretro.so",
+    "make": {
+      "file": "Makefile",
+      "args": "",
       "target": ""
     },
     "symbols": 0
@@ -1702,7 +1740,7 @@
       "pre-make": [
         "mkdir -p build",
         "cd build",
-        "printf '\\n\\t\\tRunning CMAKE Build\\n'",
+        "printf 'Running CMAKE Build\\n'",
         "cmake -DCMAKE_BUILD_TYPE=RELEASE -DAARCH64=ON .. >/dev/null 2>&1"
       ]
     }
@@ -1717,6 +1755,25 @@
       "target": ""
     },
     "symbols": 0
+  },
+  "wasm4": {
+    "source": "https://github.com/aduros/wasm4",
+    "directory": "wasm4",
+    "output": "wasm4_libretro.so",
+    "make": {
+      "file": "Makefile",
+      "args": "",
+      "target": ""
+    },
+    "symbols": 0,
+    "commands": {
+      "pre-make": [
+        "mkdir -p runtimes/native/build",
+        "cd runtimes/native/build",
+        "printf 'Running CMAKE Build\\n'",
+        "cmake -DCMAKE_BUILD_TYPE=Release -DLIBRETRO=On .. >/dev/null 2>&1"
+      ]
+    }
   },
   "x1": {
     "source": "https://github.com/libretro/xmil-libretro",
@@ -1733,5 +1790,16 @@
         "cd libretro"
       ]
     }
+  },
+  "zc250x": {
+    "source": "https://github.com/netux79/zc250x-libretro",
+    "directory": "zc250x-libretro",
+    "output": "zc250x_libretro.so",
+    "make": {
+      "file": "Makefile",
+      "args": "",
+      "target": ""
+    },
+    "symbols": 0
   }
 }
