@@ -333,9 +333,11 @@ done
 
 (
 	printf "<!DOCTYPE html>\n<html>\n<head>\n<title>MURCB - muOS RetroArch Core Builder</title>\n</head>\n<body>\n"
-	printf "<h2>MURCB - muOS RetroArch Core Builder</h2>\n"
-	printf "<h3>Currently only <pre>aarch64</pre> builds for now!</h3>\n"
-	printf "<pre>\n"
+	printf "<pre style='font-size:2rem;margin-top:-5px;margin-bottom:-15px;'>MURCB - muOS RetroArch Core Builder</pre>\n"
+	printf "<pre style='font-size:1rem;'>Currently only <span style='font-weight:800'>"
+	printf "aarch64"
+	printf "</span> builds for now!</pre>\n"
+	printf "<hr>\n<pre>\n"
 	[ -f "$BUILD_DIR/.index-extended" ] && cat "$BUILD_DIR/.index-extended" || printf "No cores available!\n"
 	printf "</pre>\n</body>\n</html>\n"
 ) >"$BUILD_DIR/index.html"
