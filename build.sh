@@ -9,16 +9,19 @@ USAGE() {
 	echo "  -a, --all            Build all cores"
 	echo "  -c, --core [cores]   Build specific cores (e.g., -c dosbox-pure sameboy)"
 	echo "  -p, --purge          Purge cores directory before building"
+	echo "  -u, --update         Combine all core archives into a single update archive"
 	echo ""
 	echo "Notes:"
-	echo "  - Either -a or -c is required, but NOT both"
+	echo "  - Either -a, -c, or -u is required, but NOT together"
 	echo "  - If -p is used, it MUST be the first argument"
+	echo "  - The -u switch must have a storage pointer (e.g., -u mmc)"
 	echo ""
 	echo "Examples:"
 	echo "  $0 -a"
 	echo "  $0 -c dosbox-pure sameboy"
 	echo "  $0 -p -a"
 	echo "  $0 -p -c dosbox-pure sameboy"
+	echo "  $0 -u mmc"
 	echo ""
 	exit 1
 }
@@ -27,6 +30,8 @@ PURGE=0
 BUILD_ALL=0
 BUILD_CORES=""
 OPTION_SPECIFIED=0
+UPDATE=0
+STORAGE_POINTER=x
 
 if [ "$#" -gt 0 ]; then
 	case "$1" in
@@ -54,11 +59,27 @@ while [ "$#" -gt 0 ]; do
 			OPTION_SPECIFIED=1
 			shift
 			if [ "$#" -eq 0 ]; then
-				printf "Error: Missing cores \n\n" >&2
+				printf "Error: Missing cores\n\n" >&2
 				USAGE
 			fi
 			BUILD_CORES="$*"
 			break
+			;;
+		-u | --update)
+			[ "$OPTION_SPECIFIED" -ne 0 ] && USAGE
+			OPTION_SPECIFIED=1
+			shift
+			if [ "$#" -eq 0 ]; then
+				printf "Error: Missing storage pointer\n\n" >&2
+				USAGE
+			fi
+			STORAGE_POINTER="$1"
+			shift
+			[ -z "$STORAGE_POINTER" ] && {
+				printf "Error: Invalid storage pointer\n"
+				exit 1
+			}
+			UPDATE=1
 			;;
 		*)
 			printf "Error: Unknown option '%s'\n" "$1" >&2
@@ -69,18 +90,58 @@ done
 
 [ "$OPTION_SPECIFIED" -eq 0 ] && USAGE
 
+BASE_DIR=$(pwd)
+CORE_CONFIG="core.json"
+BUILD_DIR="$BASE_DIR/build"
+CORES_DIR="$BASE_DIR/cores"
+PATCH_DIR="$BASE_DIR/patch"
+
+UPDATE_ZIP() {
+	UPDATE_ARCHIVE="muOS-RetroArch-Core_Update-$(date +"%Y-%m-%d_%H-%M").zip"
+	TEMP_DIR="$(mktemp -d)"
+	CORE_FOLDER="$TEMP_DIR/mnt/$STORAGE_POINTER/MUOS/core"
+
+	if [ -z "$(ls "$BUILD_DIR"/*.zip 2>/dev/null)" ]; then
+		printf "No ZIP files found in '%s'\n" "$BUILD_DIR" >&2
+		rmdir "$TEMP_DIR"
+		exit 1
+	fi
+
+	mkdir -p "$CORE_FOLDER"
+
+	printf "Extracting all ZIP files from '%s' into '%s'\n" "$BUILD_DIR" "$CORE_FOLDER"
+
+	for ZIP_FILE in "$BUILD_DIR"/*.zip; do
+		printf "Unpacking '%s'...\n" "$(basename "$ZIP_FILE")"
+		unzip -q "$ZIP_FILE" -d "$CORE_FOLDER" || {
+			printf "Failed to unpack '%s'\n" "$(basename "$ZIP_FILE")" >&2
+			rm -rf "$TEMP_DIR"
+			exit 1
+		}
+	done
+
+	printf "Creating consolidated update archive: %s\n" "$UPDATE_ARCHIVE"
+
+	(cd "$TEMP_DIR" && zip -q -r "$BASE_DIR/$UPDATE_ARCHIVE" .) || {
+		printf "Failed to create update archive\n" >&2
+		rm -rf "$TEMP_DIR"
+		exit 1
+	}
+
+	rm -rf "$TEMP_DIR"
+
+	printf "Update archive created successfully: %s\n" "$BASE_DIR/$UPDATE_ARCHIVE"
+	exit 0
+}
+
+[ "$UPDATE" -eq 1 ] && UPDATE_ZIP
+
 for CMD in aarch64-linux-objcopy aarch64-linux-strip file git jq make patch pv readelf zip; do
 	if ! command -v "$CMD" >/dev/null 2>&1; then
 		printf "Error: Missing required command '%s'\n" "$CMD" >&2
 		exit 1
 	fi
 done
-
-BASE_DIR=$(pwd)
-CORE_CONFIG="core.json"
-BUILD_DIR="$BASE_DIR/build"
-CORES_DIR="$BASE_DIR/cores"
-PATCH_DIR="$BASE_DIR/patch"
 
 mkdir -p "$BUILD_DIR"
 mkdir -p "$CORES_DIR"
