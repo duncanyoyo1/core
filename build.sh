@@ -314,6 +314,14 @@ for NAME in $CORES; do
 		continue
 	fi
 
+	if [ "$POST_MAKE" != "[]" ]; then
+		if ! RUN_COMMANDS "post-make" "$POST_MAKE"; then
+			printf "Post-make commands failed for '%s'\n" "$NAME" >&2
+			RETURN_TO_BASE
+			continue
+		fi
+	fi
+
 	if [ "$SYMBOLS" -eq 0 ]; then
 		# Check if the output is not stripped already
 		if file "$OUTPUT" | grep -q 'not stripped'; then
@@ -336,14 +344,6 @@ for NAME in $CORES; do
 		RETURN_TO_BASE
 		continue
 	}
-
-	if [ "$POST_MAKE" != "[]" ]; then
-		if ! RUN_COMMANDS "post-make" "$POST_MAKE"; then
-			printf "Post-make commands failed for '%s'\n" "$NAME" >&2
-			RETURN_TO_BASE
-			continue
-		fi
-	fi
 
 	printf "\nIndexing and compressing '%s'\n" "$OUTPUT"
 
