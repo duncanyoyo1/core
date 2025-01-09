@@ -1162,7 +1162,7 @@
     "symbols": 0
   },
   "picodrive": {
-    "source": "https://github.com/libretro/picodrive",
+    "source": "https://github.com/irixxxx/picodrive",
     "directory": "picodrive",
     "output": "picodrive_libretro.so",
     "make": {
