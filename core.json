@@ -1528,22 +1528,6 @@
     },
     "symbols": 0
   },
-  "vbam": {
-    "source": "https://github.com/libretro/vbam-libretro",
-    "directory": "vbam-libretro",
-    "output": "vbam_libretro.so",
-    "make": {
-      "file": "Makefile",
-      "args": "",
-      "target": ""
-    },
-    "symbols": 0,
-    "commands": {
-      "pre-make": [
-        "cd src/libretro"
-      ]
-    }
-  },
   "vecx": {
     "source": "https://github.com/libretro/libretro-vecx",
     "directory": "libretro-vecx",
@@ -1755,6 +1739,22 @@
       "target": ""
     },
     "symbols": 0
+  },
+  "visualboyadvance-m": {
+    "source": "https://github.com/visualboyadvance-m/visualboyadvance-m",
+    "directory": "visualboyadvance-m",
+    "output": "vbam_libretro.so",
+    "make": {
+      "file": "Makefile",
+      "args": "",
+      "target": ""
+    },
+    "symbols": 0,
+    "commands": {
+      "pre-make": [
+        "cd src/libretro"
+      ]
+    }
   },
   "wasm4": {
     "source": "https://github.com/aduros/wasm4",
