@@ -112,7 +112,12 @@
       "args": "",
       "target": ""
     },
-    "symbols": 0
+    "symbols": 0,
+    "commands": {
+      "pre-make": [
+        "cd libretro"
+      ]
+    }
   },
   "bsnes2014_performance": {
     "source": "https://github.com/libretro/bsnes2014",
@@ -249,7 +254,12 @@
       "args": "",
       "target": ""
     },
-    "symbols": 0
+    "symbols": 0,
+    "commands": {
+      "pre-make": [
+        "cd src/libretro"
+      ]
+    }
   },
   "emux_chip8": {
     "source": "https://github.com/sronsse/emux",
@@ -264,7 +274,7 @@
     "commands": {
       "pre-make": [
         "cd libretro",
-        "cp $PATCH_DIR/Emux/Makefile.aarch64 ."
+        "cp $PATCH_DIR/$NAME/Makefile.aarch64 ."
       ],
       "post-make": [
         "find ../. -name '*.o' -delete"
@@ -284,7 +294,7 @@
     "commands": {
       "pre-make": [
         "cd libretro",
-        "cp $PATCH_DIR/Emux/Makefile.aarch64 ."
+        "cp $PATCH_DIR/$NAME/Makefile.aarch64 ."
       ],
       "post-make": [
         "find ../. -name '*.o' -delete"
@@ -304,7 +314,7 @@
     "commands": {
       "pre-make": [
         "cd libretro",
-        "cp $PATCH_DIR/Emux/Makefile.aarch64 ."
+        "cp $PATCH_DIR/$NAME/Makefile.aarch64 ."
       ],
       "post-make": [
         "find ../. -name '*.o' -delete"
@@ -324,7 +334,7 @@
     "commands": {
       "pre-make": [
         "cd libretro",
-        "cp $PATCH_DIR/Emux/Makefile.aarch64 ."
+        "cp $PATCH_DIR/$NAME/Makefile.aarch64 ."
       ],
       "post-make": [
         "find ../. -name '*.o' -delete"
@@ -713,7 +723,7 @@
     "directory": "hatari",
     "output": "hatari_libretro.so",
     "make": {
-      "file": "Makefile",
+      "file": "Makefile.libretro",
       "args": "",
       "target": ""
     },
@@ -735,7 +745,7 @@
     "directory": "FBNeo-Xtreme-Amped",
     "output": "km_fbneo_xtreme_amped_libretro.so",
     "make": {
-      "file": "makefile",
+      "file": "Makefile",
       "args": "",
       "target": ""
     },
@@ -1088,7 +1098,12 @@
       "args": "",
       "target": ""
     },
-    "symbols": 0
+    "symbols": 0,
+    "commands": {
+      "pre-make": [
+        "cd libretro"
+      ]
+    }
   },
   "np2kai": {
     "source": "https://github.com/AZO234/NP2kai",
@@ -1361,7 +1376,7 @@
     "directory": "smsplus-gx",
     "output": "smsplus_libretro.so",
     "make": {
-      "file": "Makefile",
+      "file": "Makefile.libretro",
       "args": "",
       "target": ""
     },
