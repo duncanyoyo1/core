@@ -8,6 +8,7 @@ bluemsx_libretro.so.zip
 bnes_libretro.so.zip
 bsnes2014_performance_libretro.so.zip
 bsnes_cplusplus98_libretro.so.zip
+bsnes-jg_libretro.so.zip
 bsnes_mercury_performance_libretro.so.zip
 cannonball_libretro.so.zip
 cap32_libretro.so.zip
@@ -17,6 +18,11 @@ crocods_libretro.so.zip
 dosbox_pure_libretro.so.zip
 dosbox_svn_libretro.so.zip
 DoubleCherryGB_libretro.so.zip
+ecwolf_libretro.so.zip
+emux_chip8_libretro.so.zip
+emux_gb_libretro.so.zip
+emux_nes_libretro.so.zip
+emux_sms_libretro.so.zip
 ep128emu_core_libretro.so.zip
 fake08_libretro.so.zip
 fbalpha2012_cps1_libretro.so.zip
@@ -45,7 +51,9 @@ gme_libretro.so.zip
 gpsp_libretro.so.zip
 gw_libretro.so.zip
 handy_libretro.so.zip
+hatari_libretro.so.zip
 jaxe_libretro.so.zip
+km_fbneo_xtreme_amped_libretro.so.zip
 km_mame2003_xtreme_amped_libretro.so.zip
 km_puae_xtreme_amped_2k24_libretro.so.zip
 lowresnx_libretro.so.zip
@@ -73,6 +81,7 @@ minivmac_libretro.so.zip
 mu_libretro.so.zip
 nekop2_libretro.so.zip
 neocd_libretro.so.zip
+nestopia_libretro.so.zip
 np2kai_libretro.so.zip
 numero_libretro.so.zip
 nxengine_libretro.so.zip
@@ -95,6 +104,7 @@ quicknes_libretro.so.zip
 race_libretro.so.zip
 retro8_libretro.so.zip
 sameboy_libretro.so.zip
+smsplus_libretro.so.zip
 snes9x2002_libretro.so.zip
 snes9x2005_libretro.so.zip
 snes9x2010_libretro.so.zip
