@@ -1182,7 +1182,7 @@
     "output": "picodrive_libretro.so",
     "make": {
       "file": "Makefile.libretro",
-      "args": "platform=aarch64",
+      "args": "platform=arm64",
       "target": ""
     },
     "symbols": 0
@@ -1374,8 +1374,8 @@
     "output": "sameboy_libretro.so",
     "make": {
       "file": "Makefile",
-      "args": "",
-      "target": ""
+      "args": "CC=gcc",
+      "target": "libretro"
     },
     "symbols": 0,
     "commands": {
@@ -1388,7 +1388,9 @@
         "cd libretro"
       ],
       "post-make": [
-        "cd .."
+        "printf 'Moving sameboy_libretro.so'",
+        "mv build/bin/sameboy_libretro.so .",
+        "pwd"
       ]
     }
   },
