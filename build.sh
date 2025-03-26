@@ -384,26 +384,28 @@ for NAME in $CORES; do
 	PV_PID=$!
 	trap 'kill $PV_PID 2>/dev/null' EXIT
 
-	MAKE_CMD="make -j$(nproc)"
+	MAKE_CMD="make V-1 -j$(nproc)"
 	[ -n "$MAKE_FILE" ] && MAKE_CMD="$MAKE_CMD -f $MAKE_FILE"
 	[ -n "$MAKE_ARGS" ] && MAKE_CMD="$MAKE_CMD $MAKE_ARGS"
 	[ -n "$MAKE_TARGET" ] && MAKE_CMD="$MAKE_CMD $MAKE_TARGET"
 
-	# Run the command
-	if $MAKE_CMD >/dev/null 2>&1; then
-		kill $PV_PID
-		wait $PV_PID 2>/dev/null
-		printf "\nBuild completed successfully for '%s'\n" "$NAME"
-		
-		# Update cache with new hash
-		jq --arg name "$NAME" --arg hash "$REMOTE_HASH" '.[$name] = $hash' "$CACHE_FILE" > "$CACHE_FILE.tmp" && mv "$CACHE_FILE.tmp" "$CACHE_FILE"
+	LOGFILE="$(dirname "$0")/build.log"
+	START_TS=$(date +%s)
+
+	# Run make; capture everything into build.log
+	kill $PV_PID 2>/dev/null
+	if make -j"$(nproc)" -f "$MAKE_FILE" $MAKE_ARGS $MAKE_TARGET >>"$LOGFILE" 2>&1; then
+    	printf "\nBuild succeeded: %s\n" "$NAME"
+    	jq --arg name "$NAME" --arg hash "$REMOTE_HASH" \
+    	   '.[$name] = $hash' "$CACHE_FILE" >"$CACHE_FILE.tmp" && mv "$CACHE_FILE.tmp" "$CACHE_FILE"
 	else
-		kill $PV_PID
-		wait $PV_PID 2>/dev/null
-		printf "\nBuild failed for '%s' using '%s'\n" "$NAME" "$MAKE_FILE" >&2
-		RETURN_TO_BASE
-		continue
+    	printf "\nBuild FAILED: %s — see %s\n" "$NAME" "$LOGFILE" >&2
+    	RETURN_TO_BASE
+    	continue
 	fi
+
+	END_TS=$(date +%s)
+	printf "Duration for '%s': %ds\n" "$NAME" "$((END_TS - START_TS))" >>"$LOGFILE"
 
 	if [ "$POST_MAKE" != "[]" ]; then
 		if ! RUN_COMMANDS "post-make" "$POST_MAKE"; then
@@ -480,8 +482,6 @@ for NAME in $CORES; do
 
 	RETURN_TO_BASE
 done
-
-
 
 (
 	printf "<!DOCTYPE html>\n<html>\n<head>\n<title>MURCB - muOS RetroArch Core Builder</title>\n</head>\n<body>\n"
