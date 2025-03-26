@@ -416,16 +416,18 @@ for NAME in $CORES; do
 	fi
 
 	if [ "$SYMBOLS" -eq 0 ]; then
-        if file "$OUTPUT" | grep -q 'not stripped'; then
-            $STRIP -sx "$OUTPUT"
-            printf "\nStripped debug symbols"
-        fi
+		# Check if the output is not stripped already
+		if file "$OUTPUT" | grep -q 'not stripped'; then
+			$STRIP -sx "$OUTPUT"
+			printf "\nStripped debug symbols"
+		fi
 
-        if readelf -S "$OUTPUT" | grep -Fq '.note.gnu.build-id'; then
-            $OBJCOPY --remove-section=.note.gnu.build-id "$OUTPUT"
-            printf "\nRemoved BuildID section"
-        fi
-    fi
+		# Check if the BuildID section is present
+		if readelf -S "$OUTPUT" | grep -Fq '.note.gnu.build-id'; then
+			$OBJCOPY --remove-section=.note.gnu.build-id "$OUTPUT"
+			printf "\nRemoved BuildID section"
+		fi
+	fi
 
 	printf "\nFile Information: %s\n" "$(file -b "$OUTPUT")"
 
