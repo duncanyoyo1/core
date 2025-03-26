@@ -159,8 +159,10 @@ if command -v aarch64-linux-gnu-strip >/dev/null 2>&1; then
     STRIP=aarch64-linux-gnu-strip
 elif command -v aarch64-linux-strip >/dev/null 2>&1; then
     STRIP=aarch64-linux-strip
+elif command -v strip >/dev/null 2>&1; then
+    STRIP=strip
 else
-    printf "Error: Neither aarch64-linux-gnu-strip nor aarch64-linux-strip found\n" >&2
+    printf "Error: No suitable strip command found\n" >&2
     exit 1
 fi
 
@@ -412,18 +414,16 @@ for NAME in $CORES; do
 	fi
 
 	if [ "$SYMBOLS" -eq 0 ]; then
-		# Check if the output is not stripped already
-		if file "$OUTPUT" | grep -q 'not stripped'; then
-			aarch64-linux-strip -sx "$OUTPUT"
-			printf "\nStripped debug symbols"
-		fi
+        if file "$OUTPUT" | grep -q 'not stripped'; then
+            $STRIP -sx "$OUTPUT"
+            printf "\nStripped debug symbols"
+        fi
 
-		# Check if the BuildID section is present
-		if readelf -S "$OUTPUT" | grep -Fq '.note.gnu.build-id'; then
-			aarch64-linux-objcopy --remove-section=.note.gnu.build-id "$OUTPUT"
-			printf "\nRemoved BuildID section"
-		fi
-	fi
+        if readelf -S "$OUTPUT" | grep -Fq '.note.gnu.build-id'; then
+            $OBJCOPY --remove-section=.note.gnu.build-id "$OUTPUT"
+            printf "\nRemoved BuildID section"
+        fi
+    fi
 
 	printf "\nFile Information: %s\n" "$(file -b "$OUTPUT")"
 
