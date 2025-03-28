@@ -756,6 +756,23 @@
       ]
     }
   },
+    "fbneo": {
+    "source": "https://github.com/libretro/FBNeo",
+    "directory": "FBNeo",
+    "output": "fbneo_libretro.so",
+    "make": {
+      "file": "Makefile",
+      "args": "-C src/burner/libretro platform=aarch64",
+      "target": ""
+    },
+    "symbols": 0,
+    "commands":{
+      "post-make": [
+      "printf 'Moving fbneo_libretro.so'",
+      "mv src/burner/libretro/fbneo_libretro.dll ./fbneo_libretro.so"
+      ]
+    }
+  },
   "km_mame2003_xtreme_amped": {
     "source": "https://github.com/KMFDManic/mame2003-xtreme",
     "directory": "mame2003-xtreme",
@@ -1182,7 +1199,7 @@
     "output": "picodrive_libretro.so",
     "make": {
       "file": "Makefile.libretro",
-      "args": "platform=arm64",
+      "args": "platform=aarch64",
       "target": ""
     },
     "symbols": 0
@@ -1264,14 +1281,14 @@
     "output": "ppsspp_libretro.so",
     "make": {
       "file": "Makefile",
-      "args": "-C build platform=arm64",
+      "args": "-C build platform=aarch64",
       "target": ""
     },
     "symbols": 0,
     "commands": {
       "pre-make": [
         "mkdir -p build",
-        "cd build && cmake .. -DLIBRETRO=ON -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DCMAKE_SYSTEM_NAME=Linux -DUSE_SDL2=ON -DSDL2=ON -DUSE_NATIVE_GL=OFF -DUSE_OPENGL=OFF -DUSE_GLES=ON -DUSE_VULKAN=OFF -DUSE_SYSTEM_FFMPEG=OFF -DUSE_FFMPEG=ON -DUSING_FBDEV=ON -DUSE_DISCORD=OFF -DANDROID=OFF -DWIN32=OFF -DAPPLE=OFF -DUNITTEST=OFF -DSIMULATOR=OFF -DUSING_QT_UI=OFF -DHEADLESS=ON -DMOBILE_DEVICE=OFF -DENABLE_CTEST=OFF -DEGL_NO_X11=1 -DMESA_EGL_NO_X11_HEADERS=1 -DUSING_X11_VULKAN=OFF -DARM=ON -DARM64=ON -DUSING_GLES2=ON -DUSING_EGL=OFF -DUSE_SYSTEM_GLEW=OFF -DGOLD=ON -DCMAKE_SYSTEM_PROCESSOR=aarch64 -DCMAKE_EXE_LINKER_FLAGS='-Wl,--as-needed' -DCMAKE_CXX_FLAGS='-flax-vector-conversions'"
+        "cd build && cmake .. -DLIBRETRO=ON -DCMAKE_BUILD_TYPE=Release -DBUILD_SHARED_LIBS=OFF -DCMAKE_SYSTEM_NAME=Linux -DUSE_SYSTEM_FFMPEG=OFF -DUSE_FFMPEG=ON -DUSING_FBDEV=ON -DUSE_DISCORD=OFF -DANDROID=OFF -DWIN32=OFF -DAPPLE=OFF -DUNITTEST=OFF -DSIMULATOR=OFF -DUSING_QT_UI=OFF -DHEADLESS=ON -DMOBILE_DEVICE=OFF -DENABLE_CTEST=OFF -DUSING_X11_VULKAN=OFF -DARM=ON -DARM64=ON -DUSING_GLES2=ON -DUSING_EGL=OFF -DCMAKE_SYSTEM_PROCESSOR=aarch64"
       ],
     "post-make": [
       "printf 'Moving ppsspp_libretro.so'",
@@ -1374,7 +1391,7 @@
     "output": "sameboy_libretro.so",
     "make": {
       "file": "Makefile",
-      "args": "CC=gcc CONF=release",
+      "args": "CC=gcc CONF=native_release",
       "target": "libretro"
     },
     "symbols": 0,
