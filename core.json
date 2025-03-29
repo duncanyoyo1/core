@@ -386,16 +386,20 @@
   "fbalpha2012": {
     "source": "https://github.com/libretro/fbalpha2012",
     "directory": "fbalpha2012",
-    "output": "fbalpha2012_libretro.so.so",
+    "output": "fbalpha2012_libretro.so",
     "make": {
       "file": "makefile.libretro",
-      "args": "",
+      "args": "-C svn-current/trunk",
       "target": ""
     },
     "symbols": 0,
     "commands": {
       "pre-make": [
         "cd svn-current/trunk"
+      ],
+      "post-make": [
+      "pwd; printf 'Moving fbalpha2012_libretro.so'",
+      "mv svn-current/trunk/fbalpha2012_libretro.so ."
       ]
     }
   },
