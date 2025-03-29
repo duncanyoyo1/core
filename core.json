@@ -1843,13 +1843,16 @@
     "output": "x1_libretro.so",
     "make": {
       "file": "Makefile.libretro",
-      "args": "",
+      "args": "-C libretro",
       "target": ""
     },
     "symbols": 0,
     "commands": {
       "pre-make": [
         "cd libretro"
+      ],
+      "post-make": [
+        "mv libretro/x1_libretro.so ."
       ]
     }
   },
