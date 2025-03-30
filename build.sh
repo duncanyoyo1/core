@@ -50,7 +50,7 @@ if [ "$#" -eq 0 ]; then
 	USAGE
 fi
 
-# Cechk for remaining arguments and set appropriate options
+# Check for remaining arguments and set appropriate options
 while [ "$#" -gt 0 ]; do
 	case "$1" in
 		-a | --all)
@@ -144,11 +144,34 @@ UPDATE_ZIP() {
 
 [ "$UPDATE" -eq 1 ] && UPDATE_ZIP
 
-for CMD in aarch64-linux-objcopy aarch64-linux-strip file git jq make patch pv readelf zip; do
-	if ! command -v "$CMD" >/dev/null 2>&1; then
-		printf "Error: Missing required command '%s'\n" "$CMD" >&2
-		exit 1
-	fi
+# Detect proper aarch64 objcopy command.
+if command -v aarch64-linux-gnu-objcopy >/dev/null 2>&1; then
+    OBJCOPY=aarch64-linux-gnu-objcopy
+elif command -v aarch64-linux-objcopy >/dev/null 2>&1; then
+    OBJCOPY=aarch64-linux-objcopy
+else
+    printf "Error: Neither aarch64-linux-gnu-objcopy nor aarch64-linux-objcopy found\n" >&2
+    exit 1
+fi
+
+# Detect proper aarch64 strip command.
+if command -v aarch64-linux-gnu-strip >/dev/null 2>&1; then
+    STRIP=aarch64-linux-gnu-strip
+elif command -v aarch64-linux-strip >/dev/null 2>&1; then
+    STRIP=aarch64-linux-strip
+elif command -v strip >/dev/null 2>&1; then
+    STRIP=strip
+else
+    printf "Error: No suitable strip command found\n" >&2
+    exit 1
+fi
+
+# Check for other required commands
+for CMD in file git jq make patch pv readelf zip; do
+    if ! command -v "$CMD" >/dev/null 2>&1; then
+        printf "Error: Missing required command '%s'\n" "$CMD" >&2
+        exit 1
+    fi
 done
 
 # Create required directories
@@ -165,23 +188,13 @@ RETURN_TO_BASE() {
 }
 
 RUN_COMMANDS() {
-	printf "\nRunning '%s' commands\n" "$1"
-	CMD_LIST=$(echo "$2" | jq -r '.[]')
-
-	# Run through the list of given commands in the array and use an EOF to run them outside of this subshell
-	while IFS= read -r CMD; do
-		CMD=$(eval "echo \"$CMD\"")
-
-		# Skip "Running" message for commands starting with 'printf'
-		if ! echo "$CMD" | grep -qE '^printf'; then
-			printf "Running: %s\n" "$CMD"
-		fi
-		eval "$CMD" || {
-			printf "Command Failed: %s\n" "$CMD" >&2
-			return 1
-		}
-	done <<EOF
-$CMD_LIST
+    printf "\nRunning '%s' commands\n" "$1"
+    # Extract the commands as separate lines from the JSON.
+    CMD=$(printf '%s\n' "$2" | jq -r '.[]')
+    printf "Running:\n%s\n" "$CMD"
+    # Feed the commands into sh via a here-document so they run in one session.
+    sh <<EOF
+$CMD
 EOF
 }
 
@@ -247,8 +260,8 @@ for NAME in $CORES; do
 	BRANCH=$(echo "$MODULE" | jq -r '.branch // ""')
 
 	# Optional keys
-	PRE_MAKE=$(echo "$MODULE" | jq -c '.commands["pre-make"] // []')
-	POST_MAKE=$(echo "$MODULE" | jq -c '.commands["post-make"] // []')
+	PRE_MAKE=$(echo "$MODULE" | jq -r '.commands["pre-make"] // []')
+	POST_MAKE=$(echo "$MODULE" | jq -r '.commands["post-make"] // []')
 
 	CORE_DIR="$CORES_DIR/$DIR"
 
@@ -272,7 +285,7 @@ for NAME in $CORES; do
 	printf "Remote hash: %s\n" "$REMOTE_HASH"
 	printf "Cached hash: %s\n" "$CACHED_HASH"
 
-	if [ "$CACHED_HASH" = "$REMOTE_HASH" ] && [ "$PURGE" -eq 0 ]; then
+	if [ "$CACHED_HASH" = "$REMOTE_HASH" ] && [ "$PURGE" -eq 0 ] && [ -f "$OUTPUT" ]; then
 		printf "Core '%s' is up to date (hash: %s). Skipping build.\n" "$NAME" "$REMOTE_HASH"
 		continue
 	fi
@@ -293,12 +306,13 @@ for NAME in $CORES; do
 			continue
 		}
 		
-		# Enter the directory and update submodules
-		cd "$CORE_DIR" || {
-			printf "Failed to enter directory %s\n" "$CORE_DIR" >&2
-			continue
-		}
-		
+        # Always update submodules even if the repo exists
+        git submodule update --init --recursive || {
+            printf "Failed to update submodules for %s\n" "$NAME" >&2
+            RETURN_TO_BASE
+            continue
+        }
+
 		# Update all submodules recursively
 		git submodule update --init --recursive || {
 			printf "Failed to update submodules for %s\n" "$SOURCE" >&2
@@ -322,6 +336,13 @@ for NAME in $CORES; do
 		printf "Failed to enter directory %s\n" "$CORE_DIR" >&2
 		continue
 	}
+
+    # Always update submodules even if the repo exists
+    git submodule update --init --recursive || {
+        printf "Failed to update submodules for %s\n" "$NAME" >&2
+        RETURN_TO_BASE
+        continue
+    }
 
 	if [ $BEEN_CLONED -eq 0 ]; then
 		printf "Pulling latest changes for '%s'\n" "$NAME"
@@ -363,26 +384,28 @@ for NAME in $CORES; do
 	PV_PID=$!
 	trap 'kill $PV_PID 2>/dev/null' EXIT
 
-	MAKE_CMD="make -j$(nproc)"
+	MAKE_CMD="make V-1 -j$(nproc)"
 	[ -n "$MAKE_FILE" ] && MAKE_CMD="$MAKE_CMD -f $MAKE_FILE"
 	[ -n "$MAKE_ARGS" ] && MAKE_CMD="$MAKE_CMD $MAKE_ARGS"
 	[ -n "$MAKE_TARGET" ] && MAKE_CMD="$MAKE_CMD $MAKE_TARGET"
 
-	# Run the command
-	if $MAKE_CMD >/dev/null 2>&1; then
-		kill $PV_PID
-		wait $PV_PID 2>/dev/null
-		printf "\nBuild completed successfully for '%s'\n" "$NAME"
-		
-		# Update cache with new hash
-		jq --arg name "$NAME" --arg hash "$REMOTE_HASH" '.[$name] = $hash' "$CACHE_FILE" > "$CACHE_FILE.tmp" && mv "$CACHE_FILE.tmp" "$CACHE_FILE"
+	LOGFILE="$(dirname "$0")/build.log"
+	START_TS=$(date +%s)
+
+	# Run make; capture everything into build.log
+	kill $PV_PID 2>/dev/null
+	if make -j"$(nproc)" -f "$MAKE_FILE" $MAKE_ARGS $MAKE_TARGET >>"$LOGFILE" 2>&1; then
+    	printf "\nBuild succeeded: %s\n" "$NAME"
+    	jq --arg name "$NAME" --arg hash "$REMOTE_HASH" \
+    	   '.[$name] = $hash' "$CACHE_FILE" >"$CACHE_FILE.tmp" && mv "$CACHE_FILE.tmp" "$CACHE_FILE"
 	else
-		kill $PV_PID
-		wait $PV_PID 2>/dev/null
-		printf "\nBuild failed for '%s' using '%s'\n" "$NAME" "$MAKE_FILE" >&2
-		RETURN_TO_BASE
-		continue
+    	printf "\nBuild FAILED: %s — see %s\n" "$NAME" "$LOGFILE" >&2
+    	RETURN_TO_BASE
+    	continue
 	fi
+
+	END_TS=$(date +%s)
+	printf "Duration for '%s': %ds\n" "$NAME" "$((END_TS - START_TS))" >>"$LOGFILE"
 
 	if [ "$POST_MAKE" != "[]" ]; then
 		if ! RUN_COMMANDS "post-make" "$POST_MAKE"; then
@@ -395,13 +418,13 @@ for NAME in $CORES; do
 	if [ "$SYMBOLS" -eq 0 ]; then
 		# Check if the output is not stripped already
 		if file "$OUTPUT" | grep -q 'not stripped'; then
-			aarch64-linux-strip -sx "$OUTPUT"
+			$STRIP -sx "$OUTPUT"
 			printf "\nStripped debug symbols"
 		fi
 
 		# Check if the BuildID section is present
 		if readelf -S "$OUTPUT" | grep -Fq '.note.gnu.build-id'; then
-			aarch64-linux-objcopy --remove-section=.note.gnu.build-id "$OUTPUT"
+			$OBJCOPY --remove-section=.note.gnu.build-id "$OUTPUT"
 			printf "\nRemoved BuildID section"
 		fi
 	fi
@@ -461,8 +484,6 @@ for NAME in $CORES; do
 
 	RETURN_TO_BASE
 done
-
-
 
 (
 	printf "<!DOCTYPE html>\n<html>\n<head>\n<title>MURCB - muOS RetroArch Core Builder</title>\n</head>\n<body>\n"
