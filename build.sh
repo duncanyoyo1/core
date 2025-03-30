@@ -159,8 +159,10 @@ if command -v aarch64-linux-gnu-strip >/dev/null 2>&1; then
     STRIP=aarch64-linux-gnu-strip
 elif command -v aarch64-linux-strip >/dev/null 2>&1; then
     STRIP=aarch64-linux-strip
+elif command -v strip >/dev/null 2>&1; then
+    STRIP=strip
 else
-    printf "Error: Neither aarch64-linux-gnu-strip nor aarch64-linux-strip found\n" >&2
+    printf "Error: No suitable strip command found\n" >&2
     exit 1
 fi
 
@@ -382,26 +384,28 @@ for NAME in $CORES; do
 	PV_PID=$!
 	trap 'kill $PV_PID 2>/dev/null' EXIT
 
-	MAKE_CMD="make -j$(nproc)"
+	MAKE_CMD="make V-1 -j$(nproc)"
 	[ -n "$MAKE_FILE" ] && MAKE_CMD="$MAKE_CMD -f $MAKE_FILE"
 	[ -n "$MAKE_ARGS" ] && MAKE_CMD="$MAKE_CMD $MAKE_ARGS"
 	[ -n "$MAKE_TARGET" ] && MAKE_CMD="$MAKE_CMD $MAKE_TARGET"
 
-	# Run the command
-	if $MAKE_CMD >/dev/null 2>&1; then
-		kill $PV_PID
-		wait $PV_PID 2>/dev/null
-		printf "\nBuild completed successfully for '%s'\n" "$NAME"
-		
-		# Update cache with new hash
-		jq --arg name "$NAME" --arg hash "$REMOTE_HASH" '.[$name] = $hash' "$CACHE_FILE" > "$CACHE_FILE.tmp" && mv "$CACHE_FILE.tmp" "$CACHE_FILE"
+	LOGFILE="$(dirname "$0")/build.log"
+	START_TS=$(date +%s)
+
+	# Run make; capture everything into build.log
+	kill $PV_PID 2>/dev/null
+	if make -j"$(nproc)" -f "$MAKE_FILE" $MAKE_ARGS $MAKE_TARGET >>"$LOGFILE" 2>&1; then
+    	printf "\nBuild succeeded: %s\n" "$NAME"
+    	jq --arg name "$NAME" --arg hash "$REMOTE_HASH" \
+    	   '.[$name] = $hash' "$CACHE_FILE" >"$CACHE_FILE.tmp" && mv "$CACHE_FILE.tmp" "$CACHE_FILE"
 	else
-		kill $PV_PID
-		wait $PV_PID 2>/dev/null
-		printf "\nBuild failed for '%s' using '%s'\n" "$NAME" "$MAKE_FILE" >&2
-		RETURN_TO_BASE
-		continue
+    	printf "\nBuild FAILED: %s — see %s\n" "$NAME" "$LOGFILE" >&2
+    	RETURN_TO_BASE
+    	continue
 	fi
+
+	END_TS=$(date +%s)
+	printf "Duration for '%s': %ds\n" "$NAME" "$((END_TS - START_TS))" >>"$LOGFILE"
 
 	if [ "$POST_MAKE" != "[]" ]; then
 		if ! RUN_COMMANDS "post-make" "$POST_MAKE"; then
@@ -414,13 +418,13 @@ for NAME in $CORES; do
 	if [ "$SYMBOLS" -eq 0 ]; then
 		# Check if the output is not stripped already
 		if file "$OUTPUT" | grep -q 'not stripped'; then
-			aarch64-linux-strip -sx "$OUTPUT"
+			$STRIP -sx "$OUTPUT"
 			printf "\nStripped debug symbols"
 		fi
 
 		# Check if the BuildID section is present
 		if readelf -S "$OUTPUT" | grep -Fq '.note.gnu.build-id'; then
-			aarch64-linux-objcopy --remove-section=.note.gnu.build-id "$OUTPUT"
+			$OBJCOPY --remove-section=.note.gnu.build-id "$OUTPUT"
 			printf "\nRemoved BuildID section"
 		fi
 	fi
@@ -480,8 +484,6 @@ for NAME in $CORES; do
 
 	RETURN_TO_BASE
 done
-
-
 
 (
 	printf "<!DOCTYPE html>\n<html>\n<head>\n<title>MURCB - muOS RetroArch Core Builder</title>\n</head>\n<body>\n"
