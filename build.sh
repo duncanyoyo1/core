@@ -341,7 +341,6 @@ for NAME in $CORES; do
 
 		# Return to previous directory
 		cd - > /dev/null
-
 		printf "\n"
 		BEEN_CLONED=1
 	fi
