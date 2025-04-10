@@ -338,7 +338,6 @@ for NAME in $CORES; do
 			cd - > /dev/null  # Return to previous directory
 			continue
 		}
-
 		# Return to previous directory
 		cd - > /dev/null
 		printf "\n"
