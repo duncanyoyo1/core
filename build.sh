@@ -318,6 +318,7 @@ for NAME in $CORES; do
 		# If a commit hash was provided, checkout that commit after cloning.
 		if [ -n "$BRANCH" ] && echo "$BRANCH" | grep -qE '^[0-9a-f]{7,40}$'; then
 			cd "$CORE_DIR" || exit 1
+			git fetch --all
 			git checkout --detach "$BRANCH" || {
 				printf "Failed to checkout commit %s in %s\n" "$BRANCH" "$CORE_DIR" >&2
 				continue
@@ -362,13 +363,29 @@ for NAME in $CORES; do
     }
 
 	if [ $BEEN_CLONED -eq 0 ]; then
-		printf "Pulling latest changes for '%s'\n" "$NAME"
-		git pull --quiet --recurse-submodules -j8 || {
-			printf "Failed to pull latest changes for '%s'\n" "$NAME" >&2
-			RETURN_TO_BASE
-			continue
-		}
-	fi
+    # If the BRANCH is a commit hash (i.e., a sequence of hexadecimal digits), then
+    # skip git pull and instead fetch and force checkout the desired commit.
+    if [ -n "$BRANCH" ] && echo "$BRANCH" | grep -qE '^[0-9a-f]{7,40}$'; then
+        printf "Repository already cloned. Fetching updates and checking out commit '%s'\n" "$BRANCH"
+        git fetch --all || {
+           printf "Failed to fetch updates for '%s'\n" "$NAME" >&2
+           RETURN_TO_BASE
+           continue
+        }
+        git checkout --detach "$BRANCH" || {
+           printf "Failed to checkout commit '%s' for '%s'\n" "$BRANCH" "$NAME" >&2
+           RETURN_TO_BASE
+           continue
+        }
+    else
+        printf "Pulling latest changes for '%s'\n" "$NAME"
+        git pull --quiet --recurse-submodules -j8 || {
+            printf "Failed to pull latest changes for '%s'\n" "$NAME" >&2
+            RETURN_TO_BASE
+            continue
+        }
+    fi
+fi
 
 	# Verify local hash matches remote hash after clone/pull
 	LOCAL_HASH=$(git rev-parse --short HEAD | cut -c 1-7)
