@@ -289,10 +289,10 @@ for NAME in $CORES; do
 	printf "Remote hash: %s\n" "$REMOTE_HASH"
 	printf "Cached hash: %s\n" "$CACHED_HASH"
 
-    if [ "$CACHED_HASH" = "$REMOTE_HASH" ] && [ "$PURGE" -eq 0 ] && [ -f "$BUILD_DIR/$OUTPUT.zip" ]; then
-        printf "Core '%s' is up to date (hash: %s). Skipping build.\n" "$NAME" "$REMOTE_HASH"
-        continue
-    fi
+	if [ "$CACHED_HASH" = "$REMOTE_HASH" ] && [ "$PURGE" -eq 0 ] && [ -f "$BUILD_DIR/$OUTPUT.zip" ]; then
+		printf "Core '%s' is up to date (hash: %s). Skipping build.\n" "$NAME" "$REMOTE_HASH"
+		continue
+	fi
 
 
 	if [ "$PURGE" -eq 1 ]; then
