@@ -294,7 +294,6 @@ for NAME in $CORES; do
 		continue
 	fi
 
-
 	if [ "$PURGE" -eq 1 ]; then
 		printf "Purging core '%s' directory\n" "$DIR"
 		rm -rf "$CORE_DIR"
