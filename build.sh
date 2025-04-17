@@ -418,7 +418,7 @@ fi
 	PV_PID=$!
 	trap 'kill $PV_PID 2>/dev/null' EXIT
 
-	MAKE_CMD="make V-1 -j$(nproc)"
+	MAKE_CMD="make V=1 -j$(nproc)"
 	[ -n "$MAKE_FILE" ] && MAKE_CMD="$MAKE_CMD -f $MAKE_FILE"
 	[ -n "$MAKE_ARGS" ] && MAKE_CMD="$MAKE_CMD $MAKE_ARGS"
 	[ -n "$MAKE_TARGET" ] && MAKE_CMD="$MAKE_CMD $MAKE_TARGET"
