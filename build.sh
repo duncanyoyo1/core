@@ -289,7 +289,7 @@ for NAME in $CORES; do
 	printf "Remote hash: %s\n" "$REMOTE_HASH"
 	printf "Cached hash: %s\n" "$CACHED_HASH"
 
-	if [ "$CACHED_HASH" = "$REMOTE_HASH" ] && [ "$PURGE" -eq 0 ] && [ -f "$OUTPUT" ]; then
+	if [ "$CACHED_HASH" = "$REMOTE_HASH" ] && [ "$PURGE" -eq 0 ] && [ -f "$BUILD_DIR/$OUTPUT.zip" ]; then
 		printf "Core '%s' is up to date (hash: %s). Skipping build.\n" "$NAME" "$REMOTE_HASH"
 		continue
 	fi
@@ -418,7 +418,7 @@ fi
 	PV_PID=$!
 	trap 'kill $PV_PID 2>/dev/null' EXIT
 
-	MAKE_CMD="make V-1 -j$(nproc)"
+	MAKE_CMD="make V=1 -j$(nproc)"
 	[ -n "$MAKE_FILE" ] && MAKE_CMD="$MAKE_CMD -f $MAKE_FILE"
 	[ -n "$MAKE_ARGS" ] && MAKE_CMD="$MAKE_CMD $MAKE_ARGS"
 	[ -n "$MAKE_TARGET" ] && MAKE_CMD="$MAKE_CMD $MAKE_TARGET"
