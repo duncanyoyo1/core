@@ -377,12 +377,20 @@ for NAME in $CORES; do
            RETURN_TO_BASE
            continue
         }
-    else
-        printf "Pulling latest changes for '%s'\n" "$NAME"
-        git pull --quiet --recurse-submodules -j8 || {
-            printf "Failed to pull latest changes for '%s'\n" "$NAME" >&2
-            RETURN_TO_BASE
-            continue
+	else
+        printf "Updating '%s' to remote HEAD\n" "$NAME"
+        git fetch --quiet origin || {
+            printf "  fetch failed for '%s'\n" "$NAME" >&2
+            RETURN_TO_BASE; continue
+        }
+        git reset --hard origin/HEAD || {
+            printf "  reset failed for '%s'\n" "$NAME" >&2
+            RETURN_TO_BASE; continue
+        }
+        git submodule sync --quiet
+        git submodule update --init --recursive --quiet || {
+            printf "  submodule update failed for '%s'\n" "$NAME" >&2
+            RETURN_TO_BASE; continue
         }
     fi
 fi
