@@ -1,4 +1,15 @@
 {
+  "2048": {
+    "source": "https://github.com/libretro/libretro-2048",
+    "directory": "libretro-2048",
+    "output": "2048_libretro.so",
+    "make": {
+      "file": "Makefile.libretro",
+      "args": "",
+      "target": ""
+    },
+    "symbols": 0
+  },
   "81": {
     "source": "https://github.com/libretro/81-libretro",
     "directory": "81-libretro",
@@ -929,7 +940,7 @@
     "output": "mame2010_libretro.so",
     "make": {
       "file": "Makefile",
-      "args": "",
+      "args": "FORCE_DRC_C_BACKEND=1 NOASM=1 platform=aarch64",
       "target": ""
     },
     "symbols": 0
