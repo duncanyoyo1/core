@@ -1077,6 +1077,32 @@
     },
     "symbols": 0
   },
+  "melonds": {
+    "source": "https://github.com/libretro/melonds",
+    "directory": "melonDS",
+    "output": "melonds_libretro.so",
+    "make": {
+      "file": "Makefile",
+      "args": "",
+      "target": ""
+    },
+    "symbols": 0
+  },
+  "melondsds": {
+    "source": "https://github.com/rafaelvcaetano/melonDS-android-lib",
+    "directory": "melonDSDS",
+    "output": "melondsds_libretro.so",
+    "make": {
+      "file": "Release",
+      "args": "",
+      "target": ""
+    },
+    "symbols": 0,
+    "pre-make": [
+        "mkdir -p build",
+        "cd build && cmake -B build && cmake --build build -j$(nproc --all)"
+      ]
+  },
   "mesen": {
     "source": "https://github.com/libretro/Mesen",
     "directory": "Mesen",
