@@ -1104,7 +1104,7 @@
         "cmake --build build -j$(nproc --all)"
       ],
       "post-make": [
-      "mv build/libretro/melondsds_libretro.so ."
+      "mv build/src/libretro/melondsds_libretro.so ."
       ]
     }
   },
