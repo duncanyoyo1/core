@@ -945,6 +945,17 @@
     },
     "symbols": 0
   },
+  "mame": {
+    "source": "https://github.com/libretro/mame",
+    "directory": "mame",
+    "output": "mame_libretro.so",
+    "make": {
+      "file": "Makefile",
+      "args": "platform=aarch64",
+      "target": ""
+    },
+    "symbols": 0
+  },
   "mednafen_gba": {
     "source": "https://github.com/libretro/beetle-gba-libretro",
     "directory": "beetle-gba-libretro",
