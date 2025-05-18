@@ -1954,7 +1954,7 @@
     "symbols": 0,
     "commands": {
       "pre-make": [
-        "env -i bash --noprofile --norc -c 'cd 3rdparty/genie && make'"
+        "env -i PATH=/usr/bin:/bin HOME=$HOME bash -c 'cd 3rdparty/genie && make'"
       ]
     }
   },
