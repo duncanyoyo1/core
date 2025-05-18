@@ -10,6 +10,7 @@ USAGE() {
 	echo "  -a, --all            Build all cores"
 	echo "  -c, --core [cores]   Build specific cores (e.g., -c dosbox-pure sameboy)"
 	echo "  -p, --purge          Purge cores directory before building"
+	echo "  -f, --force          Force build without purge (ignore cache)"
 	echo "  -u, --update         Combine all core archives into a single update archive"
 	echo ""
 	echo "Notes:"
@@ -29,6 +30,7 @@ USAGE() {
 
 # Initialise all options to 0
 PURGE=0
+FORCE=0
 BUILD_ALL=0
 BUILD_CORES=""
 OPTION_SPECIFIED=0
@@ -38,10 +40,14 @@ STORAGE_POINTER=x
 # If argument '-p' or '--purge' provided, set PURGE=1
 if [ "$#" -gt 0 ]; then
 	case "$1" in
-		-p | --purge)
-			PURGE=1
-			shift
-			;;
+	  -p|--purge)
+    	PURGE=1
+    	shift
+    	;;
+	  -f|--force)
+    	FORCE=1
+    	shift
+    	;;
 	esac
 fi
 
@@ -289,9 +295,9 @@ for NAME in $CORES; do
 	printf "Remote hash: %s\n" "$REMOTE_HASH"
 	printf "Cached hash: %s\n" "$CACHED_HASH"
 
-	if [ "$CACHED_HASH" = "$REMOTE_HASH" ] && [ "$PURGE" -eq 0 ] && [ -f "$BUILD_DIR/$OUTPUT.zip" ]; then
-		printf "Core '%s' is up to date (hash: %s). Skipping build.\n" "$NAME" "$REMOTE_HASH"
-		continue
+	if [ "$FORCE" -eq 0 ] && [ "$CACHED_HASH" = "$REMOTE_HASH" ] && [ "$PURGE" -eq 0 ] && [ -f "$BUILD_DIR/$OUTPUT.zip" ]; then
+  		printf "Core '%s' is up to date (hash: %s). Skipping build.\n" "$NAME" "$REMOTE_HASH"
+  		continue
 	fi
 
 	if [ "$PURGE" -eq 1 ]; then
@@ -345,11 +351,6 @@ for NAME in $CORES; do
 		BEEN_CLONED=1
 	fi
 
-	APPLY_PATCHES "$NAME" "$CORE_DIR" || {
-		printf "Failed to apply patches for %s\n" "$NAME" >&2
-		continue
-	}
-
 	cd "$CORE_DIR" || {
 		printf "Failed to enter directory %s\n" "$CORE_DIR" >&2
 		continue
@@ -394,6 +395,10 @@ for NAME in $CORES; do
         }
     fi
 fi
+	APPLY_PATCHES "$NAME" "$CORE_DIR" || {
+		printf "Failed to apply patches for %s\n" "$NAME" >&2
+		continue
+	}
 
 	# Verify local hash matches remote hash after clone/pull
 	LOCAL_HASH=$(git rev-parse --short HEAD | cut -c 1-7)
