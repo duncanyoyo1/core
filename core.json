@@ -906,17 +906,6 @@
       ]
     }
   },
-    "mame2010": {
-    "source": "https://github.com/libretro/mame2010-libretro",
-    "directory": "mame2010-libretro",
-    "output": "mame2010_libretro.so",
-    "make": {
-      "file": "Makefile",
-      "args": "FORCE_DRC_C_BACKEND=1 NOASM=1 platform=aarch64",
-      "target": ""
-    },
-    "symbols": 0
-  },
   "mame2000": {
     "source": "https://github.com/libretro/mame2000-libretro",
     "directory": "mame2000-libretro",
@@ -957,6 +946,17 @@
     "make": {
       "file": "Makefile",
       "args": "",
+      "target": ""
+    },
+    "symbols": 0
+  },
+      "mame2010": {
+    "source": "https://github.com/libretro/mame2010-libretro",
+    "directory": "mame2010-libretro",
+    "output": "mame2010_libretro.so",
+    "make": {
+      "file": "Makefile",
+      "args": "FORCE_DRC_C_BACKEND=1 NOASM=1 platform=aarch64",
       "target": ""
     },
     "symbols": 0
