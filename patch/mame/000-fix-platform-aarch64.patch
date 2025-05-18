@@ -1,0 +1,29 @@
+diff --git a/Makefile.libretro b/Makefile.libretro
+index 23ade3a2fd4..e2b7ebf67dd 100644
+--- a/Makefile.libretro
++++ b/Makefile.libretro
+@@ -77,7 +77,12 @@ ifeq ($(LIBRETRO_CPU),)
+ 	endif
+ endif
+ 
+-
++ifeq ($(CROSS_COMPILE),1)
++    # Set these as needed for your target
++    LIBRETRO_CPU := aarch64
++	PLATFORM := arm64
++	PLATFLAGS +=PLATFORM=arm64
++endif
+ 
+ ###########################################################################
+ #
+@@ -287,6 +292,10 @@ ifneq ($(PTR64),)
+ 	PLATFLAGS += PTR64=$(PTR64)
+ endif
+ 
++ifeq ($(LIBRETRO_CPU),aarch64)
++    PLATFORM := arm64
++endif
++
+ ###########################################################################
+ #
+ #   TARGET FLAGS
