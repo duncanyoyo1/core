@@ -1472,6 +1472,7 @@
   "sameboy": {
     "source": "https://github.com/LIJI32/SameBoy",
     "directory": "SameBoy",
+    "branch": "f94e607",
     "output": "sameboy_libretro.so",
     "make": {
       "file": "Makefile",
