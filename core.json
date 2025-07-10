@@ -228,7 +228,7 @@
     },
     "symbols": 0
   },
-    "dice": {
+  "dice": {
     "source": "https://github.com/mittonk/dice-libretro.git",
     "directory": "dice-libretro",
     "output": "dice_libretro.so",
@@ -969,7 +969,7 @@
     },
     "symbols": 0
   },
-    "mame2010": {
+  "mame2010": {
     "source": "https://github.com/libretro/mame2010-libretro",
     "directory": "mame2010-libretro",
     "output": "mame2010_libretro.so",
