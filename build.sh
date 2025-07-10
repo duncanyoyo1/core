@@ -10,6 +10,7 @@ USAGE() {
 	echo "  -a, --all            Build all cores"
 	echo "  -c, --core [cores]   Build specific cores (e.g., -c dosbox-pure sameboy)"
 	echo "  -p, --purge          Purge cores directory before building"
+	echo "  -f, --force          Force build without purge (ignore cache)"
 	echo "  -u, --update         Combine all core archives into a single update archive"
 	echo ""
 	echo "Notes:"
@@ -29,6 +30,7 @@ USAGE() {
 
 # Initialise all options to 0
 PURGE=0
+FORCE=0
 BUILD_ALL=0
 BUILD_CORES=""
 OPTION_SPECIFIED=0
@@ -38,10 +40,14 @@ STORAGE_POINTER=x
 # If argument '-p' or '--purge' provided, set PURGE=1
 if [ "$#" -gt 0 ]; then
 	case "$1" in
-		-p | --purge)
-			PURGE=1
-			shift
-			;;
+	  -p|--purge)
+    	PURGE=1
+    	shift
+    	;;
+	  -f|--force)
+    	FORCE=1
+    	shift
+    	;;
 	esac
 fi
 
@@ -105,7 +111,7 @@ PATCH_DIR="$BASE_DIR/patch"
 
 # Create an update zip containing all cores
 UPDATE_ZIP() {
-	UPDATE_ARCHIVE="muOS-RetroArch-Core_Update-$(date +"%Y-%m-%d_%H-%M").zip"
+	UPDATE_ARCHIVE="muOS-RetroArch-Core_Update-$(date +"%Y-%m-%d_%H-%M").muxzip"
 	TEMP_DIR="$(mktemp -d)"
 	CORE_FOLDER="$TEMP_DIR/mnt/$STORAGE_POINTER/MUOS/core"
 
@@ -289,9 +295,9 @@ for NAME in $CORES; do
 	printf "Remote hash: %s\n" "$REMOTE_HASH"
 	printf "Cached hash: %s\n" "$CACHED_HASH"
 
-	if [ "$CACHED_HASH" = "$REMOTE_HASH" ] && [ "$PURGE" -eq 0 ] && [ -f "$BUILD_DIR/$OUTPUT.zip" ]; then
-		printf "Core '%s' is up to date (hash: %s). Skipping build.\n" "$NAME" "$REMOTE_HASH"
-		continue
+	if [ "$FORCE" -eq 0 ] && [ "$CACHED_HASH" = "$REMOTE_HASH" ] && [ "$PURGE" -eq 0 ] && [ -f "$BUILD_DIR/$OUTPUT.zip" ]; then
+  		printf "Core '%s' is up to date (hash: %s). Skipping build.\n" "$NAME" "$REMOTE_HASH"
+  		continue
 	fi
 
 	if [ "$PURGE" -eq 1 ]; then
@@ -377,12 +383,20 @@ for NAME in $CORES; do
            RETURN_TO_BASE
            continue
         }
-    else
-        printf "Pulling latest changes for '%s'\n" "$NAME"
-        git pull --quiet --recurse-submodules -j8 || {
-            printf "Failed to pull latest changes for '%s'\n" "$NAME" >&2
-            RETURN_TO_BASE
-            continue
+	else
+        printf "Updating '%s' to remote HEAD\n" "$NAME"
+        git fetch --quiet origin || {
+            printf "  fetch failed for '%s'\n" "$NAME" >&2
+            RETURN_TO_BASE; continue
+        }
+        git reset --hard origin/HEAD || {
+            printf "  reset failed for '%s'\n" "$NAME" >&2
+            RETURN_TO_BASE; continue
+        }
+        git submodule sync --quiet
+        git submodule update --init --recursive --quiet || {
+            printf "  submodule update failed for '%s'\n" "$NAME" >&2
+            RETURN_TO_BASE; continue
         }
     fi
 fi
