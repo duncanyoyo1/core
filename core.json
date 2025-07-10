@@ -228,6 +228,17 @@
     },
     "symbols": 0
   },
+    "dice": {
+    "source": "https://github.com/mittonk/dice-libretro.git",
+    "directory": "dice-libretro",
+    "output": "dice_libretro.so",
+    "make": {
+      "file": "Makefile.libretro",
+      "args": "",
+      "target": ""
+    },
+    "symbols": 0
+  },
   "dosbox_pure": {
     "source": "https://github.com/schellingb/dosbox-pure",
     "directory": "dosbox-pure",
