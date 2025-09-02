@@ -7,10 +7,12 @@ USAGE() {
 	echo "Usage: $0 [options]"
 	echo ""
 	echo "Options:"
-	echo "  -a, --all            Build all cores"
-	echo "  -c, --core [cores]   Build specific cores (e.g., -c dosbox-pure sameboy)"
-	echo "  -p, --purge          Purge cores directory before building"
-	echo "  -u, --update         Combine all core archives into a single update archive"
+	echo "  -a, --all              Build all cores"
+	echo "  -c, --core [cores]     Build specific cores (e.g., -c dosbox-pure sameboy)"
+	echo "  -x, --exclude [cores]  Exclude cores when used with -a (e.g., -a -x fbneo mame2010)"
+	echo "  -p, --purge            Purge cores directory before building"
+	echo "  -f, --force            Force build without purge (ignore cache)"
+	echo "  -u, --update           Combine all core archives into a single update archive"
 	echo ""
 	echo "Notes:"
 	echo "  - Either -a, -c, or -u is required, but NOT together"
@@ -19,6 +21,7 @@ USAGE() {
 	echo ""
 	echo "Examples:"
 	echo "  $0 -a"
+	echo "  $0 -a -x fbneo mame2010"
 	echo "  $0 -c dosbox-pure sameboy"
 	echo "  $0 -p -a"
 	echo "  $0 -p -c dosbox-pure sameboy"
@@ -29,19 +32,25 @@ USAGE() {
 
 # Initialise all options to 0
 PURGE=0
+FORCE=0
 BUILD_ALL=0
 BUILD_CORES=""
+EXCLUDE_CORES=""
 OPTION_SPECIFIED=0
 UPDATE=0
 STORAGE_POINTER=x
 
-# If argument '-p' or '--purge' provided, set PURGE=1
+# If argument '-p' or '--purge' provided first, set PURGE=1
 if [ "$#" -gt 0 ]; then
 	case "$1" in
-		-p | --purge)
-			PURGE=1
-			shift
-			;;
+	  -p|--purge)
+    	PURGE=1
+    	shift
+    	;;
+	  -f|--force)
+    	FORCE=1
+    	shift
+    	;;
 	esac
 fi
 
@@ -70,6 +79,15 @@ while [ "$#" -gt 0 ]; do
 			BUILD_CORES="$*"
 			break
 			;;
+		-x | --exclude)
+			shift
+			if [ "$#" -eq 0 ]; then
+				printf "Error: Missing cores for exclude\n\n" >&2
+				USAGE
+			fi
+			EXCLUDE_CORES="$*"
+			break
+			;;
 		-u | --update)
 			[ "$OPTION_SPECIFIED" -ne 0 ] && USAGE
 			OPTION_SPECIFIED=1
@@ -86,6 +104,16 @@ while [ "$#" -gt 0 ]; do
 			}
 			UPDATE=1
 			;;
+		-f | --force)
+			# Allow force even if not first, for convenience
+			FORCE=1
+			shift
+			;;
+		-p | --purge)
+			# If purge is not first, still accept it
+			PURGE=1
+			shift
+			;;
 		*)
 			printf "Error: Unknown option '%s'\n" "$1" >&2
 			USAGE
@@ -94,7 +122,12 @@ while [ "$#" -gt 0 ]; do
 done
 
 # Confirm a valid argument was provided, else show USAGE
-[ "$OPTION_SPECIFIED" -eq 0 ] && USAGE
+[ "$OPTION_SPECIFIED" -eq 0 ] && [ "$UPDATE" -eq 0 ] && USAGE
+
+# Warn if -x used without -a
+if [ -n "$EXCLUDE_CORES" ] && [ "$BUILD_ALL" -ne 1 ]; then
+	printf "Warning: --exclude is only effective with --all\n"
+fi
 
 # Initialise directory variables
 BASE_DIR=$(pwd)
@@ -105,7 +138,7 @@ PATCH_DIR="$BASE_DIR/patch"
 
 # Create an update zip containing all cores
 UPDATE_ZIP() {
-	UPDATE_ARCHIVE="muOS-RetroArch-Core_Update-$(date +"%Y-%m-%d_%H-%M").zip"
+	UPDATE_ARCHIVE="muOS-RetroArch-Core_Update-$(date +"%Y-%m-%d_%H-%M").muxzip"
 	TEMP_DIR="$(mktemp -d)"
 	CORE_FOLDER="$TEMP_DIR/mnt/$STORAGE_POINTER/MUOS/core"
 
@@ -189,10 +222,8 @@ RETURN_TO_BASE() {
 
 RUN_COMMANDS() {
     printf "\nRunning '%s' commands\n" "$1"
-    # Extract the commands as separate lines from the JSON.
     CMD=$(printf '%s\n' "$2" | jq -r '.[]')
     printf "Running:\n%s\n" "$CMD"
-    # Feed the commands into sh via a here-document so they run in one session.
     sh <<EOF
 $CMD
 EOF
@@ -216,11 +247,17 @@ APPLY_PATCHES() {
 	fi
 }
 
-# Get specific core names or process all cores given as arguments
+# Build target list
 if [ "$BUILD_ALL" -eq 0 ]; then
 	CORES="$BUILD_CORES"
 else
 	CORES=$(jq -r 'keys[]' "$CORE_CONFIG")
+	# Apply exclusion list if any
+	if [ -n "$EXCLUDE_CORES" ]; then
+		for EXC in $EXCLUDE_CORES; do
+			CORES=$(printf "%s\n" $CORES | grep -vx "$EXC")
+		done
+	fi
 fi
 
 # Load the cache file
@@ -256,12 +293,14 @@ for NAME in $CORES; do
 		continue
 	fi
 
-	# Optional branch/commit hash
 	BRANCH=$(echo "$MODULE" | jq -r '.branch // ""')
-
-	# Optional keys
 	PRE_MAKE=$(echo "$MODULE" | jq -r '.commands["pre-make"] // []')
 	POST_MAKE=$(echo "$MODULE" | jq -r '.commands["post-make"] // []')
+	CORE_PURGE_FLAG=$(echo "$MODULE" | jq -r '.purge // 0')
+	case "$CORE_PURGE_FLAG" in
+		1) CORE_PURGE_FLAG=1 ;;
+		*) CORE_PURGE_FLAG=0 ;;
+	esac
 
 	CORE_DIR="$CORES_DIR/$DIR"
 
@@ -270,7 +309,7 @@ for NAME in $CORES; do
 	# Get cached hash
 	CACHED_HASH=$(jq -r --arg name "$NAME" '.[$name] // ""' "$CACHE_FILE")
 
-	# Get remote hash before cloning, modified for commit hash support:
+	# Resolve remote hash
 	if [ -n "$BRANCH" ]; then
 	    if echo "$BRANCH" | grep -qE '^[0-9a-f]{7,40}$'; then
 	         REMOTE_HASH="$BRANCH"
@@ -288,21 +327,27 @@ for NAME in $CORES; do
 
 	printf "Remote hash: %s\n" "$REMOTE_HASH"
 	printf "Cached hash: %s\n" "$CACHED_HASH"
+	[ "$CORE_PURGE_FLAG" -eq 1 ] && printf "purge: enabled for this core\n"
 
-	if [ "$CACHED_HASH" = "$REMOTE_HASH" ] && [ "$PURGE" -eq 0 ] && [ -f "$BUILD_DIR/$OUTPUT.zip" ]; then
-		printf "Core '%s' is up to date (hash: %s). Skipping build.\n" "$NAME" "$REMOTE_HASH"
-		continue
+	# Skip only when not forcing, hashes match, no global purge, no per-core purge, and zip exists
+	if [ "$FORCE" -eq 0 ] && [ "$CACHED_HASH" = "$REMOTE_HASH" ] && \
+	   [ "$PURGE" -eq 0 ] && [ "$CORE_PURGE_FLAG" -eq 0 ] && \
+	   [ -f "$BUILD_DIR/$OUTPUT.zip" ]; then
+  		printf "Core '%s' is up to date (hash: %s). Skipping build.\n" "$NAME" "$REMOTE_HASH"
+  		# No cache update needed
+  		continue
 	fi
 
-	if [ "$PURGE" -eq 1 ]; then
+	# Purge if requested globally or per-core
+	if [ "$PURGE" -eq 1 ] || [ "$CORE_PURGE_FLAG" -eq 1 ]; then
 		printf "Purging core '%s' directory\n" "$DIR"
 		rm -rf "$CORE_DIR"
 	fi
 
 	BEEN_CLONED=0
 	if [ ! -d "$CORE_DIR" ]; then
-		printf "Core '%s' not found\n\n" "$DIR" "$SOURCE"
-		# Modify clone command: if BRANCH is a commit hash, do not include -b.
+		printf "Core '%s' not found\n\n" "$DIR"
+		# Clone
 		if [ -n "$BRANCH" ] && echo "$BRANCH" | grep -qE '^[0-9a-f]{7,40}$'; then
 			GC_CMD="git clone --progress --quiet --recurse-submodules -j$(nproc) $SOURCE $CORE_DIR"
 		else
@@ -315,31 +360,20 @@ for NAME in $CORES; do
 			continue
 		}
 
-		# If a commit hash was provided, checkout that commit after cloning.
+		# Enter repo to init submodules and optional commit checkout
+		cd "$CORE_DIR" || { printf "Failed to enter %s\n" "$CORE_DIR" >&2; RETURN_TO_BASE; continue; }
+
 		if [ -n "$BRANCH" ] && echo "$BRANCH" | grep -qE '^[0-9a-f]{7,40}$'; then
-			cd "$CORE_DIR" || exit 1
-			git fetch --all
-			git checkout --detach "$BRANCH" || {
-				printf "Failed to checkout commit %s in %s\n" "$BRANCH" "$CORE_DIR" >&2
-				continue
-			}
-			cd - > /dev/null
+			git fetch --all || { printf "Failed to fetch in %s\n" "$CORE_DIR" >&2; RETURN_TO_BASE; continue; }
+			git checkout --detach "$BRANCH" || { printf "Failed to checkout %s\n" "$BRANCH" >&2; RETURN_TO_BASE; continue; }
 		fi
 
-		# Always update submodules even if the repo exists
 		git submodule update --init --recursive || {
 			printf "Failed to update submodules for %s\n" "$NAME" >&2
 			RETURN_TO_BASE
 			continue
 		}
 
-		# Update all submodules recursively
-		git submodule update --init --recursive || {
-			printf "Failed to update submodules for %s\n" "$SOURCE" >&2
-			cd - > /dev/null  # Return to previous directory
-			continue
-		}
-		# Return to previous directory
 		cd - > /dev/null
 		printf "\n"
 		BEEN_CLONED=1
@@ -350,44 +384,51 @@ for NAME in $CORES; do
 		continue
 	}
 
-	cd "$CORE_DIR" || {
-		printf "Failed to enter directory %s\n" "$CORE_DIR" >&2
+	# Enter repo for update and build
+	cd "$CORE_DIR" || { printf "Failed to enter %s\n" "$CORE_DIR" >&2; continue; }
+
+	# Ensure submodules are present
+	git submodule update --init --recursive || {
+		printf "Failed to update submodules for %s\n" "$NAME" >&2
+		RETURN_TO_BASE
 		continue
 	}
 
-    # Always update submodules even if the repo exists
-    git submodule update --init --recursive || {
-        printf "Failed to update submodules for %s\n" "$NAME" >&2
-        RETURN_TO_BASE
-        continue
-    }
-
 	if [ $BEEN_CLONED -eq 0 ]; then
-    # If the BRANCH is a commit hash (i.e., a sequence of hexadecimal digits), then
-    # skip git pull and instead fetch and force checkout the desired commit.
-    if [ -n "$BRANCH" ] && echo "$BRANCH" | grep -qE '^[0-9a-f]{7,40}$'; then
-        printf "Repository already cloned. Fetching updates and checking out commit '%s'\n" "$BRANCH"
-        git fetch --all || {
-           printf "Failed to fetch updates for '%s'\n" "$NAME" >&2
-           RETURN_TO_BASE
-           continue
-        }
-        git checkout --detach "$BRANCH" || {
-           printf "Failed to checkout commit '%s' for '%s'\n" "$BRANCH" "$NAME" >&2
-           RETURN_TO_BASE
-           continue
-        }
-    else
-        printf "Pulling latest changes for '%s'\n" "$NAME"
-        git pull --quiet --recurse-submodules -j8 || {
-            printf "Failed to pull latest changes for '%s'\n" "$NAME" >&2
-            RETURN_TO_BASE
-            continue
-        }
-    fi
-fi
+		if [ -n "$BRANCH" ] && echo "$BRANCH" | grep -qE '^[0-9a-f]{7,40}$'; then
+			printf "Repository already cloned. Fetching updates and checking out commit '%s'\n" "$BRANCH"
+			git fetch --all || {
+				printf "Failed to fetch updates for '%s'\n" "$NAME" >&2
+				RETURN_TO_BASE
+				continue
+			}
+			git checkout --detach "$BRANCH" || {
+				printf "Failed to checkout commit '%s' for '%s'\n" "$BRANCH" "$NAME" >&2
+				RETURN_TO_BASE
+				continue
+			}
+		else
+			printf "Updating '%s' to remote HEAD\n" "$NAME"
+			git fetch --quiet origin || {
+				printf "  fetch failed for '%s'\n" "$NAME" >&2
+				RETURN_TO_BASE
+				continue
+			}
+			git reset --hard origin/HEAD || {
+				printf "  reset failed for '%s'\n" "$NAME" >&2
+				RETURN_TO_BASE
+				continue
+			}
+			git submodule sync --quiet
+			git submodule update --init --recursive --quiet || {
+				printf "  submodule update failed for '%s'\n" "$NAME" >&2
+				RETURN_TO_BASE
+				continue
+			}
+		fi
+	fi
 
-	# Verify local hash matches remote hash after clone/pull
+	# Verify local hash matches remote hash after clone or update
 	LOCAL_HASH=$(git rev-parse --short HEAD | cut -c 1-7)
 	if [ "$LOCAL_HASH" != "$REMOTE_HASH" ]; then
 		printf "Warning: Local hash (%s) doesn't match remote hash (%s)\n" "$LOCAL_HASH" "$REMOTE_HASH" >&2
@@ -433,7 +474,7 @@ fi
     	jq --arg name "$NAME" --arg hash "$REMOTE_HASH" \
     	   '.[$name] = $hash' "$CACHE_FILE" >"$CACHE_FILE.tmp" && mv "$CACHE_FILE.tmp" "$CACHE_FILE"
 	else
-    	printf "\nBuild FAILED: %s — see %s\n" "$NAME" "$LOGFILE" >&2
+    	printf "\nBuild FAILED: %s - see %s\n" "$NAME" "$LOGFILE" >&2
     	RETURN_TO_BASE
     	continue
 	fi
@@ -455,7 +496,6 @@ fi
 			$STRIP -sx "$OUTPUT"
 			printf "\nStripped debug symbols"
 		fi
-
 		# Check if the BuildID section is present
 		if readelf -S "$OUTPUT" | grep -Fq '.note.gnu.build-id'; then
 			$OBJCOPY --remove-section=.note.gnu.build-id "$OUTPUT"
@@ -476,6 +516,7 @@ fi
 
 	cd "$BUILD_DIR" || {
 		printf "Failed to enter directory %s\n" "$BUILD_DIR" >&2
+		RETURN_TO_BASE
 		continue
 	}
 
@@ -488,16 +529,14 @@ fi
 	ESCAPED_OUTPUT_ZIP=$(printf "%s" "$OUTPUT.zip" | sed 's/[\\/&]/\\&/g')
 
 	if [ -f .index-extended ]; then
-		sed "/$ESCAPED_OUTPUT_ZIP/d" .index-extended >.index-extended.tmp
-		mv .index-extended.tmp .index-extended
+		sed "/$ESCAPED_OUTPUT_ZIP/d" .index-extended >.index-extended.tmp && mv .index-extended.tmp .index-extended
 	else
 		touch .index-extended
 	fi
 	echo "$INDEX" >>.index-extended
 
 	if [ -f .index ]; then
-		sed "/$ESCAPED_OUTPUT_ZIP/d" .index >.index.tmp
-		mv .index.tmp .index
+		sed "/$ESCAPED_OUTPUT_ZIP/d" .index >.index.tmp && mv .index.tmp .index
 	else
 		touch .index
 	fi
@@ -511,7 +550,7 @@ fi
 		rm -rf "$CORE_DIR"
 	else
 		printf "Cleaning build environment for '%s'\n" "$NAME"
-		make clean >/dev/null 2>&1 || {
+		make -C "$CORE_DIR" clean >/dev/null 2>&1 || {
 			printf "Clean failed or not required\n" >&2
 		}
 	fi
