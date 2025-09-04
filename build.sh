@@ -105,12 +105,10 @@ while [ "$#" -gt 0 ]; do
 			UPDATE=1
 			;;
 		-f | --force)
-			# Allow force even if not first, for convenience
 			FORCE=1
 			shift
 			;;
 		-p | --purge)
-			# If purge is not first, still accept it
 			PURGE=1
 			shift
 			;;
@@ -277,8 +275,9 @@ for NAME in $CORES; do
 	fi
 
 	# Required keys
-	DIR=$(echo "$MODULE" | jq -r '.directory')
-	OUTPUT=$(echo "$MODULE" | jq -r '.output')
+	DIR=$(echo "$MODULE"   | jq -r '.directory')
+	# Accept output as string or array; normalize to space-separated list
+	OUTPUT_LIST=$(echo "$MODULE" | jq -r '.output | if type=="string" then . else join(" ") end')
 	SOURCE=$(echo "$MODULE" | jq -r '.source')
 	SYMBOLS=$(echo "$MODULE" | jq -r '.symbols')
 
@@ -288,14 +287,14 @@ for NAME in $CORES; do
 	MAKE_TARGET=$(echo "$MODULE" | jq -r '.make.target')
 
 	# Verify required keys
-	if [ -z "$DIR" ] || [ -z "$OUTPUT" ] || [ -z "$SOURCE" ] || [ -z "$MAKE_FILE" ] || [ -z "$SYMBOLS" ]; then
+	if [ -z "$DIR" ] || [ -z "$OUTPUT_LIST" ] || [ -z "$SOURCE" ] || [ -z "$MAKE_FILE" ] || [ -z "$SYMBOLS" ]; then
 		printf "Missing required configuration keys for '%s' in '%s'\n" "$NAME" "$CORE_CONFIG" >&2
 		continue
 	fi
 
-	BRANCH=$(echo "$MODULE" | jq -r '.branch // ""')
-	PRE_MAKE=$(echo "$MODULE" | jq -r '.commands["pre-make"] // []')
-	POST_MAKE=$(echo "$MODULE" | jq -r '.commands["post-make"] // []')
+	BRANCH=$(echo "$MODULE"     | jq -r '.branch // ""')
+	PRE_MAKE=$(echo "$MODULE"   | jq -r '.commands["pre-make"] // []')
+	POST_MAKE=$(echo "$MODULE"  | jq -r '.commands["post-make"] // []')
 	CORE_PURGE_FLAG=$(echo "$MODULE" | jq -r '.purge // 0')
 	case "$CORE_PURGE_FLAG" in
 		1) CORE_PURGE_FLAG=1 ;;
@@ -329,12 +328,24 @@ for NAME in $CORES; do
 	printf "Cached hash: %s\n" "$CACHED_HASH"
 	[ "$CORE_PURGE_FLAG" -eq 1 ] && printf "purge: enabled for this core\n"
 
+	# Determine expected zip name for up-to-date check based on outputs
+	# Use a subshell to avoid clobbering positional parameters
+	EXPECTED_ZIP_NAME=$(
+		set -- $OUTPUT_LIST
+		if [ "$#" -eq 1 ]; then
+			bn=$(basename "$1")
+			printf "%s.zip" "$bn"
+		else
+			printf "%s.zip" "$NAME"
+		fi
+	)
+
 	# Skip only when not forcing, hashes match, no global purge, no per-core purge, and zip exists
+	ZIP_NAME="$EXPECTED_ZIP_NAME"
 	if [ "$FORCE" -eq 0 ] && [ "$CACHED_HASH" = "$REMOTE_HASH" ] && \
 	   [ "$PURGE" -eq 0 ] && [ "$CORE_PURGE_FLAG" -eq 0 ] && \
-	   [ -f "$BUILD_DIR/$OUTPUT.zip" ]; then
+	   [ -f "$BUILD_DIR/$ZIP_NAME" ]; then
   		printf "Core '%s' is up to date (hash: %s). Skipping build.\n" "$NAME" "$REMOTE_HASH"
-  		# No cache update needed
   		continue
 	fi
 
@@ -449,7 +460,7 @@ for NAME in $CORES; do
 	printf "\n\tARGS:\t%s" "$MAKE_ARGS"
 	printf "\n\tTARGET: %s\n" "$MAKE_TARGET"
 
-	printf "\nBuilding '%s' (%s) ..." "$NAME" "$OUTPUT"
+	printf "\nBuilding '%s' ...\n" "$NAME"
 
 	(while :; do
 		printf '.'
@@ -458,11 +469,6 @@ for NAME in $CORES; do
 
 	PV_PID=$!
 	trap 'kill $PV_PID 2>/dev/null' EXIT
-
-	MAKE_CMD="make V=1 -j$(nproc)"
-	[ -n "$MAKE_FILE" ] && MAKE_CMD="$MAKE_CMD -f $MAKE_FILE"
-	[ -n "$MAKE_ARGS" ] && MAKE_CMD="$MAKE_CMD $MAKE_ARGS"
-	[ -n "$MAKE_TARGET" ] && MAKE_CMD="$MAKE_CMD $MAKE_TARGET"
 
 	LOGFILE="$(dirname "$0")/build.log"
 	START_TS=$(date +%s)
@@ -490,29 +496,48 @@ for NAME in $CORES; do
 		fi
 	fi
 
-	if [ "$SYMBOLS" -eq 0 ]; then
-		# Check if the output is not stripped already
-		if file "$OUTPUT" | grep -q 'not stripped'; then
-			$STRIP -sx "$OUTPUT"
-			printf "\nStripped debug symbols"
-		fi
-		# Check if the BuildID section is present
-		if readelf -S "$OUTPUT" | grep -Fq '.note.gnu.build-id'; then
-			$OBJCOPY --remove-section=.note.gnu.build-id "$OUTPUT"
-			printf "\nRemoved BuildID section"
-		fi
-	fi
+	# Strip and relocate all outputs, then zip them together as $ZIP_NAME
+	OUTPUTS="$OUTPUT_LIST"
 
-	printf "\nFile Information: %s\n" "$(file -b "$OUTPUT")"
-
-	printf "\nMoving '%s' to '%s'\n" "$OUTPUT" "$BUILD_DIR"
-	mv "$OUTPUT" "$BUILD_DIR" || {
-		printf "Failed to move '%s' for '%s' to '%s'\n" "$OUTPUT" "$NAME" "$BUILD_DIR" >&2
+	# Validate each output exists
+	MISSING=0
+	for OUTFILE in $OUTPUTS; do
+		if [ ! -f "$OUTFILE" ]; then
+			printf "Missing expected output '%s' for '%s'\n" "$OUTFILE" "$NAME" >&2
+			MISSING=1
+		fi
+	done
+	if [ "$MISSING" -ne 0 ]; then
 		RETURN_TO_BASE
 		continue
-	}
+	fi
 
-	printf "\nIndexing and compressing '%s'\n" "$OUTPUT"
+	# Process each output
+	for OUTFILE in $OUTPUTS; do
+		if [ "$SYMBOLS" -eq 0 ]; then
+			# Only attempt to strip ELF binaries
+			if file "$OUTFILE" | grep -q 'ELF'; then
+				if file "$OUTFILE" | grep -q 'not stripped'; then
+					$STRIP -sx "$OUTFILE" 2>/dev/null && printf "Stripped debug symbols: %s\n" "$OUTFILE"
+				fi
+				if readelf -S "$OUTFILE" 2>/dev/null | grep -Fq '.note.gnu.build-id'; then
+					$OBJCOPY --remove-section=.note.gnu.build-id "$OUTFILE" 2>/dev/null && printf "Removed BuildID section: %s\n" "$OUTFILE"
+				fi
+			fi
+		fi
+		printf "File Information: %s\n" "$(file -b "$OUTFILE")"
+	done
+
+	printf "\nMoving outputs to '%s'\n" "$BUILD_DIR"
+	for OUTFILE in $OUTPUTS; do
+		mv "$OUTFILE" "$BUILD_DIR" || {
+			printf "Failed to move '%s' for '%s' to '%s'\n" "$OUTFILE" "$NAME" "$BUILD_DIR" >&2
+			RETURN_TO_BASE
+			continue 2
+		}
+	done
+
+	printf "\nIndexing and compressing outputs for '%s'\n" "$NAME"
 
 	cd "$BUILD_DIR" || {
 		printf "Failed to enter directory %s\n" "$BUILD_DIR" >&2
@@ -520,27 +545,49 @@ for NAME in $CORES; do
 		continue
 	}
 
-	INDEX=$(printf "%s %08x %s" "$(date +%Y-%m-%d)" "$(cksum "$OUTPUT" | awk '{print $1}')" "$OUTPUT.zip")
+	# Decide zip name based on how many outputs we had
+	ZIP_NAME=$(
+		set -- $OUTPUTS
+		if [ "$#" -eq 1 ]; then
+			printf "%s.zip" "$(basename "$1")"
+		else
+			printf "%s.zip" "$NAME"
+		fi
+	)
+	[ -f "$ZIP_NAME" ] && rm -f "$ZIP_NAME"
 
-	[ -f "$OUTPUT.zip" ] && rm -f "$OUTPUT.zip"
-	zip -q "$OUTPUT.zip" "$OUTPUT"
-	rm "$OUTPUT"
+	# Zip moved files by basename
+	BASENAMES=""
+	for OUTFILE in $OUTPUTS; do
+		BASENAMES="$BASENAMES $(basename "$OUTFILE")"
+	done
+	# shellcheck disable=SC2086
+	zip -q "$ZIP_NAME" $BASENAMES
 
-	ESCAPED_OUTPUT_ZIP=$(printf "%s" "$OUTPUT.zip" | sed 's/[\\/&]/\\&/g')
+	# Remove raw outputs after packaging
+	for OUTFILE in $OUTPUTS; do
+		rm -f "$(basename "$OUTFILE")"
+	done
+
+	# Update indexes using checksum of the zip (covers multi-file case)
+	CKSUM=$(cksum "$ZIP_NAME" | awk '{print $1}')
+	INDEX_LINE="$(date +%Y-%m-%d) $(printf "%08x" "$CKSUM") $ZIP_NAME"
+
+	ESCAPED_ZIP=$(printf "%s" "$ZIP_NAME" | sed 's/[\\/&]/\\&/g')
 
 	if [ -f .index-extended ]; then
-		sed "/$ESCAPED_OUTPUT_ZIP/d" .index-extended >.index-extended.tmp && mv .index-extended.tmp .index-extended
+		sed "/$ESCAPED_ZIP/d" .index-extended >.index-extended.tmp && mv .index-extended.tmp .index-extended
 	else
 		touch .index-extended
 	fi
-	echo "$INDEX" >>.index-extended
+	echo "$INDEX_LINE" >>.index-extended
 
 	if [ -f .index ]; then
-		sed "/$ESCAPED_OUTPUT_ZIP/d" .index >.index.tmp && mv .index.tmp .index
+		sed "/$ESCAPED_ZIP/d" .index >.index.tmp && mv .index.tmp .index
 	else
 		touch .index
 	fi
-	echo "$OUTPUT.zip" >>.index
+	echo "$ZIP_NAME" >>.index
 
 	sort -k3 .index-extended -o .index-extended
 	sort .index -o .index

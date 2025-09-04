@@ -228,17 +228,6 @@
     },
     "symbols": 0
   },
-  "dice": {
-    "source": "https://github.com/mittonk/dice-libretro.git",
-    "directory": "dice-libretro",
-    "output": "dice_libretro.so",
-    "make": {
-      "file": "Makefile.libretro",
-      "args": "",
-      "target": ""
-    },
-    "symbols": 0
-  },
   "dosbox_pure": {
     "source": "https://github.com/schellingb/dosbox-pure",
     "directory": "dosbox-pure",
@@ -545,6 +534,17 @@
       ]
     }
   },
+    "morpheuscast_xtreme": {
+    "source": "https://github.com/KMFDManic/morpheuscast_xtreme",
+    "directory": "morpheuscast_xtreme",
+    "output": "km_morpheuscast_xtreme_libretro.so",
+    "make": {
+      "file": "Makefile",
+      "args": "platform=brick",
+      "target": ""
+    },
+    "symbols": 0
+  },
   "fmsx": {
     "source": "https://github.com/libretro/fmsx-libretro",
     "directory": "fmsx-libretro",
@@ -579,9 +579,9 @@
     "symbols": 0
   },
   "freej2me": {
-    "source": "https://github.com/vancuong196/freej2me-plus-rg35xxh",
+    "source": "https://github.com/TASEmulators/freej2me-plus",
     "directory": "freej2me-plus",
-    "output": "freej2me_libretro.so",
+    "output": ["freej2me_libretro.so", "freej2me-lr.jar"],
     "make": {
       "file": "Makefile",
       "args": "-C src/libretro",
@@ -590,10 +590,12 @@
     "symbols": 0,
     "commands": {
       "pre-make": [
+        "ant",
         "cd src/libretro"
       ],
       "post-make": [
-      "mv src/libretro/freej2me_libretro.so ."
+      "mv src/libretro/freej2me_libretro.so .",
+      "mv build/freej2me-lr.jar ."
       ]
     }
   },
@@ -718,7 +720,7 @@
     }
   },
   "genesis_plus_gx": {
-    "source": "https://github.com/libretro/Genesis-Plus-GX",
+    "source": "https://github.com/RapidEdwin08/Genesis-Plus-GX-Expanded-Rom-Size",
     "directory": "Genesis-Plus-GX",
     "output": "genesis_plus_gx_libretro.so",
     "make": {
@@ -835,6 +837,7 @@
   },
     "fbneo": {
     "source": "https://github.com/libretro/FBNeo",
+    "purge": 1,
     "directory": "FBNeo",
     "output": "fbneo_libretro.so",
     "make": {
@@ -902,7 +905,33 @@
     },
     "symbols": 0
   },
-  "mame2000": {
+  "ludicrous-2k22-xtreme-amped": {
+    "source": "https://github.com/KMFDManic/ludicrous-2k22-xtreme-amped",
+    "branch": "",
+    "purge": 0,
+    "directory": "ludicrous-2k22-xtreme-amped",
+    "output": "ludicrous-2k22-xtreme-amped_libretro.so",
+    "make": {
+      "file": "Makefile",
+      "args": "LIBRETRO=1 LLE=1 CFLAGS='-fcommon'",
+      "target": ""
+    },
+    "symbols": 0
+  },
+  "ludicrous-2k24-xtreme-amped": {
+    "source": "https://github.com/KMFDManic/ludicrous-2k24-xtreme-amped",
+    "branch": "",
+    "purge": 0,
+    "directory": "ludicrous-2k24-xtreme-amped",
+    "output": "ludicrous-2k24-xtreme-amped_libretro.so",
+    "make": {
+      "file": "Makefile",
+      "args": "LIBRETRO=1 LLE=1 CFLAGS='-fcommon'",
+      "target": ""
+    },
+    "symbols": 0
+  },
+    "mame2000": {
     "source": "https://github.com/libretro/mame2000-libretro",
     "directory": "mame2000-libretro",
     "output": "mame2000_libretro.so",
@@ -946,7 +975,7 @@
     },
     "symbols": 0
   },
-  "mame2010": {
+    "mame2010": {
     "source": "https://github.com/libretro/mame2010-libretro",
     "directory": "mame2010-libretro",
     "output": "mame2010_libretro.so",
@@ -1088,6 +1117,37 @@
       "target": ""
     },
     "symbols": 0
+  },
+  "melonds": {
+    "source": "https://github.com/libretro/melonds",
+    "directory": "melonDS",
+    "output": "melonds_libretro.so",
+    "make": {
+      "file": "Makefile",
+      "args": "",
+      "target": ""
+    },
+    "symbols": 0
+  },
+  "melondsds": {
+    "source": "https://github.com/JesseTG/melonds-ds",
+    "directory": "melonds-ds",
+    "output": "melondsds_libretro.so",
+    "make": {
+      "file": "Makefile",
+      "args": "-C build",
+      "target": ""
+    },
+    "symbols": 0,
+    "commands": {
+      "pre-make": [
+        "cmake -B build",
+        "cmake --build build -j$(nproc --all)"
+      ],
+      "post-make": [
+      "mv build/src/libretro/melondsds_libretro.so ."
+      ]
+    }
   },
   "mesen": {
     "source": "https://github.com/libretro/Mesen",
