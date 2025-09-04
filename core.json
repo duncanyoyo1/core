@@ -730,7 +730,7 @@
       ]
     }
   },
-    "genesis_plus_gx": {
+  "genesis_plus_gx": {
     "source": "https://github.com/libretro/Genesis-Plus-GX",
     "directory": "Genesis-Plus-GX",
     "output": "genesis_plus_gx_libretro.so",
