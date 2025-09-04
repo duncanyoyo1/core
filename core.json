@@ -730,8 +730,8 @@
       ]
     }
   },
-  "genesis_plus_gx": {
-    "source": "https://github.com/RapidEdwin08/Genesis-Plus-GX-Expanded-Rom-Size",
+    "genesis_plus_gx": {
+    "source": "https://github.com/libretro/Genesis-Plus-GX",
     "directory": "Genesis-Plus-GX",
     "output": "genesis_plus_gx_libretro.so",
     "make": {
@@ -740,6 +740,22 @@
       "target": ""
     },
     "symbols": 0
+  },
+  "genesis_plus_gx_expanded": {
+    "source": "https://github.com/RapidEdwin08/Genesis-Plus-GX-Expanded-Rom-Size",
+    "directory": "Genesis-Plus-GX",
+    "output": "genesis_plus_gx_expanded_libretro.so",
+    "make": {
+      "file": "Makefile.libretro",
+      "args": "",
+      "target": ""
+    },
+    "symbols": 0,
+    "commands": {
+      "post-make": [
+      "mv genesis_plus_gx_libretro.so genesis_plus_gx_expanded_libretro.so"
+      ]
+    }
   },
   "geolith": {
     "source": "https://github.com/libretro/geolith-libretro",
