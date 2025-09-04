@@ -916,33 +916,7 @@
     },
     "symbols": 0
   },
-  "ludicrous-2k22-xtreme-amped": {
-    "source": "https://github.com/KMFDManic/ludicrous-2k22-xtreme-amped",
-    "branch": "",
-    "purge": 0,
-    "directory": "ludicrous-2k22-xtreme-amped",
-    "output": "ludicrous-2k22-xtreme-amped_libretro.so",
-    "make": {
-      "file": "Makefile",
-      "args": "LIBRETRO=1 LLE=1 CFLAGS='-fcommon'",
-      "target": ""
-    },
-    "symbols": 0
-  },
-  "ludicrous-2k24-xtreme-amped": {
-    "source": "https://github.com/KMFDManic/ludicrous-2k24-xtreme-amped",
-    "branch": "",
-    "purge": 0,
-    "directory": "ludicrous-2k24-xtreme-amped",
-    "output": "ludicrous-2k24-xtreme-amped_libretro.so",
-    "make": {
-      "file": "Makefile",
-      "args": "LIBRETRO=1 LLE=1 CFLAGS='-fcommon'",
-      "target": ""
-    },
-    "symbols": 0
-  },
-    "mame2000": {
+  "mame2000": {
     "source": "https://github.com/libretro/mame2000-libretro",
     "directory": "mame2000-libretro",
     "output": "mame2000_libretro.so",
@@ -986,7 +960,7 @@
     },
     "symbols": 0
   },
-    "mame2010": {
+  "mame2010": {
     "source": "https://github.com/libretro/mame2010-libretro",
     "directory": "mame2010-libretro",
     "output": "mame2010_libretro.so",
@@ -1128,37 +1102,6 @@
       "target": ""
     },
     "symbols": 0
-  },
-  "melonds": {
-    "source": "https://github.com/libretro/melonds",
-    "directory": "melonDS",
-    "output": "melonds_libretro.so",
-    "make": {
-      "file": "Makefile",
-      "args": "",
-      "target": ""
-    },
-    "symbols": 0
-  },
-  "melondsds": {
-    "source": "https://github.com/JesseTG/melonds-ds",
-    "directory": "melonds-ds",
-    "output": "melondsds_libretro.so",
-    "make": {
-      "file": "Makefile",
-      "args": "-C build",
-      "target": ""
-    },
-    "symbols": 0,
-    "commands": {
-      "pre-make": [
-        "cmake -B build",
-        "cmake --build build -j$(nproc --all)"
-      ],
-      "post-make": [
-      "mv build/src/libretro/melondsds_libretro.so ."
-      ]
-    }
   },
   "mesen": {
     "source": "https://github.com/libretro/Mesen",
