@@ -744,6 +744,7 @@
   },
   "genesis_plus_gx_expanded": {
     "source": "https://github.com/RapidEdwin08/Genesis-Plus-GX-Expanded-Rom-Size",
+    "purge": 1,
     "directory": "Genesis-Plus-GX",
     "output": "genesis_plus_gx_expanded_libretro.so",
     "make": {
