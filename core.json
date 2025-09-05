@@ -545,6 +545,17 @@
       ]
     }
   },
+    "morpheuscast_xtreme": {
+    "source": "https://github.com/KMFDManic/morpheuscast_xtreme",
+    "directory": "morpheuscast_xtreme",
+    "output": "km_morpheuscast_xtreme_libretro.so",
+    "make": {
+      "file": "Makefile",
+      "args": "platform=brick",
+      "target": ""
+    },
+    "symbols": 0
+  },
   "fmsx": {
     "source": "https://github.com/libretro/fmsx-libretro",
     "directory": "fmsx-libretro",
@@ -579,9 +590,9 @@
     "symbols": 0
   },
   "freej2me": {
-    "source": "https://github.com/vancuong196/freej2me-plus-rg35xxh",
+    "source": "https://github.com/TASEmulators/freej2me-plus",
     "directory": "freej2me-plus",
-    "output": "freej2me_libretro.so",
+    "output": ["freej2me_libretro.so", "freej2me-lr.jar"],
     "make": {
       "file": "Makefile",
       "args": "-C src/libretro",
@@ -590,10 +601,12 @@
     "symbols": 0,
     "commands": {
       "pre-make": [
+        "ant",
         "cd src/libretro"
       ],
       "post-make": [
-      "mv src/libretro/freej2me_libretro.so ."
+      "mv src/libretro/freej2me_libretro.so .",
+      "mv build/freej2me-lr.jar ."
       ]
     }
   },
@@ -719,6 +732,7 @@
   },
   "genesis_plus_gx": {
     "source": "https://github.com/libretro/Genesis-Plus-GX",
+    "purge": 1,
     "directory": "Genesis-Plus-GX",
     "output": "genesis_plus_gx_libretro.so",
     "make": {
@@ -727,6 +741,23 @@
       "target": ""
     },
     "symbols": 0
+  },
+  "genesis_plus_gx_expanded": {
+    "source": "https://github.com/RapidEdwin08/Genesis-Plus-GX-Expanded-Rom-Size",
+    "purge": 1,
+    "directory": "Genesis-Plus-GX",
+    "output": "genesis_plus_gx_expanded_libretro.so",
+    "make": {
+      "file": "Makefile.libretro",
+      "args": "",
+      "target": ""
+    },
+    "symbols": 0,
+    "commands": {
+      "post-make": [
+      "mv genesis_plus_gx_libretro.so genesis_plus_gx_expanded_libretro.so"
+      ]
+    }
   },
   "geolith": {
     "source": "https://github.com/libretro/geolith-libretro",
@@ -835,6 +866,7 @@
   },
     "fbneo": {
     "source": "https://github.com/libretro/FBNeo",
+    "purge": 1,
     "directory": "FBNeo",
     "output": "fbneo_libretro.so",
     "make": {
