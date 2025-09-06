@@ -1,6 +1,7 @@
 {
   "2048": {
     "source": "https://github.com/libretro/libretro-2048",
+    "branch": "86e02d3",
     "directory": "libretro-2048",
     "output": "2048_libretro.so",
     "make": {
@@ -12,6 +13,7 @@
   },
   "81": {
     "source": "https://github.com/libretro/81-libretro",
+    "branch": "ffc99f2",
     "directory": "81-libretro",
     "output": "81_libretro.so",
     "make": {
@@ -23,6 +25,7 @@
   },
   "a5200": {
     "source": "https://github.com/libretro/a5200",
+    "branch": "5264040",
     "directory": "a5200",
     "output": "a5200_libretro.so",
     "make": {
@@ -34,6 +37,7 @@
   },
   "ardens": {
     "source": "https://github.com/tiberiusbrown/Ardens",
+    "branch": "66058b7",
     "directory": "Ardens",
     "output": "ardens_libretro.so",
     "make": {
@@ -56,6 +60,7 @@
   },
   "arduous": {
     "source": "https://github.com/libretro/arduous",
+    "branch": "2273b48",
     "directory": "arduous",
     "output": "arduous_libretro.so",
     "make": {
@@ -79,6 +84,7 @@
   },
   "atari800": {
     "source": "https://github.com/libretro/libretro-atari800",
+    "branch": "6a18cb2",
     "directory": "libretro-atari800",
     "output": "atari800_libretro.so",
     "make": {
@@ -90,6 +96,7 @@
   },
   "bk": {
     "source": "https://github.com/libretro/bk-emulator",
+    "branch": "f95d929",
     "directory": "bk-emulator",
     "output": "bk_libretro.so",
     "make": {
@@ -101,6 +108,7 @@
   },
   "bluemsx": {
     "source": "https://github.com/libretro/blueMSX-libretro",
+    "branch": "efaaa10",
     "directory": "blueMSX-libretro",
     "output": "bluemsx_libretro.so",
     "make": {
@@ -112,6 +120,7 @@
   },
   "bnes": {
     "source": "https://github.com/libretro/bnes-libretro",
+    "branch": "8e26e89",
     "directory": "bnes-libretro",
     "output": "bnes_libretro.so",
     "make": {
@@ -123,6 +132,7 @@
   },
   "bsnes-jg": {
     "source": "https://github.com/libretro/bsnes-jg",
+    "branch": "3f37a92",
     "directory": "bsnes-jg",
     "output": "bsnes-jg_libretro.so",
     "make": {
@@ -142,6 +152,7 @@
   },
   "bsnes2014_performance": {
     "source": "https://github.com/libretro/bsnes2014",
+    "branch": "3beff8e",
     "directory": "bsnes2014",
     "output": "bsnes2014_performance_libretro.so",
     "make": {
@@ -153,6 +164,7 @@
   },
   "bsnes_cplusplus98": {
     "source": "https://github.com/libretro/bsnes-libretro-cplusplus98",
+    "branch": "0ac6a16",
     "directory": "bsnes-libretro-cplusplus98",
     "output": "bsnes_cplusplus98_libretro.so",
     "make": {
@@ -164,6 +176,7 @@
   },
   "bsnes_mercury_performance": {
     "source": "https://github.com/libretro/bsnes-mercury",
+    "branch": "0f35d04",
     "directory": "bsnes-mercury",
     "output": "bsnes_mercury_performance_libretro.so",
     "make": {
@@ -175,6 +188,7 @@
   },
   "cannonball": {
     "source": "https://github.com/libretro/cannonball",
+    "branch": "5137a79",
     "directory": "cannonball",
     "output": "cannonball_libretro.so",
     "make": {
@@ -186,6 +200,7 @@
   },
   "cap32": {
     "source": "https://github.com/libretro/libretro-cap32",
+    "branch": "a5d96c5",
     "directory": "libretro-cap32",
     "output": "cap32_libretro.so",
     "make": {
@@ -197,6 +212,7 @@
   },
   "chailove": {
     "source": "https://github.com/libretro/libretro-chailove",
+    "branch": "467cd45",
     "directory": "libretro-chailove",
     "output": "chailove_libretro.so",
     "make": {
@@ -208,6 +224,7 @@
   },
   "chimerasnes": {
     "source": "https://github.com/jamsilva/chimerasnes",
+    "branch": "04c57c2",
     "directory": "chimerasnes",
     "output": "chimerasnes_libretro.so",
     "make": {
@@ -219,6 +236,7 @@
   },
   "crocods": {
     "source": "https://github.com/libretro/libretro-crocods",
+    "branch": "a320f6e",
     "directory": "libretro-crocods",
     "output": "crocods_libretro.so",
     "make": {
@@ -230,6 +248,7 @@
   },
   "dice": {
     "source": "https://github.com/mittonk/dice-libretro.git",
+    "branch": "9efd24d",
     "directory": "dice-libretro",
     "output": "dice_libretro.so",
     "make": {
@@ -241,6 +260,7 @@
   },
   "dosbox_pure": {
     "source": "https://github.com/schellingb/dosbox-pure",
+    "branch": "a1c81ef",
     "directory": "dosbox-pure",
     "output": "dosbox_pure_libretro.so",
     "make": {
@@ -252,6 +272,7 @@
   },
   "dosbox_svn": {
     "source": "https://github.com/libretro/dosbox-svn",
+    "branch": "53ca2f6",
     "directory": "dosbox-svn",
     "output": "dosbox_svn_libretro.so",
     "make": {
@@ -271,6 +292,7 @@
   },
   "doublecherryGB": {
     "source": "https://github.com/TimOelrichs/doublecherryGB-libretro",
+    "branch": "a48e93f",
     "directory": "doublecherryGB-libretro",
     "output": "DoubleCherryGB_libretro.so",
     "make": {
@@ -282,6 +304,7 @@
   },
   "ecwolf": {
     "source": "https://github.com/libretro/ecwolf",
+    "branch": "c57ad89",
     "directory": "ecwolf",
     "output": "ecwolf_libretro.so",
     "make": {
@@ -301,6 +324,7 @@
   },
   "emux_chip8": {
     "source": "https://github.com/sronsse/emux",
+    "branch": "df14439",
     "directory": "emux-chip8",
     "output": "emux_chip8_libretro.so",
     "make": {
@@ -321,6 +345,7 @@
   },
   "emux_gb": {
     "source": "https://github.com/sronsse/emux",
+    "branch": "df14439",
     "directory": "emux-gb",
     "output": "emux_gb_libretro.so",
     "make": {
@@ -341,6 +366,7 @@
   },
   "emux_nes": {
     "source": "https://github.com/sronsse/emux",
+    "branch": "df14439",
     "directory": "emux-nes",
     "output": "emux_nes_libretro.so",
     "make": {
@@ -361,6 +387,7 @@
   },
   "emux_sms": {
     "source": "https://github.com/sronsse/emux",
+    "branch": "df14439",
     "directory": "emux-sms",
     "output": "emux_sms_libretro.so",
     "make": {
@@ -381,6 +408,7 @@
   },
   "ep128emu_core": {
     "source": "https://github.com/libretro/ep128emu-core",
+    "branch": "edc6da0",
     "directory": "ep128emu-core",
     "output": "ep128emu_core_libretro.so",
     "make": {
@@ -392,6 +420,7 @@
   },
   "fake08": {
     "source": "https://github.com/jtothebell/fake-08",
+    "branch": "0d26fd5",
     "directory": "fake-08",
     "output": "fake08_libretro.so",
     "make": {
@@ -411,6 +440,7 @@
   },
   "fbalpha": {
     "source": "https://github.com/libretro/fbalpha",
+    "branch": "0581797",
     "directory": "fbalpha",
     "output": "fbalpha_libretro.so",
     "make": {
@@ -422,6 +452,7 @@
   },
   "fbalpha2012": {
     "source": "https://github.com/libretro/fbalpha2012",
+    "branch": "77167ce",
     "directory": "fbalpha2012",
     "output": "fbalpha2012_libretro.so",
     "make": {
@@ -442,6 +473,7 @@
   },
   "fbalpha2012_cps1": {
     "source": "https://github.com/libretro/fbalpha2012_cps1",
+    "branch": "2499e30",
     "directory": "fbalpha2012_cps1",
     "output": "fbalpha2012_cps1_libretro.so",
     "make": {
@@ -453,6 +485,7 @@
   },
   "fbalpha2012_cps2": {
     "source": "https://github.com/libretro/fbalpha2012_cps2",
+    "branch": "d618e99",
     "directory": "fbalpha2012_cps2",
     "output": "fbalpha2012_cps2_libretro.so",
     "make": {
@@ -464,6 +497,7 @@
   },
   "fbalpha2012_cps3": {
     "source": "https://github.com/libretro/fbalpha2012_cps3",
+    "branch": "2d1023b",
     "directory": "fbalpha2012_cps3",
     "output": "fbalpha2012_cps3_libretro.so",
     "make": {
@@ -484,6 +518,7 @@
   },
   "fbalpha2012_neogeo": {
     "source": "https://github.com/libretro/fbalpha2012_neogeo",
+    "branch": "fa3bf50",
     "directory": "fbalpha2012_neogeo",
     "output": "fbalpha2012_neogeo_libretro.so",
     "make": {
@@ -495,6 +530,7 @@
   },
   "fceumm": {
     "source": "https://github.com/libretro/libretro-fceumm",
+    "branch": "a5dbb22",
     "directory": "libretro-fceumm",
     "output": "fceumm_libretro.so",
     "make": {
@@ -506,6 +542,7 @@
   },
   "fixgb": {
     "source": "https://github.com/libretro/fixGB",
+    "branch": "983a7d5",
     "directory": "fixGB",
     "output": "fixgb_libretro.so",
     "make": {
@@ -525,6 +562,7 @@
   },
   "flycast": {
     "source": "https://github.com/flyinghead/flycast",
+    "branch": "0243f81",
     "directory": "flycast",
     "output": "flycast_libretro.so",
     "make": {
@@ -547,6 +585,7 @@
   },
     "morpheuscast_xtreme": {
     "source": "https://github.com/KMFDManic/morpheuscast_xtreme",
+    "branch": "5d1c1c8",
     "directory": "morpheuscast_xtreme",
     "output": "km_morpheuscast_xtreme_libretro.so",
     "make": {
@@ -558,6 +597,7 @@
   },
   "fmsx": {
     "source": "https://github.com/libretro/fmsx-libretro",
+    "branch": "fbe4dfc",
     "directory": "fmsx-libretro",
     "output": "fmsx_libretro.so",
     "make": {
@@ -569,6 +609,7 @@
   },
   "freechaf": {
     "source": "https://github.com/libretro/FreeChaF",
+    "branch": "cdb8ad6",
     "directory": "FreeChaF",
     "output": "freechaf_libretro.so",
     "make": {
@@ -580,6 +621,7 @@
   },
   "freeintv": {
     "source": "https://github.com/libretro/FreeIntv",
+    "branch": "6efc4b8",
     "directory": "FreeIntv",
     "output": "freeintv_libretro.so",
     "make": {
@@ -591,6 +633,7 @@
   },
   "freej2me": {
     "source": "https://github.com/TASEmulators/freej2me-plus",
+    "branch": "74dcc88",
     "directory": "freej2me-plus",
     "output": ["freej2me_libretro.so", "freej2me-lr.jar"],
     "make": {
@@ -612,6 +655,7 @@
   },
   "frodo": {
     "source": "https://github.com/libretro/frodo-libretro",
+    "branch": "9d10e7a",
     "directory": "frodo-libretro",
     "output": "frodo_libretro.so",
     "make": {
@@ -623,6 +667,7 @@
   },
   "fuse": {
     "source": "https://github.com/libretro/fuse-libretro",
+    "branch": "cad85b7",
     "directory": "fuse-libretro",
     "output": "fuse_libretro.so",
     "make": {
@@ -634,6 +679,7 @@
   },
   "galaksija": {
     "source": "https://github.com/libretro/galaxy-libretro",
+    "branch": "13ae71a",
     "directory": "galaxy-libretro",
     "output": "galaksija_libretro.so",
     "make": {
@@ -645,6 +691,7 @@
   },
   "gambatte": {
     "source": "https://github.com/libretro/gambatte-libretro",
+    "branch": "13b7af7",
     "directory": "gambatte-libretro",
     "output": "gambatte_libretro.so",
     "make": {
@@ -656,6 +703,7 @@
   },
   "gearboy": {
     "source": "https://github.com/drhelius/Gearboy",
+    "branch": "0fc8689",
     "directory": "Gearboy",
     "output": "gearboy_libretro.so",
     "make": {
@@ -675,6 +723,7 @@
   },
   "gearcoleco": {
     "source": "https://github.com/drhelius/Gearcoleco",
+    "branch": "e326967",
     "directory": "Gearcoleco",
     "output": "gearcoleco_libretro.so",
     "make": {
@@ -694,6 +743,7 @@
   },
   "geargrafx": {
     "source": "https://github.com/drhelius/Geargrafx",
+    "branch": "4cbf2db",
     "directory": "Geargrafx",
     "output": "geargrafx_libretro.so",
     "make": {
@@ -713,6 +763,7 @@
   },
   "gearsystem": {
     "source": "https://github.com/drhelius/Gearsystem",
+    "branch": "301c5fb",
     "directory": "Gearsystem",
     "output": "gearsystem_libretro.so",
     "make": {
@@ -732,6 +783,7 @@
   },
   "genesis_plus_gx": {
     "source": "https://github.com/libretro/Genesis-Plus-GX",
+    "branch": "a69c81e",
     "purge": 1,
     "directory": "Genesis-Plus-GX",
     "output": "genesis_plus_gx_libretro.so",
@@ -744,6 +796,7 @@
   },
   "genesis_plus_gx_expanded": {
     "source": "https://github.com/RapidEdwin08/Genesis-Plus-GX-Expanded-Rom-Size",
+    "branch": "2587494",
     "purge": 1,
     "directory": "Genesis-Plus-GX",
     "output": "genesis_plus_gx_expanded_libretro.so",
@@ -761,6 +814,7 @@
   },
   "geolith": {
     "source": "https://github.com/libretro/geolith-libretro",
+    "branch": "b683c2f",
     "directory": "geolith-libretro",
     "output": "geolith_libretro.so",
     "make": {
@@ -780,6 +834,7 @@
   },
   "gme": {
     "source": "https://github.com/libretro/libretro-gme",
+    "branch": "de22a26",
     "directory": "libretro-gme",
     "output": "gme_libretro.so",
     "make": {
@@ -791,6 +846,7 @@
   },
   "gpsp": {
     "source": "https://github.com/libretro/gpsp",
+    "branch": "143b0ab",
     "directory": "gpsp",
     "output": "gpsp_libretro.so",
     "make": {
@@ -802,6 +858,7 @@
   },
   "gw": {
     "source": "https://github.com/libretro/gw-libretro",
+    "branch": "435e5cf",
     "directory": "gw-libretro",
     "output": "gw_libretro.so",
     "make": {
@@ -813,6 +870,7 @@
   },
   "handy": {
     "source": "https://github.com/libretro/libretro-handy",
+    "branch": "fca2392",
     "directory": "libretro-handy",
     "output": "handy_libretro.so",
     "make": {
@@ -824,6 +882,7 @@
   },
   "hatari": {
     "source": "https://github.com/libretro/hatari",
+    "branch": "7008194",
     "directory": "hatari",
     "output": "hatari_libretro.so",
     "make": {
@@ -835,6 +894,7 @@
   },
   "jaxe": {
     "source": "https://github.com/kurtjd/jaxe",
+    "branch": "4825aad",
     "directory": "jaxe",
     "output": "jaxe_libretro.so",
     "make": {
@@ -866,6 +926,7 @@
   },
     "fbneo": {
     "source": "https://github.com/libretro/FBNeo",
+    "branch": "",
     "purge": 1,
     "directory": "FBNeo",
     "output": "fbneo_libretro.so",
@@ -884,6 +945,7 @@
   },
   "km_mame2003_xtreme_amped": {
     "source": "https://github.com/KMFDManic/mame2003-xtreme",
+    "branch": "fabaaab",
     "directory": "mame2003-xtreme",
     "output": "km_mame2003_xtreme_amped_libretro.so",
     "make": {
@@ -895,6 +957,7 @@
   },
   "km_puae_xtreme_amped_2k24": {
     "source": "https://github.com/KMFDManic/libretro-uae",
+    "branch": "2503905",
     "directory": "km_puae",
     "output": "km_puae_xtreme_amped_2k24_libretro.so",
     "make": {
@@ -906,6 +969,7 @@
   },
   "lowresnx": {
     "source": "https://github.com/timoinutilis/lowres-nx",
+    "branch": "85c8018",
     "directory": "lowres-nx",
     "output": "lowresnx_libretro.so",
     "make": {
@@ -925,6 +989,7 @@
   },
   "lutro": {
     "source": "https://github.com/libretro/libretro-lutro",
+    "branch": "b84d060",
     "directory": "libretro-lutro",
     "output": "lutro_libretro.so",
     "make": {
@@ -936,6 +1001,7 @@
   },
   "mame2000": {
     "source": "https://github.com/libretro/mame2000-libretro",
+    "branch": "2ec60f6",
     "directory": "mame2000-libretro",
     "output": "mame2000_libretro.so",
     "make": {
@@ -947,6 +1013,7 @@
   },
   "mame2003": {
     "source": "https://github.com/libretro/mame2003-libretro",
+    "branch": "dfddf4d",
     "directory": "mame2003-libretro",
     "output": "mame2003_libretro.so",
     "make": {
@@ -958,6 +1025,7 @@
   },
   "mame2003_midway": {
     "source": "https://github.com/libretro/mame2003_midway",
+    "branch": "3a47c3d",
     "directory": "mame2003_midway",
     "output": "mame2003_midway_libretro.so",
     "make": {
@@ -969,6 +1037,7 @@
   },
   "mame2003_plus": {
     "source": "https://github.com/libretro/mame2003-plus-libretro",
+    "branch": "5af62b9",
     "directory": "mame2003-plus-libretro",
     "output": "mame2003_plus_libretro.so",
     "make": {
@@ -980,6 +1049,7 @@
   },
   "mame2010": {
     "source": "https://github.com/libretro/mame2010-libretro",
+    "branch": "c5b413b",
     "directory": "mame2010-libretro",
     "output": "mame2010_libretro.so",
     "make": {
@@ -991,6 +1061,7 @@
   },
   "mednafen_gba": {
     "source": "https://github.com/libretro/beetle-gba-libretro",
+    "branch": "6cee806",
     "directory": "beetle-gba-libretro",
     "output": "mednafen_gba_libretro.so",
     "make": {
@@ -1002,6 +1073,7 @@
   },
   "mednafen_lynx": {
     "source": "https://github.com/libretro/beetle-lynx-libretro",
+    "branch": "efd1797",
     "directory": "beetle-lynx-libretro",
     "output": "mednafen_lynx_libretro.so",
     "make": {
@@ -1013,6 +1085,7 @@
   },
   "mednafen_ngp": {
     "source": "https://github.com/libretro/beetle-ngp-libretro",
+    "branch": "139fe34",
     "directory": "beetle-ngp-libretro",
     "output": "mednafen_ngp_libretro.so",
     "make": {
@@ -1024,6 +1097,7 @@
   },
   "mednafen_pce": {
     "source": "https://github.com/libretro/beetle-pce-libretro",
+    "branch": "9a301c0",
     "directory": "beetle-pce-libretro",
     "output": "mednafen_pce_libretro.so",
     "make": {
@@ -1035,6 +1109,7 @@
   },
   "mednafen_pce_fast": {
     "source": "https://github.com/libretro/beetle-pce-fast-libretro",
+    "branch": "c95e401",
     "directory": "beetle-pce-fast-libretro",
     "output": "mednafen_pce_fast_libretro.so",
     "make": {
@@ -1046,6 +1121,7 @@
   },
   "mednafen_pcfx": {
     "source": "https://github.com/libretro/beetle-pcfx-libretro",
+    "branch": "dd04cef",
     "directory": "beetle-pcfx-libretro",
     "output": "mednafen_pcfx_libretro.so",
     "make": {
@@ -1057,6 +1133,7 @@
   },
   "mednafen_psx": {
     "source": "https://github.com/libretro/beetle-psx-libretro",
+    "branch": "fe380f7",
     "directory": "beetle-psx-libretro",
     "output": "mednafen_psx_libretro.so",
     "make": {
@@ -1068,6 +1145,7 @@
   },
   "mednafen_saturn": {
     "source": "https://github.com/libretro/beetle-saturn-libretro",
+    "branch": "ccba526",
     "directory": "beetle-saturn-libretro",
     "output": "mednafen_saturn_libretro.so",
     "make": {
@@ -1079,6 +1157,7 @@
   },
   "mednafen_supafaust": {
     "source": "https://github.com/libretro/supafaust",
+    "branch": "e25f667",
     "directory": "supafaust",
     "output": "mednafen_supafaust_libretro.so",
     "make": {
@@ -1090,6 +1169,7 @@
   },
   "mednafen_supergrafx": {
     "source": "https://github.com/libretro/beetle-supergrafx-libretro",
+    "branch": "a776133",
     "directory": "beetle-supergrafx-libretro",
     "output": "mednafen_supergrafx_libretro.so",
     "make": {
@@ -1101,6 +1181,7 @@
   },
   "mednafen_vb": {
     "source": "https://github.com/libretro/beetle-vb-libretro",
+    "branch": "8f837eb",
     "directory": "beetle-vb-libretro",
     "output": "mednafen_vb_libretro.so",
     "make": {
@@ -1112,6 +1193,7 @@
   },
   "mednafen_wswan": {
     "source": "https://github.com/libretro/beetle-wswan-libretro",
+    "branch": "2aeb47d",
     "directory": "beetle-wswan-libretro",
     "output": "mednafen_wswan_libretro.so",
     "make": {
@@ -1123,6 +1205,7 @@
   },
   "mesen": {
     "source": "https://github.com/libretro/Mesen",
+    "branch": "791c5e8",
     "directory": "Mesen",
     "output": "mesen_libretro.so",
     "make": {
@@ -1142,6 +1225,7 @@
   },
   "mesen-s": {
     "source": "https://github.com/libretro/Mesen-S",
+    "branch": "d4fca31",
     "directory": "Mesen-S",
     "output": "mesen-s_libretro.so",
     "make": {
@@ -1161,6 +1245,7 @@
   },
   "mgba": {
     "source": "https://github.com/libretro/mgba",
+    "branch": "affc86e",
     "directory": "mgba",
     "output": "mgba_libretro.so",
     "make": {
@@ -1172,6 +1257,7 @@
   },
   "minivmac": {
     "source": "https://github.com/libretro/libretro-minivmac",
+    "branch": "2eb65cd",
     "directory": "libretro-minivmac",
     "output": "minivmac_libretro.so",
     "make": {
@@ -1183,6 +1269,7 @@
   },
   "mu": {
     "source": "https://github.com/libretro/Mu",
+    "branch": "d9766f1",
     "directory": "Mu",
     "output": "mu_libretro.so",
     "make": {
@@ -1202,6 +1289,7 @@
   },
   "nekop2": {
     "source": "https://github.com/libretro/libretro-meowPC98",
+    "branch": "dc905d4",
     "directory": "libretro-meowPC98",
     "output": "nekop2_libretro.so",
     "make": {
@@ -1221,6 +1309,7 @@
   },
   "neocd": {
     "source": "https://github.com/libretro/neocd_libretro",
+    "branch": "5eca2c8",
     "directory": "neocd_libretro",
     "output": "neocd_libretro.so",
     "make": {
@@ -1232,6 +1321,7 @@
   },
   "nestopia": {
     "source": "https://github.com/libretro/nestopia",
+    "branch": "51ad831",
     "directory": "nestopia",
     "output": "nestopia_libretro.so",
     "make": {
@@ -1251,6 +1341,7 @@
   },
   "np2kai": {
     "source": "https://github.com/libretro/NP2kai",
+    "branch": "cfac20d",
     "directory": "NP2kai",
     "output": "np2kai_libretro.so",
     "make": {
@@ -1270,6 +1361,7 @@
   },
   "numero": {
     "source": "https://github.com/nbarkhina/numero",
+    "branch": "867c40a",
     "directory": "numero",
     "output": "numero_libretro.so",
     "make": {
@@ -1281,6 +1373,7 @@
   },
   "nxengine": {
     "source": "https://github.com/libretro/nxengine-libretro",
+    "branch": "9adc032",
     "directory": "nxengine-libretro",
     "output": "nxengine_libretro.so",
     "make": {
@@ -1292,6 +1385,7 @@
   },
   "o2em": {
     "source": "https://github.com/libretro/libretro-o2em",
+    "branch": "3ba4231",
     "directory": "libretro-o2em",
     "output": "o2em_libretro.so",
     "make": {
@@ -1303,6 +1397,7 @@
   },
   "opera": {
     "source": "https://github.com/libretro/opera-libretro",
+    "branch": "67a29e6",
     "directory": "opera-libretro",
     "output": "opera_libretro.so",
     "make": {
@@ -1314,7 +1409,7 @@
   },
   "pcsx_rearmed": {
     "source": "https://github.com/libretro/pcsx_rearmed",
-    "branch": "",
+    "branch": "228c14e",
     "directory": "pcsx_rearmed",
     "output": "pcsx_rearmed_libretro.so",
     "make": {
@@ -1343,6 +1438,7 @@
   },
   "pocketcdg": {
     "source": "https://github.com/libretro/libretro-pocketcdg",
+    "branch": "c1fac9f",
     "directory": "libretro-pocketcdg",
     "output": "pocketcdg_libretro.so",
     "make": {
@@ -1354,6 +1450,7 @@
   },
   "pokemini": {
     "source": "https://github.com/libretro/PokeMini",
+    "branch": "1909580",
     "directory": "PokeMini",
     "output": "pokemini_libretro.so",
     "make": {
@@ -1365,6 +1462,7 @@
   },
   "potator": {
     "source": "https://github.com/libretro/potator",
+    "branch": "735bc37",
     "directory": "potator",
     "output": "potator_libretro.so",
     "make": {
@@ -1384,6 +1482,7 @@
   },
   "prboom": {
     "source": "https://github.com/libretro/libretro-prboom",
+    "branch": "b3e5f8b",
     "directory": "libretro-prboom",
     "output": "prboom_libretro.so",
     "make": {
@@ -1395,6 +1494,7 @@
   },
   "press_f": {
     "source": "https://github.com/celerizer/Press-F-libretro",
+    "branch": "6e2858f",
     "directory": "Press-F-libretro",
     "output": "press_f_libretro.so",
     "make": {
@@ -1406,6 +1506,7 @@
   },
   "prosystem": {
     "source": "https://github.com/libretro/prosystem-libretro",
+    "branch": "acae250",
     "directory": "prosystem-libretro",
     "output": "prosystem_libretro.so",
     "make": {
@@ -1417,6 +1518,7 @@
   },
     "ppsspp": {
     "source": "https://github.com/hrydgard/ppsspp",
+    "branch": "ddc16c9",
     "directory": "ppsspp",
     "output": "ppsspp_libretro.so",
     "make": {
@@ -1438,6 +1540,7 @@
   },
   "puae": {
     "source": "https://github.com/libretro/libretro-uae",
+    "branch": "9e2aa77",
     "directory": "libretro-uae",
     "output": "puae_libretro.so",
     "make": {
@@ -1461,6 +1564,7 @@
   },
   "puzzlescript": {
     "source": "https://github.com/nwhitehead/pzretro",
+    "branch": "18b5271",
     "directory": "pzretro",
     "output": "puzzlescript_libretro.so",
     "make": {
@@ -1472,6 +1576,7 @@
   },
   "px68k": {
     "source": "https://github.com/libretro/px68k-libretro",
+    "branch": "9dfa6ab",
     "directory": "px68k-libretro",
     "output": "px68k_libretro.so",
     "make": {
@@ -1483,6 +1588,7 @@
   },
   "quasi88": {
     "source": "https://github.com/libretro/quasi88-libretro",
+    "branch": "42be798",
     "directory": "quasi88-libretro",
     "output": "quasi88_libretro.so",
     "make": {
@@ -1494,6 +1600,7 @@
   },
   "quicknes": {
     "source": "https://github.com/libretro/QuickNES_Core",
+    "branch": "dbf19f7",
     "directory": "QuickNES_Core",
     "output": "quicknes_libretro.so",
     "make": {
@@ -1505,6 +1612,7 @@
   },
   "race": {
     "source": "https://github.com/libretro/RACE",
+    "branch": "171950e",
     "directory": "RACE",
     "output": "race_libretro.so",
     "make": {
@@ -1516,6 +1624,7 @@
   },
   "retro8": {
     "source": "https://github.com/libretro/retro8",
+    "branch": "a235ff8",
     "directory": "retro8",
     "output": "retro8_libretro.so",
     "make": {
@@ -1553,6 +1662,7 @@
   },
   "smsplus": {
     "source": "https://github.com/libretro/smsplus-gx",
+    "branch": "c642bbd",
     "directory": "smsplus-gx",
     "output": "smsplus_libretro.so",
     "make": {
@@ -1564,6 +1674,7 @@
   },
   "snes9x": {
     "source": "https://github.com/libretro/snes9x",
+    "branch": "49f4845",
     "directory": "snes9x",
     "output": "snes9x_libretro.so",
     "make": {
@@ -1583,6 +1694,7 @@
   },
   "snes9x2002": {
     "source": "https://github.com/libretro/snes9x2002",
+    "branch": "a0709ec",
     "directory": "snes9x2002",
     "output": "snes9x2002_libretro.so",
     "make": {
@@ -1594,6 +1706,7 @@
   },
   "snes9x2005": {
     "source": "https://github.com/libretro/snes9x2005",
+    "branch": "74d871d",
     "directory": "snes9x2005",
     "output": "snes9x2005_libretro.so",
     "make": {
@@ -1605,6 +1718,7 @@
   },
   "snes9x2010": {
     "source": "https://github.com/libretro/snes9x2010",
+    "branch": "",
     "directory": "snes9x2010",
     "output": "snes9x2010_libretro.so",
     "make": {
@@ -1616,6 +1730,7 @@
   },
   "stella": {
     "source": "https://github.com/stella-emu/stella",
+    "branch": "749a21f",
     "directory": "stella",
     "output": "stella_libretro.so",
     "make": {
@@ -1635,6 +1750,7 @@
   },
   "stella2014": {
     "source": "https://github.com/libretro/stella2014-libretro",
+    "branch": "3cc89f0",
     "directory": "stella2014-libretro",
     "output": "stella2014_libretro.so",
     "make": {
@@ -1646,6 +1762,7 @@
   },
   "swanstation": {
     "source": "https://github.com/libretro/swanstation",
+    "branch": "4d309c0",
     "directory": "swanstation",
     "output": "swanstation_libretro.so",
     "make": {
@@ -1668,6 +1785,7 @@
   },
   "tgbdual": {
     "source": "https://github.com/libretro/tgbdual-libretro",
+    "branch": "933707c",
     "directory": "tgbdual-libretro",
     "output": "tgbdual_libretro.so",
     "make": {
@@ -1679,6 +1797,7 @@
   },
   "theodore": {
     "source": "https://github.com/Zlika/theodore",
+    "branch": "242e932",
     "directory": "theodore",
     "output": "theodore_libretro.so",
     "make": {
@@ -1690,6 +1809,7 @@
   },
   "tyrquake": {
     "source": "https://github.com/libretro/tyrquake",
+    "branch": "dfdae65",
     "directory": "tyrquake",
     "output": "tyrquake_libretro.so",
     "make": {
@@ -1701,6 +1821,7 @@
   },
   "uw8": {
     "source": "https://github.com/libretro/uw8-libretro",
+    "branch": "2dced6e",
     "directory": "uw8-libretro",
     "output": "uw8_libretro.so",
     "make": {
@@ -1712,6 +1833,7 @@
   },
   "uzem": {
     "source": "https://github.com/libretro/libretro-uzem",
+    "branch": "cd6004e",
     "directory": "libretro-uzem",
     "output": "uzem_libretro.so",
     "make": {
@@ -1723,6 +1845,7 @@
   },
   "vba_next": {
     "source": "https://github.com/libretro/vba-next",
+    "branch": "d0ec7f3",
     "directory": "vba-next",
     "output": "vba_next_libretro.so",
     "make": {
@@ -1734,6 +1857,7 @@
   },
   "vecx": {
     "source": "https://github.com/libretro/libretro-vecx",
+    "branch": "841229a",
     "directory": "libretro-vecx",
     "output": "vecx_libretro.so",
     "make": {
@@ -1745,6 +1869,7 @@
   },
   "vemulator": {
     "source": "https://github.com/libretro/vemulator-libretro",
+    "branch": "45d7556",
     "directory": "vemulator-libretro",
     "output": "vemulator_libretro.so",
     "make": {
@@ -1886,6 +2011,7 @@
   },
   "vircon32": {
     "source": "https://github.com/vircon32/vircon32-libretro",
+    "branch": "d8a9243",
     "directory": "vircon32-libretro",
     "output": "vircon32_libretro.so",
     "make": {
@@ -1908,6 +2034,7 @@
   },
   "virtualjaguar": {
     "source": "https://github.com/libretro/virtualjaguar-libretro",
+    "branch": "48096c1",
     "directory": "virtualjaguar-libretro",
     "output": "virtualjaguar_libretro.so",
     "make": {
@@ -1919,6 +2046,7 @@
   },
   "visualboyadvance-m": {
     "source": "https://github.com/visualboyadvance-m/visualboyadvance-m",
+    "branch": "1dd5ba4",
     "directory": "visualboyadvance-m",
     "output": "vbam_libretro.so",
     "make": {
@@ -1938,6 +2066,7 @@
   },
   "wasm4": {
     "source": "https://github.com/aduros/wasm4",
+    "branch": "cfb3afd",
     "directory": "wasm4",
     "output": "wasm4_libretro.so",
     "make": {
@@ -1960,6 +2089,7 @@
   },
   "x1": {
     "source": "https://github.com/libretro/xmil-libretro",
+    "branch": "6a52dc2",
     "directory": "xmil-libretro",
     "output": "x1_libretro.so",
     "make": {
@@ -1979,6 +2109,7 @@
   },
   "zc250x": {
     "source": "https://github.com/netux79/zc250x-libretro",
+    "branch": "cfe8da6",
     "directory": "zc250x-libretro",
     "output": "zc250x_libretro.so",
     "make": {
