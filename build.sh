@@ -18,7 +18,6 @@ USAGE() {
 	echo "Notes:"
 	echo "  - Either -a, -c, or -u is required, but NOT together"
 	echo "  - If -p is used, it MUST be the first argument"
-	echo "  - The -u switch must have a storage pointer (e.g., -u mmc)"
 	echo ""
 	echo "Examples:"
 	echo "  $0 -a"
@@ -27,7 +26,7 @@ USAGE() {
 	echo "  $0 -p -a"
 	echo "  $0 -p -c dosbox-pure sameboy"
 	echo "  $0 -l -a"
-	echo "  $0 -u mmc"
+	echo "  $0 -u"
 	echo ""
 	exit 1
 }
@@ -41,7 +40,6 @@ BUILD_CORES=""
 EXCLUDE_CORES=""
 OPTION_SPECIFIED=0
 UPDATE=0
-STORAGE_POINTER=x
 
 # If argument '-p' or '--purge' provided first, set PURGE=1
 if [ "$#" -gt 0 ]; then
@@ -97,16 +95,6 @@ while [ "$#" -gt 0 ]; do
 			[ "$OPTION_SPECIFIED" -ne 0 ] && USAGE
 			OPTION_SPECIFIED=1
 			shift
-			if [ "$#" -eq 0 ]; then
-				printf "Error: Missing storage pointer\n\n" >&2
-				USAGE
-			fi
-			STORAGE_POINTER="$1"
-			shift
-			[ -z "$STORAGE_POINTER" ] && {
-				printf "Error: Invalid storage pointer\n"
-				exit 1
-			}
 			UPDATE=1
 			;;
 		-f | --force)
@@ -170,9 +158,9 @@ SAFE_RM_DIR() {
 
 # Create an update zip containing all cores
 UPDATE_ZIP() {
-	UPDATE_ARCHIVE="muOS-RetroArch-Core_Update-$(date +"%Y-%m-%d_%H-%M").muxzip"
+	UPDATE_ARCHIVE="muOS-RetroArch-Core_Update-$(date +"%Y-%m-%d_%H-%M").muxupd"
 	TEMP_DIR="$(mktemp -d)"
-	CORE_FOLDER="$TEMP_DIR/mnt/$STORAGE_POINTER/MUOS/core"
+	CORE_FOLDER="$TEMP_DIR/opt/muos/share/core"
 
 	if [ -z "$(ls "$BUILD_DIR"/*.zip 2>/dev/null)" ]; then
 		printf "No ZIP files found in '%s'\n" "$BUILD_DIR" >&2
