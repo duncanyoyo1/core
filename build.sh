@@ -160,7 +160,7 @@ SAFE_RM_DIR() {
 UPDATE_ZIP() {
 	UPDATE_ARCHIVE="muOS-RetroArch-Core_Update-$(date +"%Y-%m-%d_%H-%M").muxupd"
 	TEMP_DIR="$(mktemp -d)"
-	CORE_FOLDER="$TEMP_DIR/opt/muos/share/core"
+	CORE_FOLDER="$TEMP_DIR/core"
 
 	if [ -z "$(ls "$BUILD_DIR"/*.zip 2>/dev/null)" ]; then
 		printf "No ZIP files found in '%s'\n" "$BUILD_DIR" >&2
