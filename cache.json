@@ -1,144 +1,550 @@
 {
-  "81": "ffc99f2",
-  "a5200": "5264040",
-  "ardens": "66058b7",
-  "arduous": "2273b48",
-  "atari800": "6a18cb2",
-  "bk": "f95d929",
-  "bluemsx": "efaaa10",
-  "bnes": "8e26e89",
-  "bsnes-jg": "3f37a92",
-  "bsnes2014_performance": "3beff8e",
-  "bsnes_cplusplus98": "0ac6a16",
-  "bsnes_mercury_performance": "0f35d04",
-  "cannonball": "5137a79",
-  "cap32": "a5d96c5",
-  "chailove": "467cd45",
-  "chimerasnes": "04c57c2",
-  "crocods": "a320f6e",
-  "dosbox_pure": "935b33b",
-  "dosbox_svn": "53ca2f6",
-  "doublecherryGB": "a48e93f",
-  "ecwolf": "c57ad89",
+  "81": {
+    "hash": "ffc99f2",
+    "dir": "81-libretro"
+  },
+  "a5200": {
+    "hash": "5264040",
+    "dir": "a5200"
+  },
+  "ardens": {
+    "hash": "66058b7",
+    "dir": "Ardens"
+  },
+  "arduous": {
+    "hash": "2273b48",
+    "dir": "arduous"
+  },
+  "atari800": {
+    "hash": "6a18cb2",
+    "dir": "libretro-atari800"
+  },
+  "bk": {
+    "hash": "f95d929",
+    "dir": "bk-emulator"
+  },
+  "bluemsx": {
+    "hash": "efaaa10",
+    "dir": "blueMSX-libretro"
+  },
+  "bnes": {
+    "hash": "8e26e89",
+    "dir": "bnes-libretro"
+  },
+  "bsnes-jg": {
+    "hash": "3f37a92",
+    "dir": "bsnes-jg"
+  },
+  "bsnes2014_performance": {
+    "hash": "3beff8e",
+    "dir": "bsnes2014"
+  },
+  "bsnes_cplusplus98": {
+    "hash": "0ac6a16",
+    "dir": "bsnes-libretro-cplusplus98"
+  },
+  "bsnes_mercury_performance": {
+    "hash": "0f35d04",
+    "dir": "bsnes-mercury"
+  },
+  "cannonball": {
+    "hash": "5137a79",
+    "dir": "cannonball"
+  },
+  "cap32": {
+    "hash": "a5d96c5",
+    "dir": "libretro-cap32"
+  },
+  "chailove": {
+    "hash": "467cd45",
+    "dir": "libretro-chailove"
+  },
+  "chimerasnes": {
+    "hash": "04c57c2",
+    "dir": "chimerasnes"
+  },
+  "crocods": {
+    "hash": "a320f6e",
+    "dir": "libretro-crocods"
+  },
+  "dosbox_pure": {
+    "hash": "a1c81ef",
+    "dir": "dosbox-pure"
+  },
+  "dosbox_svn": {
+    "hash": "53ca2f6",
+    "dir": "dosbox-svn"
+  },
+  "doublecherryGB": {
+    "hash": "a48e93f",
+    "dir": "doublecherryGB-libretro"
+  },
+  "ecwolf": {
+    "hash": "c57ad89",
+    "dir": "ecwolf"
+  },
   "emux_chip8": "0000000",
   "emux_gb": "0000000",
   "emux_nes": "0000000",
   "emux_sms": "0000000",
-  "ep128emu_core": "edc6da0",
-  "fake08": "0d26fd5",
-  "fbalpha": "0581797",
-  "fbalpha2012": "77167ce",
-  "fbalpha2012_cps1": "2499e30",
-  "fbalpha2012_cps2": "d618e99",
-  "fbalpha2012_cps3": "2d1023b",
-  "fbalpha2012_neogeo": "fa3bf50",
-  "fceumm": "3544ff5",
-  "fixgb": "983a7d5",
-  "flycast": "0243f81",
-  "fmsx": "fbe4dfc",
-  "freechaf": "cdb8ad6",
-  "freeintv": "6efc4b8",
+  "ep128emu_core": {
+    "hash": "edc6da0",
+    "dir": "ep128emu-core"
+  },
+  "fake08": {
+    "hash": "0d26fd5",
+    "dir": "fake-08"
+  },
+  "fbalpha": {
+    "hash": "0581797",
+    "dir": "fbalpha"
+  },
+  "fbalpha2012": {
+    "hash": "77167ce",
+    "dir": "fbalpha2012"
+  },
+  "fbalpha2012_cps1": {
+    "hash": "2499e30",
+    "dir": "fbalpha2012_cps1"
+  },
+  "fbalpha2012_cps2": {
+    "hash": "d618e99",
+    "dir": "fbalpha2012_cps2"
+  },
+  "fbalpha2012_cps3": {
+    "hash": "2d1023b",
+    "dir": "fbalpha2012_cps3"
+  },
+  "fbalpha2012_neogeo": {
+    "hash": "fa3bf50",
+    "dir": "fbalpha2012_neogeo"
+  },
+  "fceumm": {
+    "hash": "a5dbb22",
+    "dir": "libretro-fceumm"
+  },
+  "fixgb": {
+    "hash": "983a7d5",
+    "dir": "fixGB"
+  },
+  "flycast": {
+    "hash": "0243f81",
+    "dir": "flycast"
+  },
+  "fmsx": {
+    "hash": "fbe4dfc",
+    "dir": "fmsx-libretro"
+  },
+  "freechaf": {
+    "hash": "cdb8ad6",
+    "dir": "FreeChaF"
+  },
+  "freeintv": {
+    "hash": "6efc4b8",
+    "dir": "FreeIntv"
+  },
   "freej2me": "5a105d4",
-  "frodo": "9d10e7a",
-  "fuse": "cad85b7",
-  "galaksija": "13ae71a",
-  "gambatte": "13b7af7",
-  "gearboy": "0fc8689",
-  "gearcoleco": "e326967",
-  "geargrafx": "4cbf2db",
-  "gearsystem": "301c5fb",
-  "genesis_plus_gx": "a69c81e",
-  "geolith": "b683c2f",
-  "gme": "de22a26",
-  "gpsp": "143b0ab",
-  "gw": "435e5cf",
-  "handy": "fca2392",
-  "hatari": "7008194",
-  "jaxe": "4825aad",
+  "frodo": {
+    "hash": "9d10e7a",
+    "dir": "frodo-libretro"
+  },
+  "fuse": {
+    "hash": "cad85b7",
+    "dir": "fuse-libretro"
+  },
+  "galaksija": {
+    "hash": "13ae71a",
+    "dir": "galaxy-libretro"
+  },
+  "gambatte": {
+    "hash": "13b7af7",
+    "dir": "gambatte-libretro"
+  },
+  "gearboy": {
+    "hash": "0fc8689",
+    "dir": "Gearboy"
+  },
+  "gearcoleco": {
+    "hash": "e326967",
+    "dir": "Gearcoleco"
+  },
+  "geargrafx": {
+    "hash": "4cbf2db",
+    "dir": "Geargrafx"
+  },
+  "gearsystem": {
+    "hash": "301c5fb",
+    "dir": "Gearsystem"
+  },
+  "genesis_plus_gx": {
+    "hash": "a69c81e",
+    "dir": "Genesis-Plus-GX"
+  },
+  "geolith": {
+    "hash": "b683c2f",
+    "dir": "geolith-libretro"
+  },
+  "gme": {
+    "hash": "de22a26",
+    "dir": "libretro-gme"
+  },
+  "gpsp": {
+    "hash": "143b0ab",
+    "dir": "gpsp"
+  },
+  "gw": {
+    "hash": "435e5cf",
+    "dir": "gw-libretro"
+  },
+  "handy": {
+    "hash": "fca2392",
+    "dir": "libretro-handy"
+  },
+  "hatari": {
+    "hash": "7008194",
+    "dir": "hatari"
+  },
+  "jaxe": {
+    "hash": "4825aad",
+    "dir": "jaxe"
+  },
   "km_fbneo_xtreme_amped": "0000000",
-  "km_mame2003_xtreme_amped": "505e339",
-  "km_puae_xtreme_amped_2k24": "2503905",
-  "lowresnx": "85c8018",
-  "lutro": "b84d060",
-  "mame2000": "2ec60f6",
-  "mame2003": "dfddf4d",
-  "mame2003_midway": "3a47c3d",
-  "mame2003_plus": "5af62b9",
+  "km_mame2003_xtreme_amped": {
+    "hash": "fabaaab",
+    "dir": "mame2003-xtreme"
+  },
+  "km_puae_xtreme_amped_2k24": {
+    "hash": "2503905",
+    "dir": "km_puae"
+  },
+  "lowresnx": {
+    "hash": "85c8018",
+    "dir": "lowres-nx"
+  },
+  "lutro": {
+    "hash": "b84d060",
+    "dir": "libretro-lutro"
+  },
+  "mame2000": {
+    "hash": "2ec60f6",
+    "dir": "mame2000-libretro"
+  },
+  "mame2003": {
+    "hash": "dfddf4d",
+    "dir": "mame2003-libretro"
+  },
+  "mame2003_midway": {
+    "hash": "3a47c3d",
+    "dir": "mame2003_midway"
+  },
+  "mame2003_plus": {
+    "hash": "5af62b9",
+    "dir": "mame2003-plus-libretro"
+  },
   "mame2010": "0000000",
-  "mednafen_gba": "6cee806",
-  "mednafen_lynx": "efd1797",
-  "mednafen_ngp": "139fe34",
-  "mednafen_pce": "9a301c0",
-  "mednafen_pce_fast": "c95e401",
-  "mednafen_pcfx": "dd04cef",
-  "mednafen_psx": "fe380f7",
-  "mednafen_saturn": "ccba526",
-  "mednafen_supafaust": "e25f667",
-  "mednafen_supergrafx": "a776133",
-  "mednafen_vb": "8f837eb",
-  "mednafen_wswan": "2aeb47d",
-  "mesen": "791c5e8",
-  "mesen-s": "d4fca31",
-  "mgba": "affc86e",
-  "minivmac": "2eb65cd",
-  "mu": "d9766f1",
-  "nekop2": "dc905d4",
-  "neocd": "5eca2c8",
-  "nestopia": "51ad831",
-  "np2kai": "cfac20d",
-  "numero": "867c40a",
-  "nxengine": "9adc032",
-  "o2em": "3ba4231",
-  "opera": "67a29e6",
+  "mednafen_gba": {
+    "hash": "6cee806",
+    "dir": "beetle-gba-libretro"
+  },
+  "mednafen_lynx": {
+    "hash": "efd1797",
+    "dir": "beetle-lynx-libretro"
+  },
+  "mednafen_ngp": {
+    "hash": "139fe34",
+    "dir": "beetle-ngp-libretro"
+  },
+  "mednafen_pce": {
+    "hash": "9a301c0",
+    "dir": "beetle-pce-libretro"
+  },
+  "mednafen_pce_fast": {
+    "hash": "c95e401",
+    "dir": "beetle-pce-fast-libretro"
+  },
+  "mednafen_pcfx": {
+    "hash": "dd04cef",
+    "dir": "beetle-pcfx-libretro"
+  },
+  "mednafen_psx": {
+    "hash": "fe380f7",
+    "dir": "beetle-psx-libretro"
+  },
+  "mednafen_saturn": {
+    "hash": "ccba526",
+    "dir": "beetle-saturn-libretro"
+  },
+  "mednafen_supafaust": {
+    "hash": "e25f667",
+    "dir": "supafaust"
+  },
+  "mednafen_supergrafx": {
+    "hash": "a776133",
+    "dir": "beetle-supergrafx-libretro"
+  },
+  "mednafen_vb": {
+    "hash": "8f837eb",
+    "dir": "beetle-vb-libretro"
+  },
+  "mednafen_wswan": {
+    "hash": "2aeb47d",
+    "dir": "beetle-wswan-libretro"
+  },
+  "mesen": {
+    "hash": "791c5e8",
+    "dir": "Mesen"
+  },
+  "mesen-s": {
+    "hash": "d4fca31",
+    "dir": "Mesen-S"
+  },
+  "mgba": {
+    "hash": "affc86e",
+    "dir": "mgba"
+  },
+  "minivmac": {
+    "hash": "2eb65cd",
+    "dir": "libretro-minivmac"
+  },
+  "mu": {
+    "hash": "d9766f1",
+    "dir": "Mu"
+  },
+  "nekop2": {
+    "hash": "dc905d4",
+    "dir": "libretro-meowPC98"
+  },
+  "neocd": {
+    "hash": "5eca2c8",
+    "dir": "neocd_libretro"
+  },
+  "nestopia": {
+    "hash": "51ad831",
+    "dir": "nestopia"
+  },
+  "np2kai": {
+    "hash": "cfac20d",
+    "dir": "NP2kai"
+  },
+  "numero": {
+    "hash": "867c40a",
+    "dir": "numero"
+  },
+  "nxengine": {
+    "hash": "9adc032",
+    "dir": "nxengine-libretro"
+  },
+  "o2em": {
+    "hash": "3ba4231",
+    "dir": "libretro-o2em"
+  },
+  "opera": {
+    "hash": "67a29e6",
+    "dir": "opera-libretro"
+  },
   "pcsx_rearmed": "6365a75",
-  "picodrive": "7cbcd41",
-  "pocketcdg": "c1fac9f",
-  "pokemini": "1909580",
-  "potator": "735bc37",
-  "prboom": "b3e5f8b",
-  "press_f": "6e2858f",
-  "prosystem": "acae250",
-  "puae": "9e2aa77",
-  "puae2021": "a19f742",
-  "puzzlescript": "18b5271",
-  "px68k": "9dfa6ab",
-  "quasi88": "42be798",
-  "quicknes": "dbf19f7",
-  "race": "171950e",
-  "retro8": "a235ff8",
-  "sameboy": "f94e607",
-  "smsplus": "c642bbd",
-  "snes9x": "49f4845",
-  "snes9x2002": "a0709ec",
-  "snes9x2005": "74d871d",
-  "snes9x2010": "f9ae8fd",
-  "stella": "749a21f",
-  "stella2014": "3cc89f0",
-  "swanstation": "4d309c0",
-  "tgbdual": "933707c",
-  "theodore": "242e932",
-  "tyrquake": "dfdae65",
-  "uw8": "2dced6e",
-  "uzem": "cd6004e",
-  "vba_next": "d0ec7f3",
-  "vecx": "841229a",
-  "vemulator": "45d7556",
-  "vice_x128": "d545628",
-  "vice_x64": "d545628",
-  "vice_x64dtv": "d545628",
-  "vice_x64sc": "d545628",
-  "vice_xcbm2": "d545628",
-  "vice_xcbm5x0": "d545628",
-  "vice_xpet": "d545628",
-  "vice_xplus4": "d545628",
-  "vice_xscpu64": "d545628",
-  "vice_xvic": "d545628",
-  "vircon32": "d8a9243",
-  "virtualjaguar": "48096c1",
-  "visualboyadvance-m": "9ae1473",
-  "wasm4": "cfb3afd",
-  "x1": "6a52dc2",
-  "zc250x": "cfe8da6",
-  "dice": "9efd24d",
-  "2048": "86e02d3"
+  "picodrive": {
+    "hash": "7cbcd41",
+    "dir": "picodrive"
+  },
+  "pocketcdg": {
+    "hash": "c1fac9f",
+    "dir": "libretro-pocketcdg"
+  },
+  "pokemini": {
+    "hash": "1909580",
+    "dir": "PokeMini"
+  },
+  "potator": {
+    "hash": "735bc37",
+    "dir": "potator"
+  },
+  "prboom": {
+    "hash": "b3e5f8b",
+    "dir": "libretro-prboom"
+  },
+  "press_f": {
+    "hash": "6e2858f",
+    "dir": "Press-F-libretro"
+  },
+  "prosystem": {
+    "hash": "acae250",
+    "dir": "prosystem-libretro"
+  },
+  "puae": {
+    "hash": "9e2aa77",
+    "dir": "libretro-uae"
+  },
+  "puae2021": {
+    "hash": "a19f742",
+    "dir": "libretro-uae-2021"
+  },
+  "puzzlescript": {
+    "hash": "18b5271",
+    "dir": "pzretro"
+  },
+  "px68k": {
+    "hash": "9dfa6ab",
+    "dir": "px68k-libretro"
+  },
+  "quasi88": {
+    "hash": "42be798",
+    "dir": "quasi88-libretro"
+  },
+  "quicknes": {
+    "hash": "dbf19f7",
+    "dir": "QuickNES_Core"
+  },
+  "race": {
+    "hash": "171950e",
+    "dir": "RACE"
+  },
+  "retro8": {
+    "hash": "a235ff8",
+    "dir": "retro8"
+  },
+  "sameboy": {
+    "hash": "f94e607",
+    "dir": "SameBoy"
+  },
+  "smsplus": {
+    "hash": "c642bbd",
+    "dir": "smsplus-gx"
+  },
+  "snes9x": {
+    "hash": "49f4845",
+    "dir": "snes9x"
+  },
+  "snes9x2002": {
+    "hash": "a0709ec",
+    "dir": "snes9x2002"
+  },
+  "snes9x2005": {
+    "hash": "74d871d",
+    "dir": "snes9x2005"
+  },
+  "snes9x2010": {
+    "hash": "f9ae8fd",
+    "dir": "snes9x2010"
+  },
+  "stella": {
+    "hash": "749a21f",
+    "dir": "stella"
+  },
+  "stella2014": {
+    "hash": "3cc89f0",
+    "dir": "stella2014-libretro"
+  },
+  "swanstation": {
+    "hash": "4d309c0",
+    "dir": "swanstation"
+  },
+  "tgbdual": {
+    "hash": "933707c",
+    "dir": "tgbdual-libretro"
+  },
+  "theodore": {
+    "hash": "242e932",
+    "dir": "theodore"
+  },
+  "tyrquake": {
+    "hash": "dfdae65",
+    "dir": "tyrquake"
+  },
+  "uw8": {
+    "hash": "2dced6e",
+    "dir": "uw8-libretro"
+  },
+  "uzem": {
+    "hash": "cd6004e",
+    "dir": "libretro-uzem"
+  },
+  "vba_next": {
+    "hash": "d0ec7f3",
+    "dir": "vba-next"
+  },
+  "vecx": {
+    "hash": "841229a",
+    "dir": "libretro-vecx"
+  },
+  "vemulator": {
+    "hash": "45d7556",
+    "dir": "vemulator-libretro"
+  },
+  "vice_x128": {
+    "hash": "d545628",
+    "dir": "vice-libretro"
+  },
+  "vice_x64": {
+    "hash": "d545628",
+    "dir": "vice-libretro"
+  },
+  "vice_x64dtv": {
+    "hash": "d545628",
+    "dir": "vice-libretro"
+  },
+  "vice_x64sc": {
+    "hash": "d545628",
+    "dir": "vice-libretro"
+  },
+  "vice_xcbm2": {
+    "hash": "d545628",
+    "dir": "vice-libretro"
+  },
+  "vice_xcbm5x0": {
+    "hash": "d545628",
+    "dir": "vice-libretro"
+  },
+  "vice_xpet": {
+    "hash": "d545628",
+    "dir": "vice-libretro"
+  },
+  "vice_xplus4": {
+    "hash": "d545628",
+    "dir": "vice-libretro"
+  },
+  "vice_xscpu64": {
+    "hash": "d545628",
+    "dir": "vice-libretro"
+  },
+  "vice_xvic": {
+    "hash": "d545628",
+    "dir": "vice-libretro"
+  },
+  "vircon32": {
+    "hash": "d8a9243",
+    "dir": "vircon32-libretro"
+  },
+  "virtualjaguar": {
+    "hash": "48096c1",
+    "dir": "virtualjaguar-libretro"
+  },
+  "visualboyadvance-m": {
+    "hash": "1dd5ba4",
+    "dir": "visualboyadvance-m"
+  },
+  "wasm4": {
+    "hash": "cfb3afd",
+    "dir": "wasm4"
+  },
+  "x1": {
+    "hash": "6a52dc2",
+    "dir": "xmil-libretro"
+  },
+  "zc250x": {
+    "hash": "cfe8da6",
+    "dir": "zc250x-libretro"
+  },
+  "dice": {
+    "hash": "9efd24d",
+    "dir": "dice-libretro"
+  },
+  "2048": {
+    "hash": "86e02d3",
+    "dir": "libretro-2048"
+  },
+  "genesis_plus_gx_expanded": {
+    "hash": "2587494",
+    "dir": "Genesis-Plus-GX"
+  }
 }
